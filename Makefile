@@ -1,4 +1,4 @@
-SRCS	=	main.cpp
+SRCS	=	main.cpp lexer/Lexer.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 

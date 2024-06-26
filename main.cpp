@@ -1,6 +1,8 @@
 #include <print>
+#include "lexer/Lexer.hpp"
 
 int main() {
-  std::println("Hello {}", "world");
+  Lexer lexer;
+  (void)lexer;
   return 0;
 }
