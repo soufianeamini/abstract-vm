@@ -1,5 +1,6 @@
 #include "IOperand.hpp"
 template <eOperandType E, class T> class Operand : IOperand {
+public:
   int getPrecision(void) const;
   eOperandType getType(void) const;
   IOperand const *operator+(IOperand const &rhs) const;

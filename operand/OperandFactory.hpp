@@ -1,0 +1,27 @@
+#pragma once
+
+#include "IOperand.hpp"
+#include <array>
+#include <functional>
+#include <memory>
+#include <vector>
+class OperandFactory {
+private:
+  static std::vector<std::unique_ptr<const IOperand>> operands;
+  std::array<
+      std::function<IOperand const *(const OperandFactory *, std::string const &)>, 5>
+      createFunctions{
+          &OperandFactory::createInt8,   &OperandFactory::createInt16,
+          &OperandFactory::createInt32,  &OperandFactory::createFloat,
+          &OperandFactory::createDouble,
+      };
+
+public:
+  IOperand const *createOperand(eOperandType type,
+                                std::string const &value) const;
+  IOperand const *createInt8(std::string const &value) const;
+  IOperand const *createInt16(std::string const &value) const;
+  IOperand const *createInt32(std::string const &value) const;
+  IOperand const *createFloat(std::string const &value) const;
+  IOperand const *createDouble(std::string const &value) const;
+};
