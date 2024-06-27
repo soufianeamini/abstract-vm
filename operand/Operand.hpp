@@ -135,7 +135,7 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
     ss << fmod(this->value, value);
 
     std::string result;
-    return of.createOperand(eOperandType::Double, result);
+    return of.createOperand(eOperandType::Float, result);
   } else {
     return rhs % *this;
   }
