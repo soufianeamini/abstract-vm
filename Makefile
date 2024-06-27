@@ -25,6 +25,9 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
+pretty:
+	clang++ -Xclang -ast-print -fsyntax-only $(SRCS)
+
 re: fclean all
 
 .PHONY: all clean fclean re
