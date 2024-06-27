@@ -11,7 +11,11 @@ int main(int argc, char *argv[]) {
 
     std::string source = InputHandler::ReadFile(filename);
     Lexer lexer;
-    lexer.lex(source);
+    auto tokens = lexer.lex(source);
+
+    for (const auto &t : tokens) {
+      std::println("Token: {}, line: {}", t.literal, t.line);
+    }
   } else {
     std::println(stderr, "Usage: ./avm [.avm file]");
   }

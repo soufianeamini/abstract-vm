@@ -5,8 +5,8 @@
 #include <vector>
 class Lexer {
 private:
-  size_t current;
   using StrViewIter = std::string_view::const_iterator;
+  Token generateWord(StrViewIter it, StrViewIter current, int line);
 
 public:
   std::vector<Token> lex(std::string_view);

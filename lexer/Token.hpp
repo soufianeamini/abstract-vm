@@ -2,6 +2,7 @@
 
 #include <string_view>
 enum class TokenType {
+  Word, // Is an error
   Push,
   Pop,
   Dump,
@@ -21,4 +22,5 @@ enum class TokenType {
 struct Token {
   TokenType type;
   std::string_view literal;
+  int line;
 };
