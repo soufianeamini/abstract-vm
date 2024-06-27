@@ -1,6 +1,8 @@
 
 #include "OperandFactory.hpp"
 #include "IOperand.hpp"
+#include "Operand.hpp"
+#include <cstdint>
 #include <memory>
 #include <utility>
 
@@ -17,9 +19,11 @@ IOperand const *OperandFactory::createOperand(eOperandType type,
   return operand;
 }
 
-// IOperand const *OperandFactory::createInt8(std::string const &value) const {}
-// IOperand const *OperandFactory::createInt16(std::string const &value) const
-// {} IOperand const *OperandFactory::createInt32(std::string const &value)
-// const {} IOperand const *OperandFactory::createFloat(std::string const
-// &value) const {} IOperand const *OperandFactory::createDouble(std::string
-// const &value) const {}
+IOperand const *OperandFactory::createInt8(std::string const &value) const {
+  return new Operand<eOperandType::Int8, int8_t>(value);
+}
+
+// IOperand const *OperandFactory::createInt16(std::string const &value) const {}
+// IOperand const *OperandFactory::createInt32(std::string const &value) const {}
+// IOperand const *OperandFactory::createFloat(std::string const &value) const {}
+// IOperand const *OperandFactory::createDouble(std::string const &value) const {}

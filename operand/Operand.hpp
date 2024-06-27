@@ -1,6 +1,10 @@
 #include "IOperand.hpp"
-template <eOperandType E, class T> class Operand : IOperand {
+template <eOperandType E, class T> class Operand : public IOperand {
+private:
+  T value;
+
 public:
+  Operand(const std::string &value);
   int getPrecision(void) const;
   eOperandType getType(void) const;
   IOperand const *operator+(IOperand const &rhs) const;
