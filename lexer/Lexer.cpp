@@ -1,7 +1,24 @@
 #include "Lexer.hpp"
 #include "Token.hpp"
+#include <map>
 #include <print>
+#include <string>
 #include <string_view>
+
+Lexer::Lexer() {
+  keywords["add"] = TokenType::Add;
+  keywords["push"] = TokenType::Push;
+  keywords["pop"] = TokenType::Pop;
+  keywords["dump"] = TokenType::Dump;
+  keywords["assert"] = TokenType::Assert;
+  keywords["add"] = TokenType::Add;
+  keywords["sub"] = TokenType::Sub;
+  keywords["mul"] = TokenType::Mul;
+  keywords["div"] = TokenType::Div;
+  keywords["mod"] = TokenType::Mod;
+  keywords["print"] = TokenType::Print;
+  keywords["exit"] = TokenType::Exit;
+}
 
 std::vector<Token> Lexer::lex(std::string_view source) {
   std::vector<Token> tokens;
@@ -71,6 +88,24 @@ std::vector<Token> Lexer::lex(std::string_view source) {
 
 Token Lexer::generateWord(StrViewIter it, StrViewIter current, int line) {
   std::string_view slice(current, it);
+  TokenType type = TokenType::Word;
 
-  return Token{.type = TokenType::Word, .literal = slice, .line = line};
+  if (keywords.contains(std::string(slice))) {
+    type = keywords.at(std::string(slice));
+  }
+
+  return Token{.type = type, .literal = slice, .line = line};
+}
+
+Lexer::~Lexer() {}
+
+Lexer::Lexer(const Lexer &other) : keywords(other.keywords) {}
+
+Lexer &Lexer::operator=(const Lexer &other) {
+  if (this == &other)
+    return *this;
+
+  this->keywords = std::map<std::string, TokenType>(other.keywords);
+
+  return *this;
 }
