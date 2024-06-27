@@ -2,7 +2,6 @@
 #include "OperandFactory.hpp"
 #include <cmath>
 #include <sstream>
-#include <type_traits>
 #include <utility>
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -105,3 +104,39 @@ public:
   std::string const &toString(void) const { return toStr; }
   ~Operand(void) {}
 };
+
+template <>
+inline IOperand const *
+Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
+  OperandFactory of;
+  if (this->getPrecision() >= rhs.getPrecision()) {
+    std::stringstream ss(rhs.toString());
+    double value;
+
+    ss >> value;
+    ss << fmod(this->value, value);
+
+    std::string result;
+    return of.createOperand(eOperandType::Double, result);
+  } else {
+    return rhs % *this;
+  }
+}
+
+template <>
+inline IOperand const *
+Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
+  OperandFactory of;
+  if (this->getPrecision() >= rhs.getPrecision()) {
+    std::stringstream ss(rhs.toString());
+    float value;
+
+    ss >> value;
+    ss << fmod(this->value, value);
+
+    std::string result;
+    return of.createOperand(eOperandType::Double, result);
+  } else {
+    return rhs % *this;
+  }
+}
