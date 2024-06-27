@@ -1,4 +1,4 @@
-SRCS	=	main.cpp lexer/Lexer.cpp
+SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
@@ -8,7 +8,7 @@ NAME	=	avm
 
 CC	=	c++
 
-HEADER	= abstract-vm.hpp
+HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/LexerException.hpp vm/Vm.hpp
 
 all: $(NAME)
 

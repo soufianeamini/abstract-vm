@@ -1,2 +1,3 @@
-class Lexer {
-};
+#pragma once
+
+class Lexer {};

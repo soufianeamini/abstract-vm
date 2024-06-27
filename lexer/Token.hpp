@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string_view>
 enum class TokenType {
   Push,
@@ -11,8 +13,8 @@ enum class TokenType {
   Mod,
   Print,
   Exit,
-  LeftParen, // (
-  RightParen, // )
+  LeftParen,    // (
+  RightParen,   // )
   EndOfProgram, // ;;
 };
 
