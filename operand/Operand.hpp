@@ -87,8 +87,6 @@ public:
       return rhs / *this;
     }
   }
-  template <typename Integer,
-            std::enable_if_t<std::is_integral<Integer>::value, bool> = true>
   IOperand const *operator%(IOperand const &rhs) const {
     OperandFactory of;
     if (this->getPrecision() >= rhs.getPrecision()) {
@@ -97,24 +95,6 @@ public:
 
       ss >> value;
       ss << (this->value % value);
-
-      std::string result;
-      return of.createOperand(E, result);
-    } else {
-      return rhs % *this;
-    }
-  }
-  template <
-      typename Floating,
-      std::enable_if_t<std::is_floating_point<Floating>::value, bool> = true>
-  IOperand const *operator%(IOperand const &rhs) const {
-    OperandFactory of;
-    if (this->getPrecision() >= rhs.getPrecision()) {
-      std::stringstream ss(rhs.toString());
-      T value;
-
-      ss >> value;
-      ss << (fmod(this->value, value));
 
       std::string result;
       return of.createOperand(E, result);
