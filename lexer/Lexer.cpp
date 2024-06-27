@@ -6,9 +6,11 @@
 std::vector<Token> Lexer::lex(std::string_view source) {
   std::vector<Token> tokens;
 
-  for (std::string_view::const_iterator it = source.cbegin();
-       it < source.cend(); it++) {
+  for (StrViewIter it = source.cbegin(); it < source.cend(); it++) {
     std::println("[*it: {}]", *it);
+    std::string_view sub(it, it + 3);
+    tokens.push_back(Token{.type=TokenType::Add, .literal = sub});
+    break;
   }
 
   return tokens;

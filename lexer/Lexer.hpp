@@ -6,6 +6,7 @@
 class Lexer {
 private:
   size_t current;
+  using StrViewIter = std::string_view::const_iterator;
 
 public:
   std::vector<Token> lex(std::string_view);
