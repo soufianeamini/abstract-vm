@@ -2,7 +2,7 @@
 
 #include <string_view>
 enum class TokenType {
-  Word, // Is an error
+  Word,
   Push,
   Pop,
   Dump,

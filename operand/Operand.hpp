@@ -1,7 +1,11 @@
 #include "IOperand.hpp"
 #include "OperandFactory.hpp"
 #include <cmath>
+#include <format>
+#include <ostream>
+#include <print>
 #include <sstream>
+#include <string>
 #include <utility>
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -31,12 +35,9 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-
       ss >> value;
-      ss << (this->value + value);
 
-      std::string result;
-      return of.createOperand(E, result);
+      return of.createOperand(E, std::to_string(this->value + value));
     } else {
       return rhs + *this;
     }
@@ -46,12 +47,9 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-
       ss >> value;
-      ss << (this->value - value);
 
-      std::string result;
-      return of.createOperand(E, result);
+      return of.createOperand(E, std::to_string(this->value - value));
     } else {
       return rhs - *this;
     }
@@ -61,12 +59,9 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-
       ss >> value;
-      ss << (this->value * value);
 
-      std::string result;
-      return of.createOperand(E, result);
+      return of.createOperand(E, std::to_string(this->value * value));
     } else {
       return rhs * *this;
     }
@@ -76,12 +71,9 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-
       ss >> value;
-      ss << (this->value / value);
 
-      std::string result;
-      return of.createOperand(E, result);
+      return of.createOperand(E, std::to_string(this->value / value));
     } else {
       return rhs / *this;
     }
@@ -91,12 +83,9 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-
       ss >> value;
-      ss << (this->value % value);
 
-      std::string result;
-      return of.createOperand(E, result);
+      return of.createOperand(E, std::to_string(this->value % value));
     } else {
       return rhs % *this;
     }
@@ -112,12 +101,9 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
   if (this->getPrecision() >= rhs.getPrecision()) {
     std::stringstream ss(rhs.toString());
     double value;
-
     ss >> value;
-    ss << fmod(this->value, value);
 
-    std::string result;
-    return of.createOperand(eOperandType::Double, result);
+    return of.createOperand(eOperandType::Double, std::to_string(fmod(this->value, value)));
   } else {
     return rhs % *this;
   }
@@ -130,12 +116,9 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
   if (this->getPrecision() >= rhs.getPrecision()) {
     std::stringstream ss(rhs.toString());
     float value;
-
     ss >> value;
-    ss << fmod(this->value, value);
 
-    std::string result;
-    return of.createOperand(eOperandType::Float, result);
+    return of.createOperand(eOperandType::Float, std::to_string(fmod(this->value, value)));
   } else {
     return rhs % *this;
   }

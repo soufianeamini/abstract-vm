@@ -1,4 +1,6 @@
 #include "lexer/Lexer.hpp"
+#include "operand/IOperand.hpp"
+#include "operand/OperandFactory.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
 #include <print>
@@ -40,5 +42,12 @@ int main(int argc, char *argv[]) {
   } else {
     std::println(stderr, "Usage: ./avm [.avm file]");
   }
+  OperandFactory of;
+
+  auto op1 = of.createOperand(eOperandType::Int16, "3");
+  auto op2 = of.createOperand(eOperandType::Int16, "5");
+
+  auto res = *op1 + *op2;
+  std::println("value: {}", res->toString());
   return 0;
 }
