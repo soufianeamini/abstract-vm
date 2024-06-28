@@ -6,11 +6,19 @@
 class Parser {
 private:
   std::deque<Token> tokens;
+  std::vector<std::string> errors;
+  bool hasErrored = false;
+
+private:
   Instruction generateInstruction(TokenType type);
   Instruction generateInstruction(TokenType type, const IOperand *operand);
 
+  Token peek();
   Token consume(TokenType type);
-  void parseInstruction();
+  void recoverParser();
+  Instruction parseInstruction();
+  Instruction parsePush();
+  const IOperand* parseValue();
 
 public:
   Parser();

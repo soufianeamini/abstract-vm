@@ -67,6 +67,8 @@ std::vector<Token> Lexer::lex(std::string_view source) {
     }
     case '\n':
       line++;
+      tokens.push_back(
+          Token{.type = TokenType::Sep, .literal = "\n", .line = line});
       [[fallthrough]];
     case ' ':
       if (word) {
