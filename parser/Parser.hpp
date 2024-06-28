@@ -28,4 +28,6 @@ public:
   Parser &operator=(const Parser &o);
   ~Parser();
   std::vector<Instruction> parse();
+  bool getErrorState();
+  std::vector<std::string> getErrors();
 };

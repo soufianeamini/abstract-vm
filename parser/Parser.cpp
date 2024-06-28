@@ -125,6 +125,10 @@ Instruction Parser::generateInstruction(TokenType type,
   return instruction;
 }
 
+bool Parser::getErrorState() { return hasErrored; }
+
+std::vector<std::string> Parser::getErrors() { return errors; }
+
 Parser::Parser() {}
 
 Parser::Parser(const std::vector<Token> &tokens)
