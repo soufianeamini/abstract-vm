@@ -22,8 +22,41 @@ Instruction Parser::parseInstruction() {
   switch (peek().type) {
   case TokenType::Push:
     return parsePush();
+  case TokenType::Assert:
+    return parseAssert();
+  case TokenType::Pop:
+    return generateInstruction(TokenType::Pop);
+  case TokenType::Dump:
+    return generateInstruction(TokenType::Dump);
+  case TokenType::Add:
+    return generateInstruction(TokenType::Add);
+  case TokenType::Sub:
+    return generateInstruction(TokenType::Sub);
+  case TokenType::Mul:
+    return generateInstruction(TokenType::Mul);
+  case TokenType::Div:
+    return generateInstruction(TokenType::Div);
+  case TokenType::Mod:
+    return generateInstruction(TokenType::Mod);
+  case TokenType::Print:
+    return generateInstruction(TokenType::Print);
+  case TokenType::Exit:
+    return generateInstruction(TokenType::Exit);
+  case TokenType::EndOfProgram:
+    return generateInstruction(TokenType::EndOfProgram);
+  default:
+    consume(TokenType::Dummy);
   }
-  throw ParserException(ParserException::Type::UnknownInstruction, peek());
+
+  return generateInstruction(consume(TokenType::Dummy).type);
+}
+
+Instruction Parser::parseAssert() {
+  consume(TokenType::Assert);
+  const IOperand *operand = parseValue();
+  consume(TokenType::Sep);
+
+  return generateInstruction(TokenType::Assert, operand);
 }
 
 Instruction Parser::parsePush() {
@@ -43,21 +76,18 @@ const IOperand *Parser::parseValue() {
   const IOperand *operand = nullptr;
   OperandFactory of;
   if (precision.literal == "int8")
-    operand =
-        of.createOperand(eOperandType::Int8, std::string(value.literal));
+    operand = of.createOperand(eOperandType::Int8, std::string(value.literal));
   else if (precision.literal == "int16")
-    operand =
-        of.createOperand(eOperandType::Int16, std::string(value.literal));
+    operand = of.createOperand(eOperandType::Int16, std::string(value.literal));
   else if (precision.literal == "int32")
-    operand =
-        of.createOperand(eOperandType::Int32, std::string(value.literal));
+    operand = of.createOperand(eOperandType::Int32, std::string(value.literal));
   else if (precision.literal == "float")
-    operand =
-        of.createOperand(eOperandType::Float, std::string(value.literal));
+    operand = of.createOperand(eOperandType::Float, std::string(value.literal));
   else if (precision.literal == "double")
     operand =
         of.createOperand(eOperandType::Double, std::string(value.literal));
-  else throw ParserException(ParserException::Type::SyntaxError, precision);
+  else
+    consume(TokenType::Dummy);
 
   return operand;
 }

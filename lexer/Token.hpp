@@ -18,6 +18,7 @@ enum class TokenType {
   RightParen,   // )
   EndOfProgram, // ;;
   Sep,
+  Dummy,
 };
 
 struct Token {

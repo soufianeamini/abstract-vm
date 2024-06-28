@@ -18,6 +18,7 @@ private:
   void recoverParser();
   Instruction parseInstruction();
   Instruction parsePush();
+  Instruction parseAssert();
   const IOperand* parseValue();
 
 public:
