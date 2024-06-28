@@ -3,11 +3,12 @@
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
 #include <format>
+#include <print>
 
 std::vector<Instruction> Parser::parse() {
   std::vector<Instruction> instructions;
 
-  while (tokens.size() != 0) {
+  while (tokens.size() > 0) {
     try {
       instructions.push_back(parseInstruction());
     } catch (ParserException &e) {
@@ -25,24 +26,34 @@ Instruction Parser::parseInstruction() {
   case TokenType::Assert:
     return parseAssert();
   case TokenType::Pop:
+    tokens.pop_front();
     return generateInstruction(TokenType::Pop);
   case TokenType::Dump:
+    tokens.pop_front();
     return generateInstruction(TokenType::Dump);
   case TokenType::Add:
+    tokens.pop_front();
     return generateInstruction(TokenType::Add);
   case TokenType::Sub:
+    tokens.pop_front();
     return generateInstruction(TokenType::Sub);
   case TokenType::Mul:
+    tokens.pop_front();
     return generateInstruction(TokenType::Mul);
   case TokenType::Div:
+    tokens.pop_front();
     return generateInstruction(TokenType::Div);
   case TokenType::Mod:
+    tokens.pop_front();
     return generateInstruction(TokenType::Mod);
   case TokenType::Print:
+    tokens.pop_front();
     return generateInstruction(TokenType::Print);
   case TokenType::Exit:
+    tokens.pop_front();
     return generateInstruction(TokenType::Exit);
   case TokenType::EndOfProgram:
+    tokens.pop_front();
     return generateInstruction(TokenType::EndOfProgram);
   default:
     consume(TokenType::Dummy);
@@ -102,6 +113,7 @@ Token Parser::consume(TokenType type) {
     throw ParserException(ParserException::Type::SyntaxError, token);
   }
 
+  tokens.pop_front();
   return token;
 }
 
