@@ -1,3 +1,9 @@
 #pragma once
 
-class Vm {};
+#include "../parser/Instruction.hpp"
+#include <vector>
+
+class Vm {
+private:
+  std::vector<Instruction> instructions;
+};
