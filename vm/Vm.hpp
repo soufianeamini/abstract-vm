@@ -1,20 +1,23 @@
 #pragma once
 
 #include "../parser/Instruction.hpp"
-#include <stack>
+#include <deque>
 #include <vector>
 
 class Vm {
 private:
   std::vector<Instruction> instructions;
-  std::stack<Instruction> stack;
+  std::deque<const IOperand *> stack;
 
   // Instruction Pointer
   std::vector<Instruction>::const_iterator ip;
 
 public:
-  Vm();
   void interpret();
+  void dumpStack();
+  void assert(const std::string &actual, const std::string &expected);
+
+  Vm();
   Vm(const std::vector<Instruction> &instructions);
   Vm(const std::vector<Instruction> &&instructions);
   Vm(const Vm &o);
