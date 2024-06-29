@@ -1,4 +1,6 @@
-SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp vm/InputHandler.cpp operand/OperandFactory.cpp exceptions/customExceptions.cpp
+SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp vm/InputHandler.cpp \
+				operand/OperandFactory.cpp exceptions/customExceptions.cpp\
+				vm/Vm.cpp
 
 HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/customExceptions.hpp vm/Vm.hpp vm/InputHandler.hpp \
 					operand/IOperand.hpp operand/Operand.hpp operand/OperandFactory.hpp

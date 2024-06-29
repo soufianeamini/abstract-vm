@@ -1,10 +1,26 @@
 #include "lexer/Lexer.hpp"
 #include "operand/IOperand.hpp"
 #include "operand/OperandFactory.hpp"
+#include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
+#include "vm/Vm.hpp"
+#include <cstdlib>
 #include <print>
 #include <utility>
+
+void printInstruction(const Instruction &i) {
+  if (i.value)
+    std::println("Instruction: {}, Value: {}", std::to_underlying(i.command),
+                 i.value->toString());
+  else
+    std::println("Instruction: {}", std::to_underlying(i.command));
+}
+
+void printToken(const Token &t) {
+  if (t.type != TokenType::Sep)
+    std::println("Token: {}, line: {}", t.literal, t.line);
+}
 
 void FileMode(const char *arg) {
   std::string filename = arg;
@@ -13,25 +29,33 @@ void FileMode(const char *arg) {
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
   auto tokens = lexer.lex(source);
+  Parser parser(tokens);
+
+  if (parser.getErrorState()) {
+    std::println("Has errored!");
+    for (auto &error : parser.getErrors()) {
+      std::println("{}", error);
+    }
+    std::exit(1);
+  }
+  auto instructions = parser.parse();
+  Vm vm(instructions);
 
   for (const auto &t : tokens) {
-    if (t.type != TokenType::Sep)
-      std::println("Token: {}, line: {}", t.literal, t.line);
+    printToken(t);
   }
 
-  Parser parser(tokens);
-  auto instructions = parser.parse();
-
   for (const auto &i : instructions) {
-    if (i.value)
-      std::println("Instruction: {}, Value: {}", std::to_underlying(i.command),
-                   i.value->toString());
-    else
-      std::println("Instruction: {}", std::to_underlying(i.command));
+    printInstruction(i);
   }
 }
 
 void Repl() {}
+
+void printOperand(const IOperand *op) {
+  std::println("Op: {}, value: {}", std::to_underlying(op->getType()),
+               op->toString());
+}
 
 int main(int argc, char *argv[]) {
   if (argc == 1) {
@@ -42,12 +66,5 @@ int main(int argc, char *argv[]) {
   } else {
     std::println(stderr, "Usage: ./avm [.avm file]");
   }
-  OperandFactory of;
-
-  auto op1 = of.createOperand(eOperandType::Int16, "3");
-  auto op2 = of.createOperand(eOperandType::Int16, "5");
-
-  auto res = *op1 + *op2;
-  std::println("value: {}", res->toString());
   return 0;
 }

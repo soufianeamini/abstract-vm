@@ -20,6 +20,9 @@ std::vector<Instruction> Parser::parse() {
 }
 
 Instruction Parser::parseInstruction() {
+  while (peek().type == TokenType::Sep)
+    consume(TokenType::Sep);
+
   switch (peek().type) {
   case TokenType::Push:
     return parsePush();
