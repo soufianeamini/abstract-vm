@@ -1,6 +1,5 @@
 #include "Vm.hpp"
 #include "../exceptions/customExceptions.hpp"
-#include <ostream>
 #include <print>
 
 Vm::Vm() {}
@@ -24,31 +23,42 @@ void Vm::interpret() {
   while (ip != instructions.cend()) {
     switch (ip->command) {
     case TokenType::Push:
-      stack.push_back(ip->value);
+      this->push();
       break;
     case TokenType::Pop:
-      stack.pop_back();
+      this->pop();
       break;
     case TokenType::Dump:
-      dumpStack();
+      this->dumpStack();
       break;
     case TokenType::Assert:
-      std::string top = stack.back()->toString();
-      std::string assertValue = ip->value->toString();
-      this->assert(top, assertValue);
+      this->assert();
       break;
     }
     ip++;
   }
 }
 
-void Vm::assert(const std::string &actual, const std::string &expected) {
+void Vm::push() { stack.push_back(ip->value); }
+
+void Vm::pop() {
+  if (stack.size() == 0)
+    throw VmException(VmException::Type::EmptyStack);
+  this->stack.pop_back();
+}
+
+void Vm::assert() {
+  if (stack.size() == 0)
+    throw VmException(VmException::Type::EmptyStack);
+
+  std::string actual = stack.back()->toString();
+  std::string expected = ip->value->toString();
   if (actual != expected)
     throw VmException(VmException::Type::Assert);
 }
 
 void Vm::dumpStack() {
-  for (auto operand : stack) {
+  for (const auto &operand : stack) {
     std::println("{}", operand->toString());
   }
 }

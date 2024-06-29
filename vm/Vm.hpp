@@ -15,7 +15,9 @@ private:
 public:
   void interpret();
   void dumpStack();
-  void assert(const std::string &actual, const std::string &expected);
+  void assert();
+  void push();
+  void pop();
 
   Vm();
   Vm(const std::vector<Instruction> &instructions);
