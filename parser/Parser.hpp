@@ -7,7 +7,7 @@ class Parser {
 private:
   std::deque<Token> tokens;
   std::vector<std::string> errors;
-  bool hasErrored = false;
+  bool hasErrored;
 
 private:
   Instruction generateInstruction(TokenType type);

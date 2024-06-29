@@ -144,10 +144,10 @@ bool Parser::getErrorState() { return hasErrored; }
 
 std::vector<std::string> Parser::getErrors() { return errors; }
 
-Parser::Parser() {}
+Parser::Parser() : hasErrored(false) {}
 
 Parser::Parser(const std::vector<Token> &tokens)
-    : tokens(std::deque(tokens.begin(), tokens.end())) {}
+    : tokens(std::deque(tokens.begin(), tokens.end())), hasErrored(false) {}
 
 Parser::Parser(const Parser &o)
     : tokens(std::deque(o.tokens.begin(), o.tokens.end())), errors(o.errors),

@@ -30,15 +30,15 @@ void FileMode(const char *arg) {
   Lexer lexer;
   auto tokens = lexer.lex(source);
   Parser parser(tokens);
+  auto instructions = parser.parse();
 
   if (parser.getErrorState()) {
-    std::println("Has errored!");
     for (auto &error : parser.getErrors()) {
       std::println("{}", error);
     }
     std::exit(1);
   }
-  auto instructions = parser.parse();
+
   Vm vm(instructions);
 
   for (const auto &t : tokens) {
