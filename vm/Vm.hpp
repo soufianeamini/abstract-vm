@@ -6,6 +6,9 @@
 
 class Vm {
 private:
+  // TODO: replace Instruction with a struct containing a string and the type,
+  // so that later on whenever the Vm's stack is empty, the Operand Factory's
+  // memory gets freed
   std::vector<Instruction> instructions;
   std::deque<const IOperand *> stack;
 

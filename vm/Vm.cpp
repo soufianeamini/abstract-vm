@@ -1,7 +1,6 @@
 #include "Vm.hpp"
 #include "../exceptions/customExceptions.hpp"
 #include <print>
-#include <ranges>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -142,7 +141,6 @@ void Vm::assert() const {
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-    // for (const auto &operand : stack) {
     std::println("{}", (*it)->toString());
   }
 }
