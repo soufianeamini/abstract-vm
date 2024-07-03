@@ -20,6 +20,9 @@ public:
   void pop();
   void add();
   void sub();
+  void mul();
+  void div();
+  void print() const;
 
   Vm();
   Vm(const std::vector<Instruction> &instructions);

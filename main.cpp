@@ -1,6 +1,5 @@
 #include "lexer/Lexer.hpp"
 #include "operand/IOperand.hpp"
-#include "operand/OperandFactory.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
@@ -24,7 +23,6 @@ void printToken(const Token &t) {
 
 void FileMode(const char *arg) {
   std::string filename = arg;
-  std::println("Reading from file: {}", filename);
 
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
@@ -41,13 +39,15 @@ void FileMode(const char *arg) {
 
   Vm vm(instructions);
 
-  for (const auto &t : tokens) {
-    printToken(t);
-  }
+  // for (const auto &t : tokens) {
+  //   printToken(t);
+  // }
 
-  for (const auto &i : instructions) {
-    printInstruction(i);
-  }
+  // for (const auto &i : instructions) {
+  //   printInstruction(i);
+  // }
+
+  vm.interpret();
 }
 
 void Repl() {}
@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
     std::println("Reading from standard input");
     Repl();
   } else if (argc == 2) {
+    // std::println("Reading from file: {}", argv[1]);
     FileMode(argv[1]);
   } else {
     std::println(stderr, "Usage: ./avm [.avm file]");

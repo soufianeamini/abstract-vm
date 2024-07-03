@@ -1,6 +1,7 @@
 #include "Vm.hpp"
 #include "../exceptions/customExceptions.hpp"
 #include <print>
+#include <ranges>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -40,18 +41,83 @@ void Vm::interpret() {
     case TokenType::Sub:
       this->sub();
       break;
+    case TokenType::Mul:
+      this->mul();
+      break;
+    case TokenType::Div:
+      this->div();
+      break;
+    case TokenType::Print:
+      this->print();
+      break;
+    case TokenType::Exit:
+      return;
+    default:
+      // FIX: Remove this line at the end
+      throw "Unreachable!";
     }
     ip++;
   }
+
+  throw VmException(VmException::Type::NoExitInstruction);
+}
+
+void Vm::print() const {
+  if (stack.size() < 1)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand *a = this->stack.back();
+
+  std::println("{}", a->toString());
+}
+
+void Vm::div() {
+  if (stack.size() < 2)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand *a = this->stack.back();
+  this->stack.pop_back();
+  const IOperand *b = this->stack.back();
+  this->stack.pop_back();
+
+  if (b->toString() == "0")
+    throw VmException(VmException::Type::DivisionByZero);
+
+  const IOperand *result = *b / *a;
+  this->stack.push_back(result);
+}
+
+void Vm::mul() {
+  if (stack.size() < 2)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand *a = this->stack.back();
+  this->stack.pop_back();
+  const IOperand *b = this->stack.back();
+  this->stack.pop_back();
+
+  const IOperand *result = *b * *a;
+  this->stack.push_back(result);
+}
+
+void Vm::sub() {
+  if (stack.size() < 2)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand *a = this->stack.back();
+  this->stack.pop_back();
+  const IOperand *b = this->stack.back();
+  this->stack.pop_back();
+
+  const IOperand *result = *b - *a;
+  this->stack.push_back(result);
 }
 
 void Vm::add() {
   if (stack.size() < 2)
     throw VmException(VmException::Type::TooFewStackValues);
-  const IOperand* a = this->stack.back();
-  const IOperand* b = this->stack.back();
+  const IOperand *a = this->stack.back();
+  this->stack.pop_back();
+  const IOperand *b = this->stack.back();
+  this->stack.pop_back();
 
-  const IOperand* result = *b + *a;
+  const IOperand *result = *b + *a;
   this->stack.push_back(result);
 }
 
@@ -74,8 +140,9 @@ void Vm::assert() const {
 }
 
 void Vm::dumpStack() const {
-  for (const auto &operand : stack) {
-    std::println("{}", operand->toString());
+  for (auto it = stack.rbegin(); it != stack.rend(); it++) {
+    // for (const auto &operand : stack) {
+    std::println("{}", (*it)->toString());
   }
 }
 
