@@ -20,6 +20,7 @@ Vm &Vm::operator=(const Vm &o) {
 }
 
 void Vm::interpret() {
+  // TODO: Catch overflows
   ip = instructions.cbegin();
   while (ip != instructions.cend()) {
     switch (ip->command) {
