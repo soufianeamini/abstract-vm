@@ -34,9 +34,25 @@ void Vm::interpret() {
     case TokenType::Assert:
       this->assert();
       break;
+    case TokenType::Add:
+      this->add();
+      break;
+    case TokenType::Sub:
+      this->sub();
+      break;
     }
     ip++;
   }
+}
+
+void Vm::add() {
+  if (stack.size() < 2)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand* a = this->stack.back();
+  const IOperand* b = this->stack.back();
+
+  const IOperand* result = *b + *a;
+  this->stack.push_back(result);
 }
 
 void Vm::push() { stack.push_back(ip->value); }
@@ -47,7 +63,7 @@ void Vm::pop() {
   this->stack.pop_back();
 }
 
-void Vm::assert() {
+void Vm::assert() const {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
 
@@ -57,7 +73,7 @@ void Vm::assert() {
     throw VmException(VmException::Type::Assert);
 }
 
-void Vm::dumpStack() {
+void Vm::dumpStack() const {
   for (const auto &operand : stack) {
     std::println("{}", operand->toString());
   }

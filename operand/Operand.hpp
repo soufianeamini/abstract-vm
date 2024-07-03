@@ -13,6 +13,8 @@ private:
 public:
   Operand() {}
   Operand(const std::string &value) : toStr(value) {
+    // NOTE: Replace all occurrences of stringstream with std::stoi/stod/stof
+    // TODO: Perhaps make a specialization for the constructor for each type of operand
     std::stringstream ss(value);
     ss >> this->value;
   }

@@ -14,10 +14,12 @@ private:
 
 public:
   void interpret();
-  void dumpStack();
-  void assert();
+  void dumpStack() const;
+  void assert() const;
   void push();
   void pop();
+  void add();
+  void sub();
 
   Vm();
   Vm(const std::vector<Instruction> &instructions);
