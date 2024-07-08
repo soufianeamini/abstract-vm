@@ -13,10 +13,7 @@ private:
 public:
   Operand() {}
   Operand(const std::string &value) : toStr(value) {
-    // NOTE: Replace all occurrences of stringstream with std::stoi/stod/stof
-    // TODO: Perhaps make a specialization for the constructor for each type of operand
-    std::stringstream ss(value);
-    ss >> this->value;
+    this->value = std::stoi(value);
   }
   Operand(const Operand &o) : value(o.value), toStr(o.toStr) {}
   Operand &operator=(const Operand &o) {
@@ -103,7 +100,8 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
     double value;
     ss >> value;
 
-    return of.createOperand(eOperandType::Double, std::to_string(fmod(this->value, value)));
+    return of.createOperand(eOperandType::Double,
+                            std::to_string(fmod(this->value, value)));
   } else {
     return rhs % *this;
   }
@@ -118,8 +116,31 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
     float value;
     ss >> value;
 
-    return of.createOperand(eOperandType::Float, std::to_string(fmod(this->value, value)));
+    return of.createOperand(eOperandType::Float,
+                            std::to_string(fmod(this->value, value)));
   } else {
     return rhs % *this;
   }
 }
+
+template <>
+inline Operand<eOperandType::Float, float>::Operand(const std::string &value)
+    : toStr(value) {
+  this->value = std::stof(value);
+}
+
+template <>
+inline Operand<eOperandType::Double, double>::Operand(const std::string &value)
+    : toStr(value) {
+  this->value = std::stod(value);
+}
+
+// overflow checks 
+//
+// #include <limits>
+
+// unsigned int a, b;  // from somewhere
+
+// unsigned int diff = std::numeric_limits<unsigned int>::max() - a;
+
+// if (diff < b) { /* error, cannot add a + b */ }
