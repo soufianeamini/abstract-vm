@@ -53,7 +53,7 @@ void Vm::interpret() {
     case TokenType::Exit:
       return;
     default:
-      // FIX: Remove this line at the end
+      // FIX: Remove this line before pushing
       throw "Unreachable!";
     }
     ip++;
