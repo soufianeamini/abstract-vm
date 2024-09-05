@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string>
 #include <utility>
+#include "../avm-arithmetic/checked_arithmetic.hpp"
+
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
   T value;
