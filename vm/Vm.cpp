@@ -1,5 +1,5 @@
 #include "Vm.hpp"
-#include "../exceptions/customExceptions.hpp"
+#include "../exceptions/VmException.hpp"
 #include <cstdio>
 
 Vm::Vm() {}
