@@ -18,7 +18,7 @@ void printInstruction(const Instruction &i) {
 
 void printToken(const Token &t) {
   if (t.type != TokenType::Sep)
-		std::cout << "Token: " << t.literal << "line: " << t.line << std::endl;
+    std::cout << "Token: " << t.literal << "line: " << t.line << std::endl;
 }
 
 void FileMode(const char *arg) {
@@ -32,7 +32,7 @@ void FileMode(const char *arg) {
 
   if (parser.getErrorState()) {
     for (auto &error : parser.getErrors()) {
-			std::cout << error << std::endl;
+      std::cout << error << std::endl;
     }
     std::exit(1);
   }
@@ -53,18 +53,19 @@ void FileMode(const char *arg) {
 void Repl() {}
 
 void printOperand(const IOperand *op) {
-	std::cout << "Op: " << op->getType() << ", value: " << op->toString() << std::endl;
+  std::cout << "Op: " << op->getType() << ", value: " << op->toString()
+            << std::endl;
 }
 
 int main(int argc, char *argv[]) {
   if (argc == 1) {
-		std::cout << "Reading from standard input\n";
+    std::cout << "Reading from standard input\n";
     Repl();
   } else if (argc == 2) {
     // std::println("Reading from file: {}", argv[1]);
     FileMode(argv[1]);
   } else {
-		std::cerr << "Usage: ./avm [.avm file]";
+    std::cerr << "Usage: ./avm [.avm file]";
   }
   return 0;
 }

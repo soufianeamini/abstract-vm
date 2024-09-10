@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string_view>
+#include <string>
 enum TokenType {
   Word,
   Push,
@@ -23,6 +23,6 @@ enum TokenType {
 
 struct Token {
   TokenType type;
-  std::string_view literal;
+  std::string literal;
   int line;
 };
