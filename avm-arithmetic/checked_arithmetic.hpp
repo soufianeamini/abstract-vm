@@ -1,3 +1,4 @@
+#pragma once
 #include "../avm-lib/safe-math.h"
 #include <cstdint>
 #include <limits>
@@ -7,28 +8,45 @@ static_assert(std::numeric_limits<float>::has_infinity,
 static_assert(std::numeric_limits<double>::has_infinity,
               "infinity is not supported on this platform!");
 
-enum class CheckedArithmeticResult { CA_SUCCESS, CA_OVERFLOW, CA_UNDERFLOW, CA_INVALID };
+enum class CheckedArithmeticResult {
+  CA_SUCCESS,
+  CA_OVERFLOW,
+  CA_UNDERFLOW,
+  CA_INVALID
+};
 
 namespace checked_arithmetic {
 template <class T> CheckedArithmeticResult checked_add(T *res, T a, T b) {
+  (void)res;
+  (void)a;
+  (void)b;
   static_assert(sizeof(T) == -1,
                 "checked_arithmetic was not implemented for a type.");
   return CheckedArithmeticResult::CA_INVALID;
 }
 
 template <class T> CheckedArithmeticResult checked_sub(T *res, T a, T b) {
+  (void)res;
+  (void)a;
+  (void)b;
   static_assert(sizeof(T) == -1,
                 "checked_arithmetic was not implemented for a type.");
   return CheckedArithmeticResult::CA_INVALID;
 }
 
 template <class T> CheckedArithmeticResult checked_mul(T *res, T a, T b) {
+  (void)res;
+  (void)a;
+  (void)b;
   static_assert(sizeof(T) == -1,
                 "checked_arithmetic was not implemented for a type.");
   return CheckedArithmeticResult::CA_INVALID;
 }
 
 template <class T> CheckedArithmeticResult checked_div(T *res, T a, T b) {
+  (void)res;
+  (void)a;
+  (void)b;
   static_assert(sizeof(T) == -1,
                 "checked_arithmetic was not implemented for a type.");
   return CheckedArithmeticResult::CA_INVALID;
