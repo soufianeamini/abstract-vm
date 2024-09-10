@@ -134,13 +134,3 @@ inline Operand<eOperandType::Double, double>::Operand(const std::string &value)
     : toStr(value) {
   this->value = std::stod(value);
 }
-
-// overflow checks
-//
-// #include <limits>
-
-// unsigned int a, b;  // from somewhere
-
-// unsigned int diff = std::numeric_limits<unsigned int>::max() - a;
-
-// if (diff < b) { /* error, cannot add a + b */ }

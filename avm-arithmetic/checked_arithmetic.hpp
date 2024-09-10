@@ -15,6 +15,10 @@ enum class CheckedArithmeticResult {
   CA_INVALID
 };
 
+/**
+ * The checked_arithmetic namespace regroups generic functions for applying
+ * checked arithmetic to the types used in avm, using template specialization
+ */
 namespace checked_arithmetic {
 template <class T> CheckedArithmeticResult checked_add(T *res, T a, T b) {
   (void)res;
