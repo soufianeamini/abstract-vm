@@ -5,7 +5,7 @@
 
 class ParserException : public std::exception {
 public:
-  enum class Type {
+  enum Type {
     SyntaxError,
     UnknownInstruction,
   };
@@ -25,7 +25,7 @@ private:
 
 class VmException : public std::exception {
 public:
-  enum class Type {
+  enum Type {
     Overflow,
     Underflow,
     EmptyStack,

@@ -1,9 +1,7 @@
 #include "Lexer.hpp"
 #include "Token.hpp"
 #include <map>
-#include <print>
 #include <string>
-#include <string_view>
 
 Lexer::Lexer() {
   keywords["add"] = TokenType::Add;
@@ -33,7 +31,7 @@ std::vector<Token> Lexer::lex(std::string_view source) {
         tokens.push_back(generateWord(it, current, line));
         word = false;
       }
-      std::string_view slice(it, it + 1);
+      std::string slice(it, it + 1);
       tokens.push_back(
           Token{.type = TokenType::LeftParen, .literal = slice, .line = line});
       break;
@@ -43,7 +41,7 @@ std::vector<Token> Lexer::lex(std::string_view source) {
         tokens.push_back(generateWord(it, current, line));
         word = false;
       }
-      std::string_view slice(it, it + 1);
+      std::string slice(it, it + 1);
       tokens.push_back(
           Token{.type = TokenType::RightParen, .literal = slice, .line = line});
       break;
@@ -54,7 +52,7 @@ std::vector<Token> Lexer::lex(std::string_view source) {
         word = false;
       }
       if (it + 1 != source.cend() && *(it + 1) == ';') {
-        std::string_view slice(it, it + 2);
+        std::string slice(it, it + 2);
         tokens.push_back(Token{
             .type = TokenType::EndOfProgram, .literal = slice, .line = line});
       } else {
@@ -89,10 +87,10 @@ std::vector<Token> Lexer::lex(std::string_view source) {
 }
 
 Token Lexer::generateWord(StrViewIter it, StrViewIter current, int line) {
-  std::string_view slice(current, it);
+  std::string slice(current, it);
   TokenType type = TokenType::Word;
 
-  if (keywords.contains(std::string(slice))) {
+  if (keywords.find(std::string(slice)) != keywords.end()) {
     type = keywords.at(std::string(slice));
   }
 

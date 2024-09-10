@@ -1,18 +1,18 @@
 #include "customExceptions.hpp"
 #include <array>
-#include <format>
-#include <utility>
+#include <string>
 
 const char *ParserException::what() const noexcept {
   std::array<const char *, 2> messages{"Error: Syntax Error",
                                        "Error: Unkown Instruction"};
 
-  return messages.at(std::to_underlying(type));
+  return messages.at((type));
 }
 
 std::string ParserException::getLineInfo() const {
-  std::string info = std::format("at line: {}, token: '{}'", errorToken.line,
-                                 errorToken.literal);
+  std::string info = std::string("at line: ") +
+                     std::to_string(errorToken.line) + ", token: '" +
+                     std::string(errorToken.literal);
 
   return info;
 }
@@ -28,7 +28,7 @@ const char *VmException::what() const noexcept {
       "Error: Stack has less than two values on arithmetic instruction",
   };
 
-  return messages.at(std::to_underlying(type));
+  return messages.at((type));
 }
 
 ParserException::ParserException() {}

@@ -7,7 +7,7 @@ HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/customExceptions.hpp vm/Vm.h
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++23
+CFLAGS	=	-Wall -Wextra -Werror -std=c++17
 
 NAME	=	avm
 

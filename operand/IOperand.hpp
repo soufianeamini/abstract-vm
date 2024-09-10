@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-enum class eOperandType {
+enum eOperandType {
   Int8,
   Int16,
   Int32,

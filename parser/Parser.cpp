@@ -2,8 +2,7 @@
 #include "../exceptions/customExceptions.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
-#include <format>
-#include <print>
+#include <string>
 
 std::vector<Instruction> Parser::parse() {
   std::vector<Instruction> instructions;
@@ -12,7 +11,8 @@ std::vector<Instruction> Parser::parse() {
     try {
       instructions.push_back(parseInstruction());
     } catch (ParserException &e) {
-      errors.push_back(std::format("{} {}", e.what(), e.getLineInfo()));
+      std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
+      errors.push_back(errMsg);
     }
   }
 

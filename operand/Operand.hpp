@@ -1,11 +1,9 @@
+#include "../avm-arithmetic/checked_arithmetic.hpp"
 #include "IOperand.hpp"
 #include "OperandFactory.hpp"
 #include <cmath>
-#include <print>
 #include <sstream>
 #include <string>
-#include <utility>
-#include "../avm-arithmetic/checked_arithmetic.hpp"
 
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -27,7 +25,7 @@ public:
 
     return *this;
   }
-  int getPrecision(void) const { return std::to_underlying(E); }
+  int getPrecision(void) const { return (E); }
   eOperandType getType(void) const { return E; }
   IOperand const *operator+(IOperand const &rhs) const {
     OperandFactory of;
@@ -137,7 +135,7 @@ inline Operand<eOperandType::Double, double>::Operand(const std::string &value)
   this->value = std::stod(value);
 }
 
-// overflow checks 
+// overflow checks
 //
 // #include <limits>
 

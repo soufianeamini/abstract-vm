@@ -18,7 +18,7 @@ private:
 public:
   void interpret();
   void dumpStack() const;
-  void assert() const;
+  void vm_assert() const;
   void push();
   void pop();
   void add();

@@ -1,6 +1,6 @@
 #include "Vm.hpp"
 #include "../exceptions/customExceptions.hpp"
-#include <print>
+#include <cstdio>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -33,7 +33,7 @@ void Vm::interpret() {
       this->dumpStack();
       break;
     case TokenType::Assert:
-      this->assert();
+      this->vm_assert();
       break;
     case TokenType::Add:
       this->add();
@@ -67,7 +67,7 @@ void Vm::print() const {
     throw VmException(VmException::Type::TooFewStackValues);
   const IOperand *a = this->stack.back();
 
-  std::println("{}", a->toString());
+  puts(a->toString().c_str());
 }
 
 void Vm::div() {
@@ -129,7 +129,7 @@ void Vm::pop() {
   this->stack.pop_back();
 }
 
-void Vm::assert() const {
+void Vm::vm_assert() const {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
 
@@ -141,7 +141,7 @@ void Vm::assert() const {
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-    std::println("{}", (*it)->toString());
+    puts((*it)->toString().c_str());
   }
 }
 
