@@ -58,10 +58,12 @@ inline CheckedArithmeticResult
 checked_arithmetic::checked_add<int8_t>(int8_t *res, int8_t a, int8_t b) {
 
   if (psnip_safe_int8_add(res, a, b)) {
-    if ((a < 0) == (b < 0))
+    if (a > 0 && b > 0)
       return CheckedArithmeticResult::CA_OVERFLOW;
-    else
+    else if (a < 0 && b < 0)
       return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
   }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
@@ -69,16 +71,26 @@ checked_arithmetic::checked_add<int8_t>(int8_t *res, int8_t a, int8_t b) {
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_sub<int8_t>(int8_t *res, int8_t a, int8_t b) {
-  if (psnip_safe_int8_sub(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int8_sub(res, a, b)) {
+    if (a > 0 && b < 0)
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else if (a < 0 && b > 0)
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_mul<int8_t>(int8_t *res, int8_t a, int8_t b) {
-  if (psnip_safe_int8_mul(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int8_mul(res, a, b)) {
+    if ((a < 0) == (b < 0))
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
@@ -93,24 +105,40 @@ checked_arithmetic::checked_div<int8_t>(int8_t *res, int8_t a, int8_t b) {
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_add<int16_t>(int16_t *res, int16_t a, int16_t b) {
-  if (psnip_safe_int16_add(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int16_add(res, a, b)) {
+    if (a > 0 && b > 0)
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else if (a < 0 && b < 0)
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_sub<int16_t>(int16_t *res, int16_t a, int16_t b) {
-  if (psnip_safe_int16_sub(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int16_sub(res, a, b)) {
+    if (a > 0 && b < 0)
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else if (a < 0 && b > 0)
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_mul<int16_t>(int16_t *res, int16_t a, int16_t b) {
-  if (psnip_safe_int16_mul(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int16_mul(res, a, b)) {
+    if ((a < 0) == (b < 0))
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
@@ -125,24 +153,40 @@ checked_arithmetic::checked_div<int16_t>(int16_t *res, int16_t a, int16_t b) {
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_add<int32_t>(int32_t *res, int32_t a, int32_t b) {
-  if (psnip_safe_int32_add(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int32_add(res, a, b)) {
+    if (a > 0 && b > 0)
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else if (a < 0 && b < 0)
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_sub<int32_t>(int32_t *res, int32_t a, int32_t b) {
-  if (psnip_safe_int32_sub(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int32_sub(res, a, b)) {
+    if (a > 0 && b < 0)
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else if (a < 0 && b > 0)
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+    else
+      return CheckedArithmeticResult::CA_INVALID;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
 template <>
 inline CheckedArithmeticResult
 checked_arithmetic::checked_mul<int32_t>(int32_t *res, int32_t a, int32_t b) {
-  if (psnip_safe_int32_mul(res, a, b))
-    return CheckedArithmeticResult::CA_OVERFLOW;
+  if (psnip_safe_int32_mul(res, a, b)) {
+    if ((a < 0) == (b < 0))
+      return CheckedArithmeticResult::CA_OVERFLOW;
+    else
+      return CheckedArithmeticResult::CA_UNDERFLOW;
+  }
   return CheckedArithmeticResult::CA_SUCCESS;
 }
 
