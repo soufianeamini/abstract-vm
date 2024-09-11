@@ -60,6 +60,8 @@ std::vector<Token> Lexer::lex(const std::string &source) {
           it++;
         }
         line++;
+        tokens.push_back(
+            Token{.type = TokenType::Sep, .literal = "\n", .line = line});
       }
       break;
     }

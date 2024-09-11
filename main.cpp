@@ -32,6 +32,7 @@ void FileMode(const char *arg) {
   for (const auto &t : tokens) {
     printToken(t);
   }
+	return;
   Parser parser(tokens);
   auto instructions = parser.parse();
 
