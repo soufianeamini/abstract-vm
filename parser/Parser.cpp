@@ -10,6 +10,8 @@ std::vector<Instruction> Parser::parse() {
   while (tokens.size() > 0) {
     try {
       instructions.push_back(parseInstruction());
+      while (peek().type == TokenType::Sep)
+        consume(TokenType::Sep);
     } catch (ParserException &e) {
       std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
       errors.push_back(errMsg);

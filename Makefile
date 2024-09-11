@@ -7,11 +7,11 @@ HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/ParserException.hpp vm/Vm.hp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++17
+CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g
 
 NAME	=	avm
 
-CC	=	c++
+CC	=	clang++
 
 all: $(NAME)
 
