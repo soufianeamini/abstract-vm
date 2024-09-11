@@ -1,5 +1,6 @@
 #include "ParserException.hpp"
 #include <array>
+#include <sstream>
 
 const char *ParserException::what() const noexcept {
   std::array<const char *, 2> messages{"Error: Syntax Error",
@@ -9,11 +10,11 @@ const char *ParserException::what() const noexcept {
 }
 
 std::string ParserException::getLineInfo() const {
-  std::string info = std::string("at line: ") +
-                     std::to_string(errorToken.line) + ", token: '" +
-                     std::string(errorToken.literal);
+  std::stringstream info;
+  info << "at line: " << errorToken.line << ", token: '" << errorToken.literal
+       << "'.";
 
-  return info;
+  return info.str();
 }
 
 ParserException::ParserException() {}
