@@ -24,7 +24,7 @@ std::vector<Token> Lexer::lex(const std::string &source) {
   StrIter current = source.cend();
   bool word = false;
 
-  for (StrIter it = source.cbegin(); it < source.cend(); it++) {
+  for (StrIter it = source.cbegin(); it != source.cend(); it++) {
     switch (*it) {
     case '(': {
       if (word) {
