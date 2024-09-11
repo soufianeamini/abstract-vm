@@ -2,6 +2,7 @@
 #include "../exceptions/ParserException.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
+#include <optional>
 #include <string>
 
 std::vector<Instruction> Parser::parse() {
@@ -10,7 +11,7 @@ std::vector<Instruction> Parser::parse() {
   while (tokens.size() > 0) {
     try {
       instructions.push_back(parseInstruction());
-      while (peek().type == TokenType::Sep)
+      while (peek().has_value() && peek()->type == TokenType::Sep)
         consume(TokenType::Sep);
     } catch (ParserException &e) {
       std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
@@ -22,10 +23,13 @@ std::vector<Instruction> Parser::parse() {
 }
 
 Instruction Parser::parseInstruction() {
-  while (peek().type == TokenType::Sep)
+  while (peek().has_value() && peek()->type == TokenType::Sep)
     consume(TokenType::Sep);
 
-  switch (peek().type) {
+  if (!peek().has_value())
+    return generateInstruction(consume(TokenType::Dummy).type);
+
+  switch (peek()->type) {
   case TokenType::Push:
     return parsePush();
   case TokenType::Assert:
@@ -108,7 +112,11 @@ const IOperand *Parser::parseValue() {
   return operand;
 }
 
-Token Parser::peek() { return tokens.front(); }
+std::optional<Token> Parser::peek() {
+  if (tokens.size() != 0)
+    return std::make_optional(tokens.front());
+  return std::nullopt;
+}
 
 Token Parser::consume(TokenType type) {
   Token token = tokens.front();
@@ -123,9 +131,9 @@ Token Parser::consume(TokenType type) {
 }
 
 void Parser::recoverParser() {
-  while (peek().type != TokenType::Sep)
+  while (peek().has_value() && peek()->type != TokenType::Sep)
     tokens.pop_front();
-  while (peek().type == TokenType::Sep)
+  while (peek().has_value() && peek()->type == TokenType::Sep)
     tokens.pop_front();
 }
 

@@ -2,6 +2,7 @@
 
 #include "Instruction.hpp"
 #include <deque>
+#include <optional>
 #include <vector>
 class Parser {
 private:
@@ -13,7 +14,7 @@ private:
   Instruction generateInstruction(TokenType type);
   Instruction generateInstruction(TokenType type, const IOperand *operand);
 
-  Token peek();
+	std::optional<Token> peek();
   Token consume(TokenType type);
   void recoverParser();
   Instruction parseInstruction();
