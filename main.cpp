@@ -18,7 +18,9 @@ void printInstruction(const Instruction &i) {
 
 void printToken(const Token &t) {
   if (t.type != TokenType::Sep)
-    std::cout << "Token: " << t.literal << "line: " << t.line << std::endl;
+    std::cout << "Token: " << t.literal << ", line: " << t.line << std::endl;
+  else
+    std::cout << "TOKEN::SEP" << std::endl;
 }
 
 void FileMode(const char *arg) {
@@ -27,6 +29,9 @@ void FileMode(const char *arg) {
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
   auto tokens = lexer.lex(source);
+  for (const auto &t : tokens) {
+    printToken(t);
+  }
   Parser parser(tokens);
   auto instructions = parser.parse();
 
@@ -38,10 +43,6 @@ void FileMode(const char *arg) {
   }
 
   Vm vm(instructions);
-
-  // for (const auto &t : tokens) {
-  //   printToken(t);
-  // }
 
   // for (const auto &i : instructions) {
   //   printInstruction(i);

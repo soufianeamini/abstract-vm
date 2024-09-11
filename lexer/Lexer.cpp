@@ -18,13 +18,13 @@ Lexer::Lexer() {
   keywords["exit"] = TokenType::Exit;
 }
 
-std::vector<Token> Lexer::lex(std::string_view source) {
+std::vector<Token> Lexer::lex(const std::string &source) {
   std::vector<Token> tokens;
   int line = 1;
-  StrViewIter current = nullptr;
+  StrIter current = source.cend();
   bool word = false;
 
-  for (StrViewIter it = source.cbegin(); it < source.cend(); it++) {
+  for (StrIter it = source.cbegin(); it < source.cend(); it++) {
     switch (*it) {
     case '(': {
       if (word) {
@@ -86,7 +86,7 @@ std::vector<Token> Lexer::lex(std::string_view source) {
   return tokens;
 }
 
-Token Lexer::generateWord(StrViewIter it, StrViewIter current, int line) {
+Token Lexer::generateWord(StrIter it, StrIter current, int line) {
   std::string slice(current, it);
   TokenType type = TokenType::Word;
 
