@@ -4,7 +4,7 @@ SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp vm/InputHandler.cpp \
 
 HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/ParserException.hpp vm/Vm.hpp vm/InputHandler.hpp \
 					operand/IOperand.hpp operand/Operand.hpp operand/OperandFactory.hpp exceptions/VmException.hpp \
-					avm-lib/utils.hpp
+					avm-lib/utils.hpp avm-arithmetic/checked_arithmetic.hpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
