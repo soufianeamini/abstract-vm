@@ -1,6 +1,7 @@
 #include "Parser.hpp"
 #include "../avm-lib/utils.hpp"
 #include "../exceptions/ParserException.hpp"
+#include "../exceptions/VmException.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
 #include <optional>
@@ -100,19 +101,31 @@ const IOperand *Parser::parseValue() {
 
   const IOperand *operand = nullptr;
   OperandFactory of;
-  if (precision.literal == "int8")
-    operand = of.createOperand(eOperandType::Int8, std::string(value.literal));
-  else if (precision.literal == "int16")
-    operand = of.createOperand(eOperandType::Int16, std::string(value.literal));
-  else if (precision.literal == "int32")
-    operand = of.createOperand(eOperandType::Int32, std::string(value.literal));
-  else if (precision.literal == "float")
-    operand = of.createOperand(eOperandType::Float, std::string(value.literal));
-  else if (precision.literal == "double")
-    operand =
-        of.createOperand(eOperandType::Double, std::string(value.literal));
-  else
-    consume(TokenType::Dummy);
+  try {
+    if (precision.literal == "int8")
+      operand =
+          of.createOperand(eOperandType::Int8, std::string(value.literal));
+    else if (precision.literal == "int16")
+      operand =
+          of.createOperand(eOperandType::Int16, std::string(value.literal));
+    else if (precision.literal == "int32")
+      operand =
+          of.createOperand(eOperandType::Int32, std::string(value.literal));
+    else if (precision.literal == "float")
+      operand =
+          of.createOperand(eOperandType::Float, std::string(value.literal));
+    else if (precision.literal == "double")
+      operand =
+          of.createOperand(eOperandType::Double, std::string(value.literal));
+    else
+      consume(TokenType::Dummy);
+
+  } catch (std::out_of_range &e) {
+    if (value.literal[0] == '-')
+      throw VmException(VmException::Type::Underflow);
+    else
+      throw VmException(VmException::Type::Overflow);
+  }
 
   return operand;
 }
