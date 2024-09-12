@@ -1,8 +1,10 @@
 #include "Parser.hpp"
+#include "../avm-lib/utils.hpp"
 #include "../exceptions/ParserException.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
 #include <optional>
+#include <stdexcept>
 #include <string>
 
 std::vector<Instruction> Parser::parse() {
@@ -92,6 +94,9 @@ const IOperand *Parser::parseValue() {
   consume(TokenType::LeftParen);
   Token value = consume(TokenType::Word);
   consume(TokenType::RightParen);
+
+  if (!utils::is_valid_number(value.literal))
+    throw std::invalid_argument("invalid_number: " + value.literal);
 
   const IOperand *operand = nullptr;
   OperandFactory of;

@@ -1,9 +1,10 @@
 SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp vm/InputHandler.cpp \
 				operand/OperandFactory.cpp exceptions/ParserException.cpp\
-				vm/Vm.cpp exceptions/VmException.cpp
+				vm/Vm.cpp exceptions/VmException.cpp avm-lib/utils.cpp
 
 HEADER	= lexer/Lexer.hpp lexer/Token.hpp exceptions/ParserException.hpp vm/Vm.hpp vm/InputHandler.hpp \
-					operand/IOperand.hpp operand/Operand.hpp operand/OperandFactory.hpp exceptions/VmException.hpp
+					operand/IOperand.hpp operand/Operand.hpp operand/OperandFactory.hpp exceptions/VmException.hpp \
+					avm-lib/utils.hpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
