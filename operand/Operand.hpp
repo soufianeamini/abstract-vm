@@ -2,7 +2,9 @@
 #include "IOperand.hpp"
 #include "OperandFactory.hpp"
 #include <cmath>
+#include <cstdint>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 template <eOperandType E, class T> class Operand : public IOperand {
@@ -48,7 +50,7 @@ public:
 
       return of.createOperand(E, std::to_string(this->value - value));
     } else {
-      return rhs - *this;
+      return rhs - *this; // ok wtf?
     }
   }
   IOperand const *operator*(IOperand const &rhs) const {
@@ -121,6 +123,21 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
   } else {
     return rhs % *this;
   }
+}
+
+template <>
+inline Operand<eOperandType::Int8, int8_t>::Operand(const std::string &value) {
+  int32_t int_value = std::stoi(value);
+  if (int_value < -128 || int_value > 127)
+    throw std::out_of_range("stoi");
+}
+
+template <>
+inline Operand<eOperandType::Int16, int16_t>::Operand(
+    const std::string &value) {
+  int32_t int_value = std::stoi(value);
+  if (int_value < -32768 || int_value > 32767)
+    throw std::out_of_range("stoi");
 }
 
 template <>
