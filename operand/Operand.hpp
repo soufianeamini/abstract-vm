@@ -1,4 +1,5 @@
 #include "../avm-arithmetic/checked_arithmetic.hpp"
+#include "../exceptions/VmException.hpp"
 #include "IOperand.hpp"
 #include "OperandFactory.hpp"
 #include <cmath>
@@ -36,7 +37,21 @@ public:
       T value;
       ss >> value;
 
-      return of.createOperand(E, std::to_string(this->value + value));
+      T new_value;
+      CheckedArithmeticResult state =
+          checked_arithmetic::checked_add(&new_value, this->value, value);
+      switch (state) {
+      case CheckedArithmeticResult::CA_OVERFLOW:
+        throw VmException(VmException::Type::Overflow);
+      case CheckedArithmeticResult::CA_UNDERFLOW:
+        throw VmException(VmException::Type::Underflow);
+      case CheckedArithmeticResult::CA_INVALID:
+        throw std::invalid_argument("invalid impl");
+      case CheckedArithmeticResult::CA_SUCCESS:
+        break;
+      }
+
+      return of.createOperand(E, std::to_string(new_value));
     } else {
       return rhs + *this;
     }
@@ -48,9 +63,26 @@ public:
       T value;
       ss >> value;
 
-      return of.createOperand(E, std::to_string(this->value - value));
+      T new_value;
+      CheckedArithmeticResult state =
+          checked_arithmetic::checked_sub(&new_value, this->value, value);
+      switch (state) {
+      case CheckedArithmeticResult::CA_OVERFLOW:
+        throw VmException(VmException::Type::Overflow);
+      case CheckedArithmeticResult::CA_UNDERFLOW:
+        throw VmException(VmException::Type::Underflow);
+      case CheckedArithmeticResult::CA_INVALID:
+        throw std::invalid_argument("invalid impl");
+      case CheckedArithmeticResult::CA_SUCCESS:
+        break;
+      }
+
+      return of.createOperand(E, std::to_string(new_value));
     } else {
-      return rhs - *this; // ok wtf?
+      // The rhs precision is higher, which means we transform the *this value
+      // to have the same precision as rhs, then we recall the + operator
+      auto new_operand = of.createOperand(rhs.getType(), this->toString());
+      return *this - rhs;
     }
   }
   IOperand const *operator*(IOperand const &rhs) const {
