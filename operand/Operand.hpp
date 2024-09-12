@@ -82,7 +82,8 @@ public:
       // The rhs precision is higher, which means we transform the *this value
       // to have the same precision as rhs, then we recall the + operator
       auto new_operand = of.createOperand(rhs.getType(), this->toString());
-      return *this - rhs;
+
+      return *new_operand - rhs;
     }
   }
   IOperand const *operator*(IOperand const &rhs) const {
