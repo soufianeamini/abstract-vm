@@ -7,6 +7,8 @@ public:
   enum Type {
     SyntaxError,
     UnknownInstruction,
+		Overflow,
+		Underflow,
   };
 
   ParserException();

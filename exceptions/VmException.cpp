@@ -2,7 +2,7 @@
 #include <array>
 
 const char *VmException::what() const noexcept {
-  std::array<const char *, 7> messages{
+  static std::array<const char *, 7> messages{
       "Error: Overflow on a value",
       "Error: Underflow on a value",
       "Error: Instruction pop on empty stack",

@@ -3,8 +3,9 @@
 #include <sstream>
 
 const char *ParserException::what() const noexcept {
-  std::array<const char *, 2> messages{"Error: Syntax Error",
-                                       "Error: Unkown Instruction"};
+  static std::array<const char *, 4> messages{
+      "Error: Syntax Error", "Error: Unkown Instruction", "Error: Overflow",
+      "Error: Underflow"};
 
   return messages.at((type));
 }

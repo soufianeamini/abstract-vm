@@ -1,7 +1,6 @@
 #include "Parser.hpp"
 #include "../avm-lib/utils.hpp"
 #include "../exceptions/ParserException.hpp"
-#include "../exceptions/VmException.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
 #include <optional>
@@ -17,6 +16,7 @@ std::vector<Instruction> Parser::parse() {
       while (peek().has_value() && peek()->type == TokenType::Sep)
         consume(TokenType::Sep);
     } catch (ParserException &e) {
+			hasErrored = true;
       std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
       errors.push_back(errMsg);
     }
@@ -122,9 +122,9 @@ const IOperand *Parser::parseValue() {
 
   } catch (std::out_of_range &e) {
     if (value.literal[0] == '-')
-      throw VmException(VmException::Type::Underflow);
+      throw ParserException(ParserException::Type::Underflow, value);
     else
-      throw VmException(VmException::Type::Overflow);
+      throw ParserException(ParserException::Type::Overflow, value);
   }
 
   return operand;
