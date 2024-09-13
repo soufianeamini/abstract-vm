@@ -93,7 +93,21 @@ public:
       T value;
       ss >> value;
 
-      return of.createOperand(E, std::to_string(this->value * value));
+      T new_value;
+      CheckedArithmeticResult state =
+          checked_arithmetic::checked_mul(&new_value, this->value, value);
+      switch (state) {
+      case CheckedArithmeticResult::CA_OVERFLOW:
+        throw VmException(VmException::Type::Overflow);
+      case CheckedArithmeticResult::CA_UNDERFLOW:
+        throw VmException(VmException::Type::Underflow);
+      case CheckedArithmeticResult::CA_INVALID:
+        throw std::invalid_argument("invalid impl");
+      case CheckedArithmeticResult::CA_SUCCESS:
+        break;
+      }
+
+      return of.createOperand(E, std::to_string(new_value));
     } else {
       return rhs * *this;
     }
@@ -105,9 +119,24 @@ public:
       T value;
       ss >> value;
 
+      T new_value;
+      CheckedArithmeticResult state =
+          checked_arithmetic::checked_div(&new_value, this->value, value);
+      switch (state) {
+      case CheckedArithmeticResult::CA_OVERFLOW:
+        throw VmException(VmException::Type::Overflow);
+      case CheckedArithmeticResult::CA_UNDERFLOW:
+        throw VmException(VmException::Type::Underflow);
+      case CheckedArithmeticResult::CA_INVALID:
+        throw std::invalid_argument("invalid impl");
+      case CheckedArithmeticResult::CA_SUCCESS:
+        break;
+      }
+
       return of.createOperand(E, std::to_string(this->value / value));
     } else {
-      return rhs / *this;
+      auto new_operand = of.createOperand(rhs.getType(), this->toString());
+      return *new_operand / rhs;
     }
   }
   IOperand const *operator%(IOperand const &rhs) const {
@@ -119,7 +148,8 @@ public:
 
       return of.createOperand(E, std::to_string(this->value % value));
     } else {
-      return rhs % *this;
+      auto new_operand = of.createOperand(rhs.getType(), this->toString());
+      return *new_operand % rhs;
     }
   }
   std::string const &toString(void) const { return toStr; }
@@ -138,7 +168,8 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
     return of.createOperand(eOperandType::Double,
                             std::to_string(fmod(this->value, value)));
   } else {
-    return rhs % *this;
+    auto new_operand = of.createOperand(rhs.getType(), this->toString());
+    return *new_operand % rhs;
   }
 }
 
@@ -154,7 +185,8 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
     return of.createOperand(eOperandType::Float,
                             std::to_string(fmod(this->value, value)));
   } else {
-    return rhs % *this;
+    auto new_operand = of.createOperand(rhs.getType(), this->toString());
+    return *new_operand % rhs;
   }
 }
 
