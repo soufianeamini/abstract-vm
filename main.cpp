@@ -48,28 +48,22 @@ void FileMode(const char *arg) {
   //   printInstruction(i);
   // }
 
-  try {
-    vm.interpret();
-  } catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
-  }
+  vm.interpret();
 }
 
 void Repl() {
-  Vm vm;
   std::string line;
-  std::string input;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
   while (std::getline(std::cin, line)) {
     Lexer lexer;
-    input += line + "\n";
+		// should pass line as well
     auto nTokens = lexer.lex(line + "\n");
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
 
-    for (auto token : nTokens) {
+    for (const auto &token : nTokens) {
       if (token.type == TokenType::EndOfProgram)
         breakFromWhile = true;
     }
@@ -77,6 +71,10 @@ void Repl() {
     if (breakFromWhile)
       break;
   }
+
+  // for (const auto &t : tokens) {
+  //   printToken(t);
+  // }
 
   Parser parser(tokens);
   auto instructions = parser.parse(true);
@@ -87,11 +85,8 @@ void Repl() {
     std::exit(1);
   }
 
-  try {
-    vm.interpret();
-  } catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
-  }
+  Vm vm(instructions);
+  vm.interpret();
 }
 
 void printOperand(const IOperand *op) {
@@ -100,12 +95,16 @@ void printOperand(const IOperand *op) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc == 1) {
-    Repl();
-  } else if (argc == 2) {
-    FileMode(argv[1]);
-  } else {
-    std::cerr << "Usage: ./avm [.avm file]";
+  try {
+    if (argc == 1) {
+      Repl();
+    } else if (argc == 2) {
+      FileMode(argv[1]);
+    } else {
+      std::cerr << "Usage: ./avm [.avm file]";
+    }
+  } catch (std::exception &e) {
+    std::cerr << e.what() << std::endl;
   }
   return 0;
 }
