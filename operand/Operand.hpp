@@ -146,7 +146,21 @@ public:
       T value;
       ss >> value;
 
-      return of.createOperand(E, std::to_string(this->value % value));
+      T new_value;
+      CheckedArithmeticResult state =
+          checked_arithmetic::checked_mod(&new_value, this->value, value);
+      switch (state) {
+      case CheckedArithmeticResult::CA_OVERFLOW:
+        throw VmException(VmException::Type::Overflow);
+      case CheckedArithmeticResult::CA_UNDERFLOW:
+        throw VmException(VmException::Type::Underflow);
+      case CheckedArithmeticResult::CA_INVALID:
+        throw std::invalid_argument("invalid impl");
+      case CheckedArithmeticResult::CA_SUCCESS:
+        break;
+      }
+
+      return of.createOperand(E, std::to_string(new_value));
     } else {
       auto new_operand = of.createOperand(rhs.getType(), this->toString());
       return *new_operand % rhs;
@@ -165,8 +179,21 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
     double value;
     ss >> value;
 
-    return of.createOperand(eOperandType::Double,
-                            std::to_string(fmod(this->value, value)));
+    double new_value;
+    CheckedArithmeticResult state =
+        checked_arithmetic::checked_mod(&new_value, this->value, value);
+    switch (state) {
+    case CheckedArithmeticResult::CA_OVERFLOW:
+      throw VmException(VmException::Type::Overflow);
+    case CheckedArithmeticResult::CA_UNDERFLOW:
+      throw VmException(VmException::Type::Underflow);
+    case CheckedArithmeticResult::CA_INVALID:
+      throw std::invalid_argument("invalid impl");
+    case CheckedArithmeticResult::CA_SUCCESS:
+      break;
+    }
+
+    return of.createOperand(eOperandType::Double, std::to_string(new_value));
   } else {
     auto new_operand = of.createOperand(rhs.getType(), this->toString());
     return *new_operand % rhs;
@@ -182,8 +209,21 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
     float value;
     ss >> value;
 
-    return of.createOperand(eOperandType::Float,
-                            std::to_string(fmod(this->value, value)));
+    float new_value;
+    CheckedArithmeticResult state =
+        checked_arithmetic::checked_mod(&new_value, this->value, value);
+    switch (state) {
+    case CheckedArithmeticResult::CA_OVERFLOW:
+      throw VmException(VmException::Type::Overflow);
+    case CheckedArithmeticResult::CA_UNDERFLOW:
+      throw VmException(VmException::Type::Underflow);
+    case CheckedArithmeticResult::CA_INVALID:
+      throw std::invalid_argument("invalid impl");
+    case CheckedArithmeticResult::CA_SUCCESS:
+      break;
+    }
+
+    return of.createOperand(eOperandType::Float, std::to_string(new_value));
   } else {
     auto new_operand = of.createOperand(rhs.getType(), this->toString());
     return *new_operand % rhs;
