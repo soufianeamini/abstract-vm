@@ -48,7 +48,11 @@ void FileMode(const char *arg) {
   //   printInstruction(i);
   // }
 
-  vm.interpret();
+  try {
+    vm.interpret();
+  } catch (std::exception &e) {
+    std::cout << e.what() << std::endl;
+  }
 }
 
 void Repl() {}
