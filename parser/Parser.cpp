@@ -7,16 +7,16 @@
 #include <stdexcept>
 #include <string>
 
-std::vector<Instruction> Parser::parse() {
+std::vector<Instruction> Parser::parse(bool isRepl) {
   std::vector<Instruction> instructions;
 
   while (tokens.size() > 0) {
     try {
-      instructions.push_back(parseInstruction());
+      instructions.push_back(parseInstruction(isRepl));
       while (peek().has_value() && peek()->type == TokenType::Sep)
         consume(TokenType::Sep);
     } catch (ParserException &e) {
-			hasErrored = true;
+      hasErrored = true;
       std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
       errors.push_back(errMsg);
     }
@@ -25,7 +25,7 @@ std::vector<Instruction> Parser::parse() {
   return instructions;
 }
 
-Instruction Parser::parseInstruction() {
+Instruction Parser::parseInstruction(bool isRepl) {
   while (peek().has_value() && peek()->type == TokenType::Sep)
     consume(TokenType::Sep);
 
@@ -65,6 +65,8 @@ Instruction Parser::parseInstruction() {
     tokens.pop_front();
     return generateInstruction(TokenType::Exit);
   case TokenType::EndOfProgram:
+    if (!isRepl)
+      consume(TokenType::Dummy);
     tokens.pop_front();
     return generateInstruction(TokenType::EndOfProgram);
   default:

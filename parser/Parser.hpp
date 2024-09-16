@@ -14,13 +14,13 @@ private:
   Instruction generateInstruction(TokenType type);
   Instruction generateInstruction(TokenType type, const IOperand *operand);
 
-	std::optional<Token> peek();
+  std::optional<Token> peek();
   Token consume(TokenType type);
   void recoverParser();
-  Instruction parseInstruction();
+  Instruction parseInstruction(bool isRepl);
   Instruction parsePush();
   Instruction parseAssert();
-  const IOperand* parseValue();
+  const IOperand *parseValue();
 
 public:
   Parser();
@@ -28,7 +28,7 @@ public:
   Parser(const Parser &o);
   Parser &operator=(const Parser &o);
   ~Parser();
-  std::vector<Instruction> parse();
+  std::vector<Instruction> parse(bool isRepl);
   bool getErrorState();
   std::vector<std::string> getErrors();
 };

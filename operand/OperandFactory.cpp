@@ -37,3 +37,7 @@ IOperand const *OperandFactory::createFloat(std::string const &value) const {
 IOperand const *OperandFactory::createDouble(std::string const &value) const {
   return new Operand<eOperandType::Double, double>(value);
 }
+
+void OperandFactory::releaseMem() {
+	this->operands.clear();
+}

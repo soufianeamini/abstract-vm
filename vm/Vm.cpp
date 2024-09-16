@@ -19,7 +19,6 @@ Vm &Vm::operator=(const Vm &o) {
 }
 
 void Vm::interpret() {
-  // TODO: Catch overflows
   ip = instructions.cbegin();
   while (ip != instructions.cend()) {
     switch (ip->command) {
@@ -51,6 +50,8 @@ void Vm::interpret() {
       this->print();
       break;
     case TokenType::Exit:
+      return;
+    case TokenType::EndOfProgram:
       return;
     default:
       // FIX: Remove this line before pushing
