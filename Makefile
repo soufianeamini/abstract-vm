@@ -6,9 +6,9 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
-DEPS = external-libs/include
+DEPS = ./external-libs/include
 
-STATIC_LIBS = external-libs/lib
+STATIC_LIBS = ./external-libs/lib/libfmt.a
 
 NAME	=	avm
 
@@ -17,7 +17,7 @@ CC	=	clang++
 all: $(NAME)
 
 $(NAME): $(DEPS) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) -L$(STATIC_LIBS) $(STATIC_LIBS)/libfmt.a -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(STATIC_LIBS) -o $@
 
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
