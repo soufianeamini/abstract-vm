@@ -14,17 +14,27 @@ print(deps_dir)
 print(install_dir)
 print(cmake_command)
 
-# TODO: check for existence before installing a lib
-# TODO: handle error at every process invocation
-
-def download_lib(url, tag, name):
+def download_lib(url, tag, name: str):
     target_dir = deps_dir / name
 
-    os.system(f"git clone --depth 1 --branch {tag} {url} {target_dir}")
-    os.system(f"mkdir {target_dir / 'build'}")
-    os.chdir(target_dir / "build")
-    os.system(cmake_command)
-    os.system("make install")
+    if target_dir.exists():
+        print(f"{target_dir} already exists. Skipping git clone..")
+    else:
+        os.system(f"git clone --depth 1 --branch {tag} {url} {target_dir}")
+
+    tasks = [
+        lambda : os.system(f"mkdir -p {target_dir / 'build'}"),
+        lambda : os.chdir(target_dir / "build"),
+        lambda : os.system(cmake_command),
+        lambda : os.system("make install"),
+    ]
+
+    i = 0
+    for task in tasks:
+        if task():
+            print(f"Error executing task id: {i}. Aborting...")
+            return
+        i += 1
 
 # TODO: generalize the concurrent code by gathering lambdas in an array and starting and joining threads by collecting them through another array
 

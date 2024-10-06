@@ -28,6 +28,7 @@ $(NAME): $(DEPS) $(OBJS)
 
 $(DEPS):
 	echo "Installing dependencies... This can take a few minutes"
+	mkdir -p external-libs
 	./scripts/install_dependencies.py
 
 clean:
