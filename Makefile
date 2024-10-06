@@ -33,10 +33,11 @@ $(DEPS):
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) -r external-libs
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) -r external-libs deps
+	$(RM) -r deps
 
 pretty:
 	clang++ -Xclang -ast-print -fsyntax-only $(SRCS)
