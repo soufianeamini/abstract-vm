@@ -1,3 +1,5 @@
 **/*.o
 avm
 notes.md
+deps
+external-libs
