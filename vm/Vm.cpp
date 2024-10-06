@@ -1,6 +1,6 @@
 #include "Vm.hpp"
 #include "../exceptions/VmException.hpp"
-#include <iostream>
+#include <fmt/base.h>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -68,7 +68,7 @@ void Vm::print() const {
     throw VmException(VmException::Type::TooFewStackValues);
   const IOperand *a = this->stack.back();
 
-	std::cout << a->toString() << std::endl;
+  fmt::println("{}", a->toString());
 }
 
 void Vm::div() {
@@ -142,8 +142,7 @@ void Vm::vm_assert() const {
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-		// std::cout << "Printing value:" << std::endl;
-		std::cout << (*it)->toString() << std::endl;
+    fmt::println("{}", (*it)->toString());
   }
 }
 

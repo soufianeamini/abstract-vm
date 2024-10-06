@@ -1,3 +1,4 @@
+#include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
 #include "operand/IOperand.hpp"
@@ -5,22 +6,24 @@
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
 #include "vm/Vm.hpp"
+#include <cstdio>
+#include <fmt/base.h>
 #include <iostream>
 #include <string>
 
 void printInstruction(const Instruction &i) {
   if (i.value) {
-    std::cout << fmt::format("Instruction: {}, Value: {}\n", (int)i.command,
-                             i.value->toString());
+    fmt::println("Instruction: {}, Value: {}", fmt::underlying(i.command),
+                 i.value->toString());
   } else
-    std::cout << fmt::format("Instruction: {}\n", (int)i.command);
+    fmt::println("Instruction: {}", fmt::underlying(i.command));
 }
 
 void printToken(const Token &t) {
   if (t.type != TokenType::Sep)
-    std::cout << fmt::format("Token: {}, line: {}\n", t.literal, t.line);
+    fmt::println("Token: {}, line: {}", t.literal, t.line);
   else
-    std::cout << "TOKEN::SEP\n";
+    fmt::println("TOKEN::SEP");
 }
 
 void FileMode(const char *arg) {
@@ -37,7 +40,7 @@ void FileMode(const char *arg) {
 
   if (parser.getErrorState()) {
     for (auto &error : parser.getErrors()) {
-      std::cout << error << std::endl;
+      fmt::println("{}", error);
     }
     std::exit(1);
   }
@@ -75,6 +78,7 @@ void Repl() {
   }
 
   // for (const auto &t : tokens) {
+	//   fmt::println("{}", t);
   //   printToken(t);
   // }
 
@@ -82,7 +86,7 @@ void Repl() {
   auto instructions = parser.parse(true);
   if (parser.getErrorState()) {
     for (auto &error : parser.getErrors()) {
-      std::cerr << error << std::endl;
+      fmt::println(stderr, "{}", error);
     }
     std::exit(1);
   }
@@ -92,8 +96,9 @@ void Repl() {
 }
 
 void printOperand(const IOperand *op) {
-  std::cout << fmt::format("Op: {}, value: {}\n", (int)op->getType(),
-                           op->toString());
+	// implement format_as instead of using this function
+  fmt::println("Op: {}, value: {}", fmt::underlying(op->getType()),
+               op->toString());
 }
 
 int main(int argc, char *argv[]) {
@@ -103,10 +108,10 @@ int main(int argc, char *argv[]) {
     } else if (argc == 2) {
       FileMode(argv[1]);
     } else {
-      std::cerr << "Usage: ./avm [.avm file]";
+      fmt::println(stderr, "Usage: ./avm [.avm file]");
     }
   } catch (std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    fmt::println(stderr, "{}", e.what());
   }
   return 0;
 }
