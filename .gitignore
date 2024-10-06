@@ -1,4 +1,5 @@
 **/*.o
+target
 avm
 notes.md
 deps

@@ -27,6 +27,9 @@ $(DEPS):
 	mkdir -p external-libs
 	./scripts/install_dependencies.py
 
+test: all
+	cargo test --lib
+
 clean:
 	$(RM) $(OBJS)
 	$(RM) -r external-libs
