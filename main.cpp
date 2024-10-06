@@ -1,29 +1,26 @@
-#include <nlohmann/json.hpp>
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
-#include "nlohmann/json_fwd.hpp"
 #include "operand/IOperand.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
 #include "vm/Vm.hpp"
-#include <cstdlib>
 #include <iostream>
 #include <string>
 
 void printInstruction(const Instruction &i) {
   if (i.value) {
-    std::cout << "Instruction: " << i.command
-              << ", Value: " << i.value->toString() << "\n";
+    std::cout << fmt::format("Instruction: {}, Value: {}\n", (int)i.command,
+                             i.value->toString());
   } else
-    std::cout << "Instruction: " << i.command << std::endl;
+    std::cout << fmt::format("Instruction: {}\n", (int)i.command);
 }
 
 void printToken(const Token &t) {
   if (t.type != TokenType::Sep)
-    std::cout << "Token: " << t.literal << ", line: " << t.line << std::endl;
+    std::cout << fmt::format("Token: {}, line: {}\n", t.literal, t.line);
   else
-    std::cout << "TOKEN::SEP" << std::endl;
+    std::cout << "TOKEN::SEP\n";
 }
 
 void FileMode(const char *arg) {
@@ -56,15 +53,15 @@ void FileMode(const char *arg) {
 
 void Repl() {
   std::string line;
-	// int lineNumber = 1;
+  // int lineNumber = 1;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
   while (std::getline(std::cin, line)) {
     Lexer lexer;
-		// should pass line as well
+    // should pass line as well
     auto nTokens = lexer.lex(line + "\n");
-		// lineNumber++;
+    // lineNumber++;
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
 
@@ -95,15 +92,13 @@ void Repl() {
 }
 
 void printOperand(const IOperand *op) {
-  std::cout << "Op: " << op->getType() << ", value: " << op->toString()
-            << std::endl;
+  std::cout << fmt::format("Op: {}, value: {}\n", (int)op->getType(),
+                           op->toString());
 }
 
 int main(int argc, char *argv[]) {
   try {
     if (argc == 1) {
-			std::cout << fmt::format("Test");
-			nlohmann::json x;
       Repl();
     } else if (argc == 2) {
       FileMode(argv[1]);

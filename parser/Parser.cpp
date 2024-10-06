@@ -6,6 +6,7 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <fmt/format.h>
 
 std::vector<Instruction> Parser::parse(bool isRepl) {
   std::vector<Instruction> instructions;
@@ -17,7 +18,7 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
         consume(TokenType::Sep);
     } catch (ParserException &e) {
       hasErrored = true;
-      std::string errMsg = std::string(e.what()) + " " + e.getLineInfo();
+			std::string errMsg = fmt::format("{} {}", e.what(), e.getLineInfo());
       errors.push_back(errMsg);
     }
   }
