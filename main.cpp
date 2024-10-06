@@ -74,9 +74,9 @@ void Repl() {
       break;
   }
 
-  for (const auto &t : tokens) {
-    printToken(t);
-  }
+  // for (const auto &t : tokens) {
+  //   printToken(t);
+  // }
 
   Parser parser(tokens);
   auto instructions = parser.parse(true);
