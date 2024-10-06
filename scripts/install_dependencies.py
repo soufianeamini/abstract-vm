@@ -9,12 +9,12 @@ deps_dir = root_path / "deps"
 install_dir = root_path / "external-libs"
 cmake_command = f"cmake -DCMAKE_INSTALL_PREFIX:PATH={install_dir} .."
 
-print(root_path)
-print(deps_dir)
-print(install_dir)
-print(cmake_command)
+# print(root_path)
+# print(deps_dir)
+# print(install_dir)
+# print(cmake_command)
 
-def download_lib(url, tag, name: str):
+def download_cmake_lib(url, tag, name: str):
     target_dir = deps_dir / name
 
     if target_dir.exists():
@@ -36,16 +36,17 @@ def download_lib(url, tag, name: str):
             return
         i += 1
 
-# TODO: generalize the concurrent code by gathering lambdas in an array and starting and joining threads by collecting them through another array
+libs = [
+    lambda : download_cmake_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json"),
+    lambda : download_cmake_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"),
+]
 
-t1 = Thread(target=lambda : download_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json"))
-t2 = Thread(target=lambda : download_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"))
+handles: list[Thread] = []
 
-t1.start()
-t2.start()
+for lib in libs:
+    thread = Thread(target=lib)
+    thread.start()
+    handles.append(thread)
 
-t1.join()
-t2.join()
-#
-# download_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json")
-# download_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt")
+for handle in handles:
+    handle.join()
