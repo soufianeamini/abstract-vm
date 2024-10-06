@@ -142,7 +142,7 @@ void Vm::vm_assert() const {
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-		std::cout << "Printing value:" << std::endl;
+		// std::cout << "Printing value:" << std::endl;
 		std::cout << (*it)->toString() << std::endl;
   }
 }

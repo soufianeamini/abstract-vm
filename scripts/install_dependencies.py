@@ -28,14 +28,14 @@ def download_lib(url, tag, name):
 
 # TODO: generalize the concurrent code by gathering lambdas in an array and starting and joining threads by collecting them through another array
 
-# t1 = Thread(target=lambda : download_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json"))
-# t2 = Thread(target=lambda : download_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"))
-#
-# t1.start()
-# t2.start()
-#
-# t1.join()
-# t2.join()
+t1 = Thread(target=lambda : download_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json"))
+t2 = Thread(target=lambda : download_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
 #
 # download_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json")
 # download_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt")
