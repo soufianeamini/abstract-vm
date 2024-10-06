@@ -8,7 +8,11 @@ HEADER	= parser/Instruction.hpp parser/Parser.hpp lexer/Lexer.hpp lexer/Token.hp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g
+CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
+
+DEPS = external-libs/include
+
+# STATIC_LIBS = external-libs/
 
 NAME	=	avm
 
@@ -16,11 +20,15 @@ CC	=	clang++
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(DEPS) $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) -o $@ 
 
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DEPS):
+	echo "Installing dependencies... This can take a few minutes"
+	./scripts/install_dependencies.py
 
 clean:
 	$(RM) $(OBJS)
