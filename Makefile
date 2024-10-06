@@ -1,4 +1,4 @@
-SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp
+SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp lexer/Token.cpp
 
 HEADER = avm-arithmetic/checked_arithmetic.hpp  exceptions/ParserException.hpp  lexer/Token.hpp operand/Operand.hpp vm/InputHandler.hpp avm-lib/safe-math.h exceptions/VmException.hpp operand/IOperand.hpp parser/Instruction.hpp vm/Vm.hpp avm-lib/utils.hpp lexer/Lexer.hpp  operand/OperandFactory.hpp parser/Parser.hpp
 

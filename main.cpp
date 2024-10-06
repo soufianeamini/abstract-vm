@@ -19,13 +19,6 @@ void printInstruction(const Instruction &i) {
     fmt::println("Instruction: {}", fmt::underlying(i.command));
 }
 
-void printToken(const Token &t) {
-  if (t.type != TokenType::Sep)
-    fmt::println("Token: {}, line: {}", t.literal, t.line);
-  else
-    fmt::println("TOKEN::SEP");
-}
-
 void FileMode(const char *arg) {
   std::string filename = arg;
 
@@ -33,7 +26,7 @@ void FileMode(const char *arg) {
   Lexer lexer;
   auto tokens = lexer.lex(source);
   // for (const auto &t : tokens) {
-  //   printToken(t);
+  //   fmt::println("{}", t);
   // }
   Parser parser(tokens);
   auto instructions = parser.parse(false);
@@ -78,8 +71,7 @@ void Repl() {
   }
 
   // for (const auto &t : tokens) {
-	//   fmt::println("{}", t);
-  //   printToken(t);
+  //   fmt::println("{}", t);
   // }
 
   Parser parser(tokens);
@@ -96,7 +88,8 @@ void Repl() {
 }
 
 void printOperand(const IOperand *op) {
-	// implement format_as instead of using this function
+  // implement format_as instead of using this function
+  // by taking const ref of IOperand
   fmt::println("Op: {}, value: {}", fmt::underlying(op->getType()),
                op->toString());
 }
@@ -111,7 +104,7 @@ int main(int argc, char *argv[]) {
       fmt::println(stderr, "Usage: ./avm [.avm file]");
     }
   } catch (std::exception &e) {
-    fmt::println(stderr, "{}", e.what());
+    fmt::println(stderr, "{}", e);
   }
   return 0;
 }

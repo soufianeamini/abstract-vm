@@ -26,3 +26,5 @@ struct Token {
   std::string literal;
   int line;
 };
+
+std::string format_as(const Token& t);
