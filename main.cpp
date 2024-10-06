@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
       fmt::println(stderr, "Usage: ./avm [.avm file]");
     }
   } catch (std::exception &e) {
-    fmt::println(stderr, "{}", e);
+    fmt::println(stderr, "{}", e.what());
   }
   return 0;
 }
