@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from threading import Thread
+from multiprocessing import Process
 
 root_path = Path(os.curdir).resolve()
 deps_dir = root_path / "deps"
@@ -41,12 +41,12 @@ libs = [
     lambda : download_cmake_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"),
 ]
 
-handles: list[Thread] = []
+handles: list[Process] = []
 
 for lib in libs:
-    thread = Thread(target=lib)
-    thread.start()
-    handles.append(thread)
+    process = Process(target=lib)
+    process.start()
+    handles.append(process)
 
 for handle in handles:
     handle.join()

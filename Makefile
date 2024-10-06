@@ -21,7 +21,7 @@ CC	=	clang++
 all: $(NAME)
 
 $(NAME): $(DEPS) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) -L$(STATIC_LIBS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -L$(STATIC_LIBS) $(STATIC_LIBS)/libfmt.a -o $@
 
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@

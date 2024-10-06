@@ -1,4 +1,7 @@
+#include <nlohmann/json.hpp>
+#include "fmt/format.h"
 #include "lexer/Lexer.hpp"
+#include "nlohmann/json_fwd.hpp"
 #include "operand/IOperand.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
@@ -99,6 +102,8 @@ void printOperand(const IOperand *op) {
 int main(int argc, char *argv[]) {
   try {
     if (argc == 1) {
+			std::cout << fmt::format("Test");
+			nlohmann::json x;
       Repl();
     } else if (argc == 2) {
       FileMode(argv[1]);
