@@ -7,7 +7,7 @@ from threading import Thread
 root_path = Path(os.curdir).resolve()
 deps_dir = root_path / "deps"
 install_dir = root_path / "external-libs"
-cmake_command = f"cmake -DCMAKE_INSTALL_PREFIX:PATH={install_dir} .."
+cmake_command = f"cmake -DFMT_TEST=OFF -DJSON_BuildTests=OFF -DCMAKE_INSTALL_PREFIX:PATH={install_dir} .."
 
 # print(root_path)
 # print(deps_dir)

@@ -12,7 +12,7 @@ CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
 DEPS = external-libs/include
 
-STATIC_LIBS = external-libs/lib/libfmt.a
+STATIC_LIBS = external-libs/lib
 
 NAME	=	avm
 
@@ -21,13 +21,13 @@ CC	=	clang++
 all: $(NAME)
 
 $(NAME): $(DEPS) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) $(STATIC_LIBS) -o $@ 
+	$(CC) $(CFLAGS) $(OBJS) -L$(STATIC_LIBS) -o $@
 
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DEPS):
-	echo "Installing dependencies... This can take a few minutes"
+	@echo "Installing dependencies..."
 	mkdir -p external-libs
 	./scripts/install_dependencies.py
 
@@ -36,6 +36,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) -r external-libs deps
 
 pretty:
 	clang++ -Xclang -ast-print -fsyntax-only $(SRCS)
