@@ -16,8 +16,7 @@ mod test {
         fn test_addition() -> TestResult<()> {
             let output = execute_program("./avm", vec!["tests/example.avm"])?;
             let expected = fs::read_to_string("tests/example.avm.output")?;
-            let stdout = output.stdout;
-            let actual = String::from_utf8(stdout)?;
+            let actual = String::from_utf8(output.stdout)?;
 
             assert_eq!(expected, actual);
 
