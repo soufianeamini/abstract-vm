@@ -53,6 +53,7 @@ void FileMode(const char *arg) {
 
 void Repl() {
   std::string line;
+	// int lineNumber = 1;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
@@ -60,6 +61,7 @@ void Repl() {
     Lexer lexer;
 		// should pass line as well
     auto nTokens = lexer.lex(line + "\n");
+		// lineNumber++;
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
 
@@ -72,9 +74,9 @@ void Repl() {
       break;
   }
 
-  // for (const auto &t : tokens) {
-  //   printToken(t);
-  // }
+  for (const auto &t : tokens) {
+    printToken(t);
+  }
 
   Parser parser(tokens);
   auto instructions = parser.parse(true);
