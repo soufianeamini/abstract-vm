@@ -12,7 +12,7 @@ CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
 DEPS = external-libs/include
 
-# STATIC_LIBS = external-libs/
+STATIC_LIBS = external-libs/lib/libfmt.a
 
 NAME	=	avm
 
@@ -21,7 +21,7 @@ CC	=	clang++
 all: $(NAME)
 
 $(NAME): $(DEPS) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) -o $@ 
+	$(CC) $(CFLAGS) $(OBJS) $(STATIC_LIBS) -o $@ 
 
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
