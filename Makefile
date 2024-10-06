@@ -1,10 +1,6 @@
-SRCS	=	main.cpp lexer/Lexer.cpp parser/Parser.cpp vm/InputHandler.cpp \
-				operand/OperandFactory.cpp exceptions/ParserException.cpp\
-				vm/Vm.cpp exceptions/VmException.cpp avm-lib/utils.cpp
+SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp
 
-HEADER	= parser/Instruction.hpp parser/Parser.hpp lexer/Lexer.hpp lexer/Token.hpp exceptions/ParserException.hpp vm/Vm.hpp vm/InputHandler.hpp \
-					operand/IOperand.hpp operand/Operand.hpp operand/OperandFactory.hpp exceptions/VmException.hpp \
-					avm-lib/utils.hpp avm-arithmetic/checked_arithmetic.hpp
+HEADER = avm-arithmetic/checked_arithmetic.hpp  exceptions/ParserException.hpp  lexer/Token.hpp operand/Operand.hpp vm/InputHandler.hpp avm-lib/safe-math.h exceptions/VmException.hpp operand/IOperand.hpp parser/Instruction.hpp vm/Vm.hpp avm-lib/utils.hpp lexer/Lexer.hpp  operand/OperandFactory.hpp parser/Parser.hpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
