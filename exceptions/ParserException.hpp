@@ -4,7 +4,7 @@
 
 class ParserException : public std::exception {
 public:
-  enum Type {
+  enum class Type {
     SyntaxError,
     UnknownInstruction,
 		Overflow,
@@ -23,3 +23,5 @@ private:
   Type type;
   Token errorToken;
 };
+
+std::string format_as(const ParserException::Type& t);

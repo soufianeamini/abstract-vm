@@ -1,9 +1,10 @@
 #pragma once
 #include <exception>
+#include <string>
 
 class VmException : public std::exception {
 public:
-  enum Type {
+  enum class Type {
     Overflow,
     Underflow,
     EmptyStack,
@@ -23,3 +24,5 @@ public:
 private:
   Type type;
 };
+
+std::string format_as(const VmException::Type& t);
