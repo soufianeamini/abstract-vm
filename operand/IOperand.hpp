@@ -23,3 +23,5 @@ public:
   toString(void) const = 0; // String representation of the instance
   virtual ~IOperand(void) {}
 };
+
+std::string format_as(const IOperand& op);

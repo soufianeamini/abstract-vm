@@ -2,6 +2,7 @@
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
 #include "operand/IOperand.hpp"
+#include "operand/OperandFactory.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
@@ -85,13 +86,6 @@ void Repl() {
 
   Vm vm(instructions);
   vm.interpret();
-}
-
-void printOperand(const IOperand *op) {
-  // implement format_as instead of using this function
-  // by taking const ref of IOperand
-  fmt::println("Op: {}, value: {}", fmt::underlying(op->getType()),
-               op->toString());
 }
 
 int main(int argc, char *argv[]) {

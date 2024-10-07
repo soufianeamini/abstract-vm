@@ -2,6 +2,7 @@
 #include "IOperand.hpp"
 #include "Operand.hpp"
 #include <cstdint>
+#include <fmt/format.h>
 #include <memory>
 #include <utility>
 
@@ -38,6 +39,9 @@ IOperand const *OperandFactory::createDouble(std::string const &value) const {
   return new Operand<eOperandType::Double, double>(value);
 }
 
-void OperandFactory::releaseMem() {
-	this->operands.clear();
+void OperandFactory::releaseMem() { this->operands.clear(); }
+
+std::string format_as(const IOperand &op) {
+  return fmt::format("Operand {{ Op: {}, value: {} }}",
+                     fmt::underlying(op.getType()), op.toString());
 }
