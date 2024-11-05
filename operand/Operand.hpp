@@ -7,6 +7,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <fmt/format.h>
 
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -28,7 +29,7 @@ public:
 
     return *this;
   }
-  int getPrecision(void) const { return (E); }
+  int getPrecision(void) const { return fmt::underlying(E); }
   eOperandType getType(void) const { return E; }
   IOperand const *operator+(IOperand const &rhs) const {
     OperandFactory of;

@@ -11,7 +11,7 @@ std::vector<std::unique_ptr<const IOperand>> OperandFactory::operands;
 IOperand const *OperandFactory::createOperand(eOperandType type,
                                               std::string const &value) const {
   std::function<IOperand const *(const OperandFactory *, std::string const &)>
-      createOp = createFunctions[(type)];
+      createOp = createFunctions[fmt::underlying(type)];
 
   const IOperand *operand = createOp(this, value);
   std::unique_ptr<const IOperand> ptr(operand);
