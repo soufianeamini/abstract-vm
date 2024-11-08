@@ -14,7 +14,7 @@ cmake_command = f"cmake -DFMT_TEST=OFF -DJSON_BuildTests=OFF -DCMAKE_INSTALL_PRE
 # print(install_dir)
 # print(cmake_command)
 
-def download_cmake_lib(url, tag, name: str):
+def download_cmake_lib(url: str, tag: str, name: str):
     target_dir = deps_dir / name
 
     if target_dir.exists():
@@ -39,6 +39,7 @@ def download_cmake_lib(url, tag, name: str):
 libs = [
     lambda : download_cmake_lib(url="git@github.com:nlohmann/json.git", tag="v3.11.3", name="json"),
     lambda : download_cmake_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"),
+    lambda : download_cmake_lib(url="git@github.com:google/googletest.git", tag="v1.15.2", name="googletest"),
 ]
 
 handles: list[Process] = []

@@ -22,7 +22,7 @@ $(NAME): $(DEPS) $(OBJS)
 %.o:	%.cpp $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DEPS):
+$(DEPS): scripts/install_dependencies.py
 	@echo "Installing dependencies..."
 	mkdir -p external-libs
 	./scripts/install_dependencies.py
