@@ -28,7 +28,8 @@ $(DEPS):
 	./scripts/install_dependencies.py
 
 test: all
-	cargo test --lib
+	. .venv/bin/activate
+	ward
 
 clean:
 	$(RM) $(OBJS)

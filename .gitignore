@@ -1,4 +1,5 @@
 **/*.o
+.venv
 target
 avm
 notes.md
