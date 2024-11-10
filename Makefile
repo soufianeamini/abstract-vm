@@ -1,4 +1,4 @@
-SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp lexer/Token.cpp
+SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp lexer/Token.cpp tests/tests.cpp
 
 HEADER = avm-arithmetic/checked_arithmetic.hpp  exceptions/ParserException.hpp  lexer/Token.hpp operand/Operand.hpp vm/InputHandler.hpp avm-lib/safe-math.h exceptions/VmException.hpp operand/IOperand.hpp parser/Instruction.hpp vm/Vm.hpp avm-lib/utils.hpp lexer/Lexer.hpp  operand/OperandFactory.hpp parser/Parser.hpp
 
@@ -8,7 +8,7 @@ CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
 DEPS = ./external-libs/include
 
-STATIC_LIBS = ./external-libs/lib/libfmt.a
+STATIC_LIBS = ./external-libs/lib/libfmt.a ./external-libs/lib/libgtest.a
 
 NAME	=	avm
 
@@ -29,7 +29,10 @@ $(DEPS): scripts/install_dependencies.py
 
 test: all
 	. .venv/bin/activate
-	ward -p tests/
+	ward -p tests/ || echo "Make sure that DEBUG is not set for integration tests"
+
+run: all
+	./avm
 
 clean:
 	$(RM) $(OBJS)

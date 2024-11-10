@@ -1,3 +1,5 @@
+#define DEBUG
+
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
@@ -8,6 +10,7 @@
 #include "vm/Vm.hpp"
 #include <cstdio>
 #include <fmt/base.h>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <string>
 
@@ -88,6 +91,11 @@ void Repl() {
 }
 
 int main(int argc, char *argv[]) {
+	#ifdef DEBUG
+	(void)argc;(void)argv;
+  testing::InitGoogleTest();
+  return RUN_ALL_TESTS();
+	#else
   try {
     if (argc == 1) {
       Repl();
@@ -100,4 +108,5 @@ int main(int argc, char *argv[]) {
     fmt::println(stderr, "{}", e.what());
   }
   return 0;
+	#endif
 }
