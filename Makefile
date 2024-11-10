@@ -29,7 +29,7 @@ $(DEPS): scripts/install_dependencies.py
 
 test: all
 	. .venv/bin/activate
-	ward
+	ward -p tests/
 
 clean:
 	$(RM) $(OBJS)

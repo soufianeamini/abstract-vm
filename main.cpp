@@ -2,7 +2,6 @@
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
 #include "operand/IOperand.hpp"
-#include "operand/OperandFactory.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"

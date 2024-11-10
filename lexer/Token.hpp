@@ -28,3 +28,4 @@ struct Token {
 };
 
 std::string format_as(const Token& t);
+std::string format_as(const TokenType& t);
