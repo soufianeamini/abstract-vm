@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <gtest/gtest.h>
 #include <iostream>
+#include <queue>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -46,14 +47,15 @@ TEST(Lexer, SimpleTest) {
 
 TEST(Lexer, Comment) {
   ISOLATE_TEST();
-  std::cout << "Inside thread\n";
   Lexer lexer;
-
-  std::cout << "Before calling lexer" << std::endl;
   auto tokens = lexer.lex("; Hello, this should be completely ignored");
-  std::cout << "After calling lexer" << std::endl;
+  ASSERT_EQ(tokens.size(), (unsigned long)1);
 
-  ASSERT_EQ(tokens.size(), (unsigned long)0);
+  auto token = tokens[0];
+
+  ASSERT_EQ(token.type, TokenType::Sep);
+  ASSERT_EQ(token.line, 1);
+  ASSERT_EQ(token.literal, "\n");
   exit(EXIT_SUCCESS);
 }
 

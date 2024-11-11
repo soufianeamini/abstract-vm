@@ -59,16 +59,18 @@ std::vector<Token> Lexer::lex(const std::string &source) {
         while (it != source.cend() && *it != '\n') {
           it++;
         }
+        if (it == source.cend())
+          it--;
         line++;
         tokens.push_back(
-            Token{.type = TokenType::Sep, .literal = "\n", .line = line});
+            Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
       }
       break;
     }
     case '\n':
       line++;
       tokens.push_back(
-          Token{.type = TokenType::Sep, .literal = "\n", .line = line});
+          Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
       [[fallthrough]];
     case ' ':
       if (word) {
