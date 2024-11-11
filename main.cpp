@@ -91,11 +91,10 @@ void Repl() {
 }
 
 int main(int argc, char *argv[]) {
-	#ifdef DEBUG
-	(void)argc;(void)argv;
-  testing::InitGoogleTest();
+#ifdef DEBUG
+  testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
-	#else
+#else
   try {
     if (argc == 1) {
       Repl();
@@ -108,5 +107,5 @@ int main(int argc, char *argv[]) {
     fmt::println(stderr, "{}", e.what());
   }
   return 0;
-	#endif
+#endif
 }
