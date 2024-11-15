@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from multiprocessing import Process
+from multiprocessing import Process, set_start_method
 
 root_path = Path(os.curdir).resolve()
 deps_dir = root_path / "deps"
@@ -41,6 +41,8 @@ libs = [
     lambda : download_cmake_lib(url="git@github.com:fmtlib/fmt.git", tag="11.0.2", name="fmt"),
     lambda : download_cmake_lib(url="git@github.com:google/googletest.git", tag="v1.15.2", name="googletest"),
 ]
+
+set_start_method("fork")
 
 handles: list[Process] = []
 
