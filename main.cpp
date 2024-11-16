@@ -28,9 +28,6 @@ void FileMode(const char *arg) {
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
   auto tokens = lexer.lex(source);
-  // for (const auto &t : tokens) {
-  //   fmt::println("{}", t);
-  // }
   Parser parser(tokens);
   auto instructions = parser.parse(false);
 
@@ -72,10 +69,6 @@ void Repl() {
     if (breakFromWhile)
       break;
   }
-
-  // for (const auto &t : tokens) {
-  //   fmt::println("{}", t);
-  // }
 
   Parser parser(tokens);
   auto instructions = parser.parse(true);
