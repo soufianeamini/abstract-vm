@@ -3,10 +3,11 @@
 #include "../exceptions/ParserException.hpp"
 #include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
+#include "VmValue.hpp"
+#include <fmt/format.h>
 #include <optional>
 #include <stdexcept>
 #include <string>
-#include <fmt/format.h>
 
 std::vector<Instruction> Parser::parse(bool isRepl) {
   std::vector<Instruction> instructions;
@@ -18,7 +19,7 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
         consume(TokenType::Sep);
     } catch (ParserException &e) {
       hasErrored = true;
-			std::string errMsg = fmt::format("{} {}", e.what(), e.getLineInfo());
+      std::string errMsg = fmt::format("{} {}", e.what(), e.getLineInfo());
       errors.push_back(errMsg);
     }
   }
@@ -79,7 +80,7 @@ Instruction Parser::parseInstruction(bool isRepl) {
 
 Instruction Parser::parseAssert() {
   consume(TokenType::Assert);
-  const IOperand *operand = parseValue();
+  VmValue operand = parseValue();
   consume(TokenType::Sep);
 
   return generateInstruction(TokenType::Assert, operand);
@@ -87,13 +88,13 @@ Instruction Parser::parseAssert() {
 
 Instruction Parser::parsePush() {
   consume(TokenType::Push);
-  const IOperand *operand = parseValue();
+  VmValue operand = parseValue();
   consume(TokenType::Sep);
 
   return generateInstruction(TokenType::Push, operand);
 }
 
-const IOperand *Parser::parseValue() {
+VmValue Parser::parseValue() {
   Token precision = consume(TokenType::Word);
   consume(TokenType::LeftParen);
   Token value = consume(TokenType::Word);
@@ -102,24 +103,19 @@ const IOperand *Parser::parseValue() {
   if (!utils::is_valid_number(value.literal))
     throw std::invalid_argument("invalid_number: " + value.literal);
 
-  const IOperand *operand = nullptr;
+  VmValue operand;
   OperandFactory of;
   try {
     if (precision.literal == "int8")
-      operand =
-          of.createOperand(eOperandType::Int8, std::string(value.literal));
+      operand = VmValue{.type = eOperandType::Int8, .value = value.literal};
     else if (precision.literal == "int16")
-      operand =
-          of.createOperand(eOperandType::Int16, std::string(value.literal));
+      operand = VmValue{.type = eOperandType::Int16, .value = value.literal};
     else if (precision.literal == "int32")
-      operand =
-          of.createOperand(eOperandType::Int32, std::string(value.literal));
+      operand = VmValue{.type = eOperandType::Int32, .value = value.literal};
     else if (precision.literal == "float")
-      operand =
-          of.createOperand(eOperandType::Float, std::string(value.literal));
+      operand = VmValue{.type = eOperandType::Float, .value = value.literal};
     else if (precision.literal == "double")
-      operand =
-          of.createOperand(eOperandType::Double, std::string(value.literal));
+      operand = VmValue{.type = eOperandType::Double, .value = value.literal};
     else
       consume(TokenType::Dummy);
 
@@ -159,13 +155,12 @@ void Parser::recoverParser() {
 }
 
 Instruction Parser::generateInstruction(TokenType type) {
-  Instruction instruction = Instruction{.command = type, .value = nullptr};
+  Instruction instruction = Instruction{.command = type, .value = VmValue()};
 
   return instruction;
 }
 
-Instruction Parser::generateInstruction(TokenType type,
-                                        const IOperand *operand) {
+Instruction Parser::generateInstruction(TokenType type, VmValue operand) {
   Instruction instruction = Instruction{.command = type, .value = operand};
 
   return instruction;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../parser/Instruction.hpp"
+#include "../parser/VmValue.hpp"
 #include <deque>
 #include <vector>
 
@@ -10,7 +11,7 @@ private:
   // so that later on whenever the Vm's stack is empty, the Operand Factory's
   // memory gets freed
   std::vector<Instruction> instructions;
-  std::deque<const IOperand *> stack;
+  std::deque<VmValue> stack;
 
   // Instruction Pointer
   std::vector<Instruction>::const_iterator ip;

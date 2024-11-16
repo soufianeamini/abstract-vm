@@ -2,8 +2,9 @@
 
 #include "../lexer/Token.hpp"
 #include "../operand/IOperand.hpp"
+#include "VmValue.hpp"
 
 struct Instruction {
   TokenType command;
-  const IOperand *value;
+  VmValue value;
 };

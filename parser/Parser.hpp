@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Instruction.hpp"
+#include "VmValue.hpp"
 #include <deque>
 #include <optional>
 #include <vector>
@@ -12,7 +13,7 @@ private:
 
 private:
   Instruction generateInstruction(TokenType type);
-  Instruction generateInstruction(TokenType type, const IOperand *operand);
+  Instruction generateInstruction(TokenType type, VmValue operand);
 
   std::optional<Token> peek();
   Token consume(TokenType type);
@@ -20,7 +21,7 @@ private:
   Instruction parseInstruction(bool isRepl);
   Instruction parsePush();
   Instruction parseAssert();
-  const IOperand *parseValue();
+  VmValue parseValue();
 
 public:
   Parser();
