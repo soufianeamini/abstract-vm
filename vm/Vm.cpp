@@ -142,6 +142,8 @@ void Vm::vm_assert() const {
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
+		// TODO: make vm write to an internal buffer, so that the main function writes what's in the buffer to the stdout
+		// This allows the vm to be more testable
     fmt::println("{}", (*it)->toString());
   }
 }

@@ -53,6 +53,7 @@ void Repl() {
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
+	// TODO: change std::getline() to InputHandler::ReadLine()
   while (std::getline(std::cin, line)) {
     Lexer lexer;
     // should pass line as well

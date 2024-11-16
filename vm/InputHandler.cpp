@@ -1,5 +1,6 @@
 #include <fstream>
 #include <sstream>
+
 namespace InputHandler {
 std::string ReadFile(const std::string &filename) {
   std::fstream file(filename);
