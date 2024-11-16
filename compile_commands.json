@@ -5,8 +5,8 @@
       "-c",
       "CMakeCXXCompilerId.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/3.30.3/CompilerIdCXX",
-    "file": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/3.30.3/CompilerIdCXX",
+    "file": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
   },
   {
     "arguments": [
@@ -17,14 +17,14 @@
       "CMakeFiles/cmTC_85e7f.dir/CMakeCXXCompilerABI.cpp.o",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/CMakeScratch/TryCompile-b3mIHY",
+    "directory": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/CMakeScratch/TryCompile-b3mIHY",
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
-    "output": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/CMakeScratch/TryCompile-b3mIHY/CMakeFiles/cmTC_85e7f.dir/CMakeCXXCompilerABI.cpp.o"
+    "output": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/CMakeScratch/TryCompile-b3mIHY/CMakeFiles/cmTC_85e7f.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/app/42cursus/abstract-vm/deps/fmt/include",
+      "-I~/Documents/42cursus/abstract-vm/deps/fmt/include",
       "-O3",
       "-DNDEBUG",
       "-fvisibility=hidden",
@@ -32,11 +32,11 @@
       "-c",
       "-o",
       "CMakeFiles/fmt.dir/src/format.cc.o",
-      "/app/42cursus/abstract-vm/deps/fmt/src/format.cc"
+      "~/Documents/42cursus/abstract-vm/deps/fmt/src/format.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/fmt/build",
-    "file": "/app/42cursus/abstract-vm/deps/fmt/src/format.cc",
-    "output": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/fmt.dir/src/format.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/fmt/build",
+    "file": "~/Documents/42cursus/abstract-vm/deps/fmt/src/format.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/fmt.dir/src/format.cc.o"
   },
   {
     "arguments": [
@@ -44,8 +44,8 @@
       "-c",
       "CMakeCCompilerId.c"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdC",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdC/CMakeCCompilerId.c"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdC",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdC/CMakeCCompilerId.c"
   },
   {
     "arguments": [
@@ -53,8 +53,8 @@
       "-c",
       "CMakeCXXCompilerId.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdCXX",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdCXX",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
   },
   {
     "arguments": [
@@ -65,9 +65,9 @@
       "CMakeFiles/cmTC_d0e31.dir/CMakeCCompilerABI.c.o",
       "/usr/share/cmake/Modules/CMakeCCompilerABI.c"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-nMY9FS",
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-nMY9FS",
     "file": "/usr/share/cmake/Modules/CMakeCCompilerABI.c",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-nMY9FS/CMakeFiles/cmTC_d0e31.dir/CMakeCCompilerABI.c.o"
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-nMY9FS/CMakeFiles/cmTC_d0e31.dir/CMakeCCompilerABI.c.o"
   },
   {
     "arguments": [
@@ -78,15 +78,15 @@
       "CMakeFiles/cmTC_d49ca.dir/CMakeCXXCompilerABI.cpp.o",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-NV0GQ3",
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-NV0GQ3",
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-NV0GQ3/CMakeFiles/cmTC_d49ca.dir/CMakeCXXCompilerABI.cpp.o"
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/CMakeFiles/CMakeScratch/TryCompile-NV0GQ3/CMakeFiles/cmTC_d49ca.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/app/42cursus/abstract-vm/deps/googletest/googletest/include",
-      "-I/app/42cursus/abstract-vm/deps/googletest/googletest",
+      "-I~/Documents/42cursus/abstract-vm/deps/googletest/googletest/include",
+      "-I~/Documents/42cursus/abstract-vm/deps/googletest/googletest",
       "-Wall",
       "-Wshadow",
       "-Wundef",
@@ -99,16 +99,16 @@
       "-c",
       "-o",
       "CMakeFiles/gtest.dir/src/gtest-all.cc.o",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest/src/gtest-all.cc"
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/src/gtest-all.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/googletest",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/googletest/src/gtest-all.cc",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googletest",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/src/gtest-all.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/app/42cursus/abstract-vm/deps/fmt/include",
+      "-I~/Documents/42cursus/abstract-vm/deps/fmt/include",
       "-O3",
       "-DNDEBUG",
       "-fvisibility=hidden",
@@ -116,21 +116,21 @@
       "-c",
       "-o",
       "CMakeFiles/fmt.dir/src/os.cc.o",
-      "/app/42cursus/abstract-vm/deps/fmt/src/os.cc"
+      "~/Documents/42cursus/abstract-vm/deps/fmt/src/os.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/fmt/build",
-    "file": "/app/42cursus/abstract-vm/deps/fmt/src/os.cc",
-    "output": "/app/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/fmt.dir/src/os.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/fmt/build",
+    "file": "~/Documents/42cursus/abstract-vm/deps/fmt/src/os.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/fmt/build/CMakeFiles/fmt.dir/src/os.cc.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/app/42cursus/abstract-vm/deps/googletest/googlemock/include",
-      "-I/app/42cursus/abstract-vm/deps/googletest/googlemock",
+      "-I~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/include",
+      "-I~/Documents/42cursus/abstract-vm/deps/googletest/googlemock",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest/include",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/include",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest",
       "-Wall",
       "-Wshadow",
       "-Wundef",
@@ -143,23 +143,23 @@
       "-c",
       "-o",
       "CMakeFiles/gmock.dir/src/gmock-all.cc.o",
-      "/app/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock-all.cc"
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock-all.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/googlemock",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock-all.cc",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googlemock",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock-all.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googlemock/include",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/include",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googlemock",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest/include",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/include",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest",
       "-Wall",
       "-Wshadow",
       "-Wundef",
@@ -172,19 +172,19 @@
       "-c",
       "-o",
       "CMakeFiles/gmock_main.dir/src/gmock_main.cc.o",
-      "/app/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock_main.cc"
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock_main.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/googlemock",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock_main.cc",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googlemock",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/googlemock/src/gmock_main.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest/include",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/include",
       "-isystem",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest",
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest",
       "-Wall",
       "-Wshadow",
       "-Wundef",
@@ -197,11 +197,11 @@
       "-c",
       "-o",
       "CMakeFiles/gtest_main.dir/src/gtest_main.cc.o",
-      "/app/42cursus/abstract-vm/deps/googletest/googletest/src/gtest_main.cc"
+      "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/src/gtest_main.cc"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/googletest/build/googletest",
-    "file": "/app/42cursus/abstract-vm/deps/googletest/googletest/src/gtest_main.cc",
-    "output": "/app/42cursus/abstract-vm/deps/googletest/build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googletest",
+    "file": "~/Documents/42cursus/abstract-vm/deps/googletest/googletest/src/gtest_main.cc",
+    "output": "~/Documents/42cursus/abstract-vm/deps/googletest/build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
   },
   {
     "arguments": [
@@ -209,8 +209,8 @@
       "-c",
       "CMakeCXXCompilerId.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/json/build/CMakeFiles/3.30.3/CompilerIdCXX",
-    "file": "/app/42cursus/abstract-vm/deps/json/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+    "directory": "~/Documents/42cursus/abstract-vm/deps/json/build/CMakeFiles/3.30.3/CompilerIdCXX",
+    "file": "~/Documents/42cursus/abstract-vm/deps/json/build/CMakeFiles/3.30.3/CompilerIdCXX/CMakeCXXCompilerId.cpp"
   },
   {
     "arguments": [
@@ -221,9 +221,9 @@
       "CMakeFiles/cmTC_8cdaf.dir/CMakeCXXCompilerABI.cpp.o",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm/deps/json/build/CMakeFiles/CMakeScratch/TryCompile-CCau1r",
+    "directory": "~/Documents/42cursus/abstract-vm/deps/json/build/CMakeFiles/CMakeScratch/TryCompile-CCau1r",
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
-    "output": "/app/42cursus/abstract-vm/deps/json/build/CMakeFiles/CMakeScratch/TryCompile-CCau1r/CMakeFiles/cmTC_8cdaf.dir/CMakeCXXCompilerABI.cpp.o"
+    "output": "~/Documents/42cursus/abstract-vm/deps/json/build/CMakeFiles/CMakeScratch/TryCompile-CCau1r/CMakeFiles/cmTC_8cdaf.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "arguments": [
@@ -239,9 +239,9 @@
       "avm-lib/utils.o",
       "avm-lib/utils.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/avm-lib/utils.cpp",
-    "output": "/app/42cursus/abstract-vm/avm-lib/utils.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/avm-lib/utils.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/avm-lib/utils.o"
   },
   {
     "arguments": [
@@ -257,9 +257,9 @@
       "exceptions/ParserException.o",
       "exceptions/ParserException.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/exceptions/ParserException.cpp",
-    "output": "/app/42cursus/abstract-vm/exceptions/ParserException.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/exceptions/ParserException.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/exceptions/ParserException.o"
   },
   {
     "arguments": [
@@ -275,9 +275,9 @@
       "exceptions/VmException.o",
       "exceptions/VmException.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/exceptions/VmException.cpp",
-    "output": "/app/42cursus/abstract-vm/exceptions/VmException.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/exceptions/VmException.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/exceptions/VmException.o"
   },
   {
     "arguments": [
@@ -293,9 +293,9 @@
       "lexer/Lexer.o",
       "lexer/Lexer.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/lexer/Lexer.cpp",
-    "output": "/app/42cursus/abstract-vm/lexer/Lexer.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/lexer/Lexer.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/lexer/Lexer.o"
   },
   {
     "arguments": [
@@ -311,9 +311,9 @@
       "main.o",
       "main.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/main.cpp",
-    "output": "/app/42cursus/abstract-vm/main.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/main.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/main.o"
   },
   {
     "arguments": [
@@ -329,9 +329,9 @@
       "operand/OperandFactory.o",
       "operand/OperandFactory.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/operand/OperandFactory.cpp",
-    "output": "/app/42cursus/abstract-vm/operand/OperandFactory.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/operand/OperandFactory.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/operand/OperandFactory.o"
   },
   {
     "arguments": [
@@ -347,9 +347,9 @@
       "parser/Parser.o",
       "parser/Parser.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/parser/Parser.cpp",
-    "output": "/app/42cursus/abstract-vm/parser/Parser.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/parser/Parser.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/parser/Parser.o"
   },
   {
     "arguments": [
@@ -365,9 +365,9 @@
       "vm/InputHandler.o",
       "vm/InputHandler.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/vm/InputHandler.cpp",
-    "output": "/app/42cursus/abstract-vm/vm/InputHandler.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/vm/InputHandler.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/vm/InputHandler.o"
   },
   {
     "arguments": [
@@ -383,9 +383,9 @@
       "vm/Vm.o",
       "vm/Vm.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/vm/Vm.cpp",
-    "output": "/app/42cursus/abstract-vm/vm/Vm.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/vm/Vm.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/vm/Vm.o"
   },
   {
     "arguments": [
@@ -401,9 +401,9 @@
       "lexer/Token.o",
       "lexer/Token.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/lexer/Token.cpp",
-    "output": "/app/42cursus/abstract-vm/lexer/Token.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/lexer/Token.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/lexer/Token.o"
   },
   {
     "arguments": [
@@ -419,8 +419,8 @@
       "tests/tests.o",
       "tests/tests.cpp"
     ],
-    "directory": "/app/42cursus/abstract-vm",
-    "file": "/app/42cursus/abstract-vm/tests/tests.cpp",
-    "output": "/app/42cursus/abstract-vm/tests/tests.o"
+    "directory": "~/Documents/42cursus/abstract-vm",
+    "file": "~/Documents/42cursus/abstract-vm/tests/tests.cpp",
+    "output": "~/Documents/42cursus/abstract-vm/tests/tests.o"
   }
 ]
