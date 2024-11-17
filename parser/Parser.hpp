@@ -5,6 +5,7 @@
 #include <deque>
 #include <optional>
 #include <vector>
+
 class Parser {
 private:
   std::deque<Token> tokens;
