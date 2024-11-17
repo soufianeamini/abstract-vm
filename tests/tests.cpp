@@ -20,18 +20,39 @@
     return;                                                                    \
   }
 
+#define TOKEN(tp, lit, ln)                                                     \
+  Token { .type = TokenType::tp, .literal = lit, .line = ln }
+
+#define SEP(ln) TOKEN(Sep, "\n", ln)
+#define ADD(ln) TOKEN(Add, "add", ln), SEP(ln)
+#define MUL(ln) TOKEN(Mul, "mul", ln), SEP(ln)
+#define DUMP(ln) TOKEN(Dump, "dump", ln), SEP(ln)
+#define POP(ln) TOKEN(Pop, "pop", ln), SEP(ln)
+#define EXIT(ln) TOKEN(Exit, "exit", ln), SEP(ln)
+#define PUSH(tp, val, ln)                                                      \
+  Token{.type = TokenType::Push, .literal = "push", .line = ln},               \
+      Token{.type = TokenType::Word, .literal = tp, .line = ln},               \
+      Token{.type = TokenType::LeftParen, .literal = "(", .line = ln},         \
+      Token{.type = TokenType::Word, .literal = val, .line = ln},              \
+      Token{.type = TokenType::RightParen, .literal = ")", .line = ln},        \
+      SEP(ln)
+#define ASSERT(tp, val, ln)                                                    \
+  Token{.type = TokenType::Assert, .literal = "assert", .line = ln},           \
+      Token{.type = TokenType::Word, .literal = tp, .line = ln},               \
+      Token{.type = TokenType::LeftParen, .literal = "(", .line = ln},         \
+      Token{.type = TokenType::Word, .literal = val, .line = ln},              \
+      Token{.type = TokenType::RightParen, .literal = ")", .line = ln},        \
+      SEP(ln)
+
 TEST(Lexer, SimpleTest) {
   ISOLATE_TEST();
   Lexer lexer;
 
-  auto tokens = lexer.lex("push int8(32)");
+  auto tokens = lexer.lex("push int8(32)\n");
 
   std::vector<Token> test_tokens = {
-      Token{.type = TokenType::Push, .literal = "push", .line = 1},
-      Token{.type = TokenType::Word, .literal = "int8", .line = 1},
-      Token{.type = TokenType::LeftParen, .literal = "(", .line = 1},
-      Token{.type = TokenType::Word, .literal = "32", .line = 1},
-      Token{.type = TokenType::RightParen, .literal = ")", .line = 1}};
+      PUSH("int8", "32", 1),
+  };
 
   for (unsigned int i = 0; i < test_tokens.size(); i++) {
     auto a = tokens[i];
@@ -44,54 +65,52 @@ TEST(Lexer, SimpleTest) {
   exit(EXIT_SUCCESS);
 }
 
-#define ADD_TOKEN(tp, lit, ln)                                                 \
-  Token { .type = TokenType::tp, .literal = lit, .line = ln }
-
-#define PUSH(tp, val, ln)                                                      \
-  Token{.type = TokenType::Push, .literal = "push", .line = ln},                \
-      Token{.type = TokenType::Word, .literal = tp, .line = ln},           \
-      Token{.type = TokenType::LeftParen, .literal = "(", .line = ln},          \
-      Token{.type = TokenType::Word, .literal = val, .line = ln},              \
-      Token{.type = TokenType::RightParen, .literal = ")", .line = ln}
-
 TEST(Parser, SubjectProgram) {
   ISOLATE_TEST();
 
   std::vector<Token> subject_tokens = {
-			PUSH("int32", "32", 1),
-      Token{.type = TokenType::Push, .literal = "push", .line = 1},
-      Token{.type = TokenType::Word, .literal = "int32", .line = 1},
-      Token{.type = TokenType::LeftParen, .literal = "(", .line = 1},
-      Token{.type = TokenType::Word, .literal = "32", .line = 1},
-      Token{.type = TokenType::RightParen, .literal = ")", .line = 1},
-
-      Token{.type = TokenType::Sep, .literal = "<newline>", .line = 1},
-
-      Token{.type = TokenType::Push, .literal = "push", .line = 2},
-      Token{.type = TokenType::Word, .literal = "int32", .line = 2},
-      Token{.type = TokenType::LeftParen, .literal = "(", .line = 2},
-      Token{.type = TokenType::Word, .literal = "32", .line = 2},
-      Token{.type = TokenType::RightParen, .literal = ")", .line = 2},
-
-      Token{.type = TokenType::Sep, .literal = "<newline>", .line = 2},
-
-      Token{.type = TokenType::Add, .literal = "add", .line = 3},
-
-      Token{.type = TokenType::Push, .literal = "push", .line = 4},
-      Token{.type = TokenType::Word, .literal = "float", .line = 4},
-      Token{.type = TokenType::LeftParen, .literal = "(", .line = 4},
-      Token{.type = TokenType::Word, .literal = "44.55", .line = 4},
-      Token{.type = TokenType::RightParen, .literal = ")", .line = 4},
-
-      Token{.type = TokenType::Sep, .literal = "<newline>", .line = 4},
-
-      Token{.type = TokenType::Mul, .literal = "mul", .line = 5},
-
-      // @clang-format off
+      PUSH("int32", "32", 1),
+      PUSH("int32", "32", 2),
+      ADD(3),
+      PUSH("float", "44.55", 4),
+      MUL(5),
+      PUSH("double", "42", 6),
+      PUSH("int32", "42", 7),
+      DUMP(8),
+      POP(9),
+      ASSERT("double", "42.42", 10),
+      EXIT(11),
   };
-  // @clang-format on
 
-  Parser parser;
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "32"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "32"}},
+		Instruction{.command = TokenType::Add, .value = VmValue()},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Float, .value = "44.55"}},
+		Instruction{.command = TokenType::Mul, .value = VmValue()},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Double, .value = "42"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "42"}},
+		Instruction{.command = TokenType::Dump, .value = VmValue()},
+		Instruction{.command = TokenType::Pop, .value = VmValue()},
+		Instruction{.command = TokenType::Assert, .value = VmValue{.type = eOperandType::Double, .value = "42.42"}},
+		Instruction{.command = TokenType::Exit, .value = VmValue()},
+      // clang-format on
+  };
+
+  Parser parser(subject_tokens);
+  std::vector<Instruction> instructions = parser.parse(false);
+
+  ASSERT_EQ(instructions.size(), test_instructions.size());
+
+  for (unsigned int i = 0; i < instructions.size(); i++) {
+    auto a = instructions[i];
+    auto b = test_instructions[i];
+
+    ASSERT_EQ(a.value.value, b.value.value);
+    ASSERT_EQ(a.value.type, b.value.type);
+    ASSERT_EQ(a.command, b.command);
+  }
 
   exit(EXIT_SUCCESS);
 }

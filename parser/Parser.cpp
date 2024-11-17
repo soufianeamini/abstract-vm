@@ -1,7 +1,6 @@
 #include "Parser.hpp"
 #include "../avm-lib/utils.hpp"
 #include "../exceptions/ParserException.hpp"
-#include "../operand/OperandFactory.hpp"
 #include "Instruction.hpp"
 #include "VmValue.hpp"
 #include <fmt/format.h>
@@ -104,7 +103,6 @@ VmValue Parser::parseValue() {
     throw std::invalid_argument("invalid_number: " + value.literal);
 
   VmValue operand;
-  OperandFactory of;
   try {
     if (precision.literal == "int8")
       operand = VmValue{.type = eOperandType::Int8, .value = value.literal};
