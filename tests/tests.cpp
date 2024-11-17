@@ -1,8 +1,6 @@
 #include "../lexer/Lexer.hpp"
 #include <cstdlib>
 #include <gtest/gtest.h>
-#include <iostream>
-#include <queue>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>

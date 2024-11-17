@@ -79,10 +79,15 @@ void Vm::div() {
   const IOperand *b = this->stack.back();
   this->stack.pop_back();
 
-  if (b->toString() == "0")
+  if (b->toString() == "0") {
+    delete a;
+    delete b;
     throw VmException(VmException::Type::DivisionByZero);
+  }
 
   const IOperand *result = *b / *a;
+  delete a;
+  delete b;
   this->stack.push_back(result);
 }
 
@@ -95,6 +100,8 @@ void Vm::mul() {
   this->stack.pop_back();
 
   const IOperand *result = *b * *a;
+  delete a;
+  delete b;
   this->stack.push_back(result);
 }
 
@@ -107,6 +114,8 @@ void Vm::sub() {
   this->stack.pop_back();
 
   const IOperand *result = *b - *a;
+  delete a;
+  delete b;
   this->stack.push_back(result);
 }
 
@@ -119,6 +128,8 @@ void Vm::add() {
   this->stack.pop_back();
 
   const IOperand *result = *b + *a;
+  delete a;
+  delete b;
   this->stack.push_back(result);
 }
 
@@ -131,6 +142,7 @@ void Vm::push() {
 void Vm::pop() {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
+  delete this->stack.back();
   this->stack.pop_back();
 }
 
@@ -139,7 +151,7 @@ void Vm::vmAssert() const {
     throw VmException(VmException::Type::EmptyStack);
 
   std::string actual = stack.back()->toString();
-	// TODO: I think the instruction pointer has to be incremented here
+  // TODO: I think the instruction pointer has to be incremented here
   std::string expected = ip->value.value;
 
   if (actual != expected)
@@ -156,4 +168,8 @@ void Vm::dumpStack() const {
   }
 }
 
-Vm::~Vm() {}
+Vm::~Vm() {
+  for (auto ptr : this->stack) {
+    delete ptr;
+  }
+}

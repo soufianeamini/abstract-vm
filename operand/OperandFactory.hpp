@@ -3,11 +3,8 @@
 #include "IOperand.hpp"
 #include <array>
 #include <functional>
-#include <memory>
-#include <vector>
 class OperandFactory {
 private:
-  static std::vector<std::unique_ptr<const IOperand>> operands;
   std::array<std::function<IOperand const *(const OperandFactory *,
                                             std::string const &)>,
              5>
@@ -26,5 +23,4 @@ private:
 public:
   IOperand const *createOperand(eOperandType type,
                                 std::string const &value) const;
-	void releaseMem();
 };

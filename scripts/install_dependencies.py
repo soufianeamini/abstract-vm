@@ -9,11 +9,6 @@ deps_dir = root_path / "deps"
 install_dir = root_path / "external-libs"
 cmake_command = f"cmake -DFMT_TEST=OFF -DJSON_BuildTests=OFF -DCMAKE_INSTALL_PREFIX:PATH={install_dir} .."
 
-# print(root_path)
-# print(deps_dir)
-# print(install_dir)
-# print(cmake_command)
-
 def download_cmake_lib(url: str, tag: str, name: str):
     target_dir = deps_dir / name
 

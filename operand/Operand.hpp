@@ -4,10 +4,10 @@
 #include "OperandFactory.hpp"
 #include <cmath>
 #include <cstdint>
+#include <fmt/format.h>
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <fmt/format.h>
 
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -136,6 +136,7 @@ public:
 
       return of.createOperand(E, std::to_string(this->value / value));
     } else {
+      // FIX: this leaks memory. sigh...
       auto new_operand = of.createOperand(rhs.getType(), this->toString());
       return *new_operand / rhs;
     }
@@ -163,6 +164,7 @@ public:
 
       return of.createOperand(E, std::to_string(new_value));
     } else {
+      // FIX: this leaks memory. sigh...
       auto new_operand = of.createOperand(rhs.getType(), this->toString());
       return *new_operand % rhs;
     }
@@ -196,6 +198,7 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
 
     return of.createOperand(eOperandType::Double, std::to_string(new_value));
   } else {
+    // FIX: this leaks memory. sigh...
     auto new_operand = of.createOperand(rhs.getType(), this->toString());
     return *new_operand % rhs;
   }
@@ -226,6 +229,7 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
 
     return of.createOperand(eOperandType::Float, std::to_string(new_value));
   } else {
+			// FIX: this leaks memory. sigh...
     auto new_operand = of.createOperand(rhs.getType(), this->toString());
     return *new_operand % rhs;
   }

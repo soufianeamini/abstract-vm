@@ -3,10 +3,6 @@
 #include "Operand.hpp"
 #include <cstdint>
 #include <fmt/format.h>
-#include <memory>
-#include <utility>
-
-std::vector<std::unique_ptr<const IOperand>> OperandFactory::operands;
 
 IOperand const *OperandFactory::createOperand(eOperandType type,
                                               std::string const &value) const {
@@ -14,8 +10,6 @@ IOperand const *OperandFactory::createOperand(eOperandType type,
       createOp = createFunctions[fmt::underlying(type)];
 
   const IOperand *operand = createOp(this, value);
-  std::unique_ptr<const IOperand> ptr(operand);
-  operands.emplace_back(std::move(ptr));
   return operand;
 }
 
@@ -38,8 +32,6 @@ IOperand const *OperandFactory::createFloat(std::string const &value) const {
 IOperand const *OperandFactory::createDouble(std::string const &value) const {
   return new Operand<eOperandType::Double, double>(value);
 }
-
-void OperandFactory::releaseMem() { this->operands.clear(); }
 
 std::string format_as(const IOperand &op) {
   return fmt::format("Operand {{ Op: {}, value: {} }}",
