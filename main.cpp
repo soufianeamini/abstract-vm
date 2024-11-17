@@ -3,7 +3,6 @@
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
 #include "lexer/Lexer.hpp"
-#include "operand/IOperand.hpp"
 #include "parser/Instruction.hpp"
 #include "parser/Parser.hpp"
 #include "vm/InputHandler.hpp"
@@ -15,11 +14,8 @@
 #include <string>
 
 void printInstruction(const Instruction &i) {
-  if (i.value) {
-    fmt::println("Instruction: {}, Value: {}", fmt::underlying(i.command),
-                 i.value->toString());
-  } else
-    fmt::println("Instruction: {}", fmt::underlying(i.command));
+  fmt::println("Instruction: {}, Value: {}", fmt::underlying(i.command),
+               i.value.value);
 }
 
 void FileMode(const char *arg) {
@@ -53,7 +49,7 @@ void Repl() {
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
-	// TODO: change std::getline() to InputHandler::ReadLine()
+  // TODO: change std::getline() to InputHandler::ReadLine()
   while (std::getline(std::cin, line)) {
     Lexer lexer;
     // should pass line as well

@@ -32,7 +32,7 @@ void Vm::interpret() {
       this->dumpStack();
       break;
     case TokenType::Assert:
-      this->vm_assert();
+      this->vmAssert();
       break;
     case TokenType::Add:
       this->add();
@@ -122,7 +122,11 @@ void Vm::add() {
   this->stack.push_back(result);
 }
 
-void Vm::push() { stack.push_back(ip->value); }
+void Vm::push() {
+  OperandFactory of;
+  const IOperand *operand = of.createOperand(ip->value.type, ip->value.value);
+  stack.push_back(operand);
+}
 
 void Vm::pop() {
   if (stack.size() == 0)
@@ -130,20 +134,24 @@ void Vm::pop() {
   this->stack.pop_back();
 }
 
-void Vm::vm_assert() const {
+void Vm::vmAssert() const {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
 
   std::string actual = stack.back()->toString();
-  std::string expected = ip->value->toString();
+	// TODO: I think the instruction pointer has to be incremented here
+  std::string expected = ip->value.value;
+
   if (actual != expected)
     throw VmException(VmException::Type::Assert);
 }
 
 void Vm::dumpStack() const {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-		// TODO: make vm write to an internal buffer, so that the main function writes what's in the buffer to the stdout
-		// This allows the vm to be more testable
+
+    // TODO: make vm write to an internal buffer, so that the main function
+    // writes what's in the buffer to the stdout This allows the vm to be more
+    // testable
     fmt::println("{}", (*it)->toString());
   }
 }
