@@ -233,11 +233,28 @@ TEST(ParserException, SyntaxError) {
   };
 
   Parser parser(tokens);
-  auto instructions = parser.parse(false);
+  auto _ = parser.parse(false);
   ASSERT_EQ(parser.getErrorState(), true);
   ASSERT_EQ(parser.getErrors().size(), (unsigned long)1);
   std::string error = parser.getErrors()[0];
   ASSERT_EQ(error.find("Syntax Error") != error.npos, true);
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(ParserException, Overflow) {
+  ISOLATE_TEST();
+
+  std::vector<Token> tokens = {
+      PUSH("int8", "800000", 1),
+  };
+
+  Parser parser(tokens);
+  auto _ = parser.parse(false);
+  ASSERT_EQ(parser.getErrorState(), true);
+  ASSERT_EQ(parser.getErrors().size(), 1ul);
+  std::string err = parser.getErrors()[0];
+  ASSERT_EQ(err.find("Overflow") != err.npos, true);
 
   exit(EXIT_SUCCESS);
 }
@@ -250,5 +267,7 @@ TEST(ParserException, SyntaxError) {
 // NoExitInstruction,
 // Assert,
 // TooFewStackValues,
+
+// TODO: Test multiple errors in succession
 
 #undef ISOLATE_TEST

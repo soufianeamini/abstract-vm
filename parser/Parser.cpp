@@ -106,27 +106,36 @@ VmValue Parser::parseValue() {
   }
 
   VmValue operand;
+  OperandFactory of;
+  const IOperand *ptr = nullptr;
   try {
-    if (precision.literal == "int8")
+    if (precision.literal == "int8") {
+      ptr = of.createOperand(eOperandType::Int8, value.literal);
       operand = VmValue{.type = eOperandType::Int8, .value = value.literal};
-    else if (precision.literal == "int16")
+    } else if (precision.literal == "int16") {
+      ptr = of.createOperand(eOperandType::Int16, value.literal);
       operand = VmValue{.type = eOperandType::Int16, .value = value.literal};
-    else if (precision.literal == "int32")
+    } else if (precision.literal == "int32") {
+      ptr = of.createOperand(eOperandType::Int32, value.literal);
       operand = VmValue{.type = eOperandType::Int32, .value = value.literal};
-    else if (precision.literal == "float")
+    } else if (precision.literal == "float") {
+      ptr = of.createOperand(eOperandType::Float, value.literal);
       operand = VmValue{.type = eOperandType::Float, .value = value.literal};
-    else if (precision.literal == "double")
+    } else if (precision.literal == "double") {
+      ptr = of.createOperand(eOperandType::Double, value.literal);
       operand = VmValue{.type = eOperandType::Double, .value = value.literal};
-    else
+    } else
       consume(TokenType::Dummy);
 
   } catch (std::out_of_range &e) {
+    delete ptr;
     if (value.literal[0] == '-')
       throw ParserException(ParserException::Type::Underflow, value);
     else
       throw ParserException(ParserException::Type::Overflow, value);
   }
 
+  delete ptr;
   return operand;
 }
 
