@@ -1,12 +1,13 @@
-#define DEBUG
+// #define DEBUG
 
-#include "external-libs/include/fmt/format.h"
-#include "fmt/format.h"
+#include "avm-fmt/Formatter.hpp"
 #include "avm-lexer/Lexer.hpp"
 #include "avm-parser/Instruction.hpp"
 #include "avm-parser/Parser.hpp"
 #include "avm-virtual-machine/InputHandler.hpp"
 #include "avm-virtual-machine/Vm.hpp"
+#include "external-libs/include/fmt/format.h"
+#include "fmt/format.h"
 #include <cstdio>
 #include <fmt/base.h>
 #include <gtest/gtest.h>
@@ -18,10 +19,18 @@ void printInstruction(const Instruction &i) {
                i.value.value);
 }
 
+void PrintFormattedVersion(const std::string &source) {
+  Formatter formatter;
+  fmt::println("Formatted Input:");
+  fmt::println("{}", *formatter.formatAvm(source));
+}
+
 void FileMode(const char *arg) {
   std::string filename = arg;
 
+  // TODO: handle file not existing:
   std::string source = InputHandler::ReadFile(filename);
+  PrintFormattedVersion(source);
   Lexer lexer;
   auto tokens = lexer.lex(source);
   Parser parser(tokens);
@@ -96,7 +105,7 @@ int main(int argc, char *argv[]) {
       fmt::println(stderr, "Usage: ./avm [.avm file]");
     }
   } catch (std::exception &e) {
-    fmt::println(stderr, "{}", e.what());
+    fmt::println(stderr, "error: {}", e.what());
   }
   return 0;
 #endif

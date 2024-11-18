@@ -2,8 +2,8 @@
 #include "../avm-lexer/Lexer.hpp"
 #include <optional>
 
-std::optional<std::string> Formatter::format_avm(const std::string &input) {
-
+// TODO: handle keeping comments, perhaps the lexer can handle different modes
+std::optional<std::string> Formatter::formatAvm(const std::string &input) {
   Lexer lexer;
   std::vector<Token> tokens = lexer.lex(input);
   // TODO: Parse it to verify that it's a valid string, and only return a valid
@@ -17,11 +17,38 @@ std::optional<std::string> Formatter::format_avm(const std::string &input) {
 
 std::vector<Token>
 Formatter::removeDuplicateSep(const std::vector<Token> &tokens) {
-  // TODO: remove duplicate SEP tokens, however other whitespaces is already
-  // removed from the lexing step
-  // NOTE: If there are more than 2 sep tokens, reduce them to 2 instead. But if
-  // there are 2 or 1 sep token just leave them as is
   std::vector<Token> new_tokens;
+  int sepCooldown = 0;
+
+  for (Token token : tokens) {
+    if (token.type == TokenType::Sep) {
+      if (sepCooldown < 2) {
+        sepCooldown++;
+        new_tokens.push_back(token);
+      }
+    } else {
+      sepCooldown = 0;
+      new_tokens.push_back(token);
+    }
+  }
 
   return new_tokens;
+}
+
+std::string Formatter::emitStringFromTokens(const std::vector<Token> &tokens) {
+  std::string result;
+
+  for (const auto &token : tokens) {
+    if (token.type == TokenType::Sep) {
+      result += "\n";
+    } else {
+      if (token.type == TokenType::Push) {
+        result += token.literal + " ";
+      } else {
+        result += token.literal;
+      }
+    }
+  }
+
+  return result;
 }
