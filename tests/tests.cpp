@@ -1,4 +1,3 @@
-#include "../exceptions/ParserException.hpp"
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
 #include "../vm/Vm.hpp"
@@ -10,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <vector>
 
 #define ISOLATE_TEST()                                                         \
   pid_t pid = fork();                                                          \
@@ -212,13 +212,43 @@ TEST(Parser, InvalidNumbers) {
     auto instructions = parser.parse(false);
     ASSERT_EQ(1, 2) << "Invalid Argument Exception hasn't been thrown";
   } catch (std::invalid_argument &e) {
-		ASSERT_EQ(parser.getErrorState(), true);
+    ASSERT_EQ(parser.getErrorState(), true);
   }
 
   exit(EXIT_SUCCESS);
 }
 
 // TODO: Test ParserExceptions
+// SyntaxError,
+// UnknownInstruction,
+// Overflow,
+// Underflow,
+
+TEST(ParserException, SyntaxError) {
+  ISOLATE_TEST();
+
+  std::vector<Token> tokens = {
+      TOKEN(Push, "push", 1),
+      TOKEN(LeftParen, "(", 1),
+  };
+
+  Parser parser(tokens);
+  auto instructions = parser.parse(false);
+  ASSERT_EQ(parser.getErrorState(), true);
+  ASSERT_EQ(parser.getErrors().size(), (unsigned long)1);
+  std::string error = parser.getErrors()[0];
+  ASSERT_EQ(error.find("Syntax Error") != error.npos, true);
+
+  exit(EXIT_SUCCESS);
+}
+
 // TODO: Test VmExceptions
+// Overflow,
+// Underflow,
+// EmptyStack,
+// DivisionByZero,
+// NoExitInstruction,
+// Assert,
+// TooFewStackValues,
 
 #undef ISOLATE_TEST
