@@ -2,11 +2,11 @@
 
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
-#include "lexer/Lexer.hpp"
-#include "parser/Instruction.hpp"
-#include "parser/Parser.hpp"
-#include "vm/InputHandler.hpp"
-#include "vm/Vm.hpp"
+#include "avm-lexer/Lexer.hpp"
+#include "avm-parser/Instruction.hpp"
+#include "avm-parser/Parser.hpp"
+#include "avm-virtual-machine/InputHandler.hpp"
+#include "avm-virtual-machine/Vm.hpp"
 #include <cstdio>
 #include <fmt/base.h>
 #include <gtest/gtest.h>

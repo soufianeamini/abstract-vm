@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../operand/Operand.hpp"
+#include "../avm-operand/Operand.hpp"
 
 struct VmValue {
 	eOperandType type;

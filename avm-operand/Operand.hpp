@@ -1,5 +1,5 @@
 #include "../avm-arithmetic/checked_arithmetic.hpp"
-#include "../exceptions/VmException.hpp"
+#include "../avm-exceptions/VmException.hpp"
 #include "IOperand.hpp"
 #include "OperandFactory.hpp"
 #include <cmath>

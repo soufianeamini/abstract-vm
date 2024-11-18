@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lexer/Token.hpp"
+#include "../avm-lexer/Token.hpp"
 #include "VmValue.hpp"
 
 struct Instruction {

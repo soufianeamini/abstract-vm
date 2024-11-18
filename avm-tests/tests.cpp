@@ -1,6 +1,6 @@
-#include "../lexer/Lexer.hpp"
-#include "../parser/Parser.hpp"
-#include "../vm/Vm.hpp"
+#include "../avm-lexer/Lexer.hpp"
+#include "../avm-parser/Parser.hpp"
+#include "../avm-virtual-machine/Vm.hpp"
 #include <cstdlib>
 #include <fmt/base.h>
 #include <fmt/format.h>
@@ -426,9 +426,11 @@ TEST(VmException, Assert) {
   ISOLATE_TEST();
 
   std::vector<Instruction> test_instructions = {
-		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "2"}},
-		Instruction{.command = TokenType::Assert, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
-	};
+      Instruction{.command = TokenType::Push,
+                  .value = VmValue{.type = eOperandType::Int32, .value = "2"}},
+      Instruction{.command = TokenType::Assert,
+                  .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+  };
 
   Vm vm(test_instructions);
   try {

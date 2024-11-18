@@ -1,6 +1,6 @@
-SRCS	=	avm-lib/utils.cpp exceptions/ParserException.cpp exceptions/VmException.cpp lexer/Lexer.cpp main.cpp operand/OperandFactory.cpp parser/Parser.cpp vm/InputHandler.cpp vm/Vm.cpp lexer/Token.cpp tests/tests.cpp
+SRCS	=	avm-lib/utils.cpp avm-exceptions/ParserException.cpp avm-exceptions/VmException.cpp avm-lexer/Lexer.cpp main.cpp avm-operand/OperandFactory.cpp avm-parser/Parser.cpp avm-virtual-machine/InputHandler.cpp avm-virtual-machine/Vm.cpp avm-lexer/Token.cpp avm-tests/tests.cpp
 
-HEADER = avm-arithmetic/checked_arithmetic.hpp  exceptions/ParserException.hpp  lexer/Token.hpp operand/Operand.hpp vm/InputHandler.hpp avm-lib/safe-math.h exceptions/VmException.hpp operand/IOperand.hpp parser/Instruction.hpp vm/Vm.hpp avm-lib/utils.hpp lexer/Lexer.hpp  operand/OperandFactory.hpp parser/Parser.hpp
+HEADER = avm-arithmetic/checked_arithmetic.hpp  avm-exceptions/ParserException.hpp  avm-lexer/Token.hpp avm-operand/Operand.hpp avm-virtual-machine/InputHandler.hpp avm-lib/safe-math.h avm-exceptions/VmException.hpp avm-operand/IOperand.hpp avm-parser/Instruction.hpp avm-virtual-machine/Vm.hpp avm-lib/utils.hpp avm-lexer/Lexer.hpp  avm-operand/OperandFactory.hpp avm-parser/Parser.hpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 

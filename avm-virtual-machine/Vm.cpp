@@ -1,5 +1,5 @@
 #include "Vm.hpp"
-#include "../exceptions/VmException.hpp"
+#include "../avm-exceptions/VmException.hpp"
 #include <fmt/base.h>
 #include <fmt/format.h>
 

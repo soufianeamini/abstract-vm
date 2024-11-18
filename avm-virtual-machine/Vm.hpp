@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../parser/Instruction.hpp"
+#include "../avm-parser/Instruction.hpp"
 #include <deque>
 #include <vector>
 

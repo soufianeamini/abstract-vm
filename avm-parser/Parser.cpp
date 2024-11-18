@@ -1,6 +1,6 @@
 #include "Parser.hpp"
 #include "../avm-lib/utils.hpp"
-#include "../exceptions/ParserException.hpp"
+#include "../avm-exceptions/ParserException.hpp"
 #include "Instruction.hpp"
 #include "VmValue.hpp"
 #include <fmt/format.h>

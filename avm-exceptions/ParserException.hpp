@@ -1,6 +1,6 @@
 #pragma once
 #include <exception>
-#include "../lexer/Token.hpp"
+#include "../avm-lexer/Token.hpp"
 
 class ParserException : public std::exception {
 public:
