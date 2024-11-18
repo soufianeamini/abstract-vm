@@ -170,7 +170,6 @@ void Vm::vmAssert() const {
     throw VmException(VmException::Type::EmptyStack);
 
   std::string actual = stack.back()->toString();
-  // TODO: I think the instruction pointer has to be incremented here
   std::string expected = ip->value.value;
 
   if (actual != expected)
