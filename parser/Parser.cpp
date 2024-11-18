@@ -18,6 +18,7 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
         consume(TokenType::Sep);
     } catch (ParserException &e) {
       hasErrored = true;
+      recoverParser();
       std::string errMsg = fmt::format("{} {}", e.what(), e.getLineInfo());
       errors.push_back(errMsg);
     }
