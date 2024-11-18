@@ -198,6 +198,17 @@ TEST(VirtualMachine, SubjectProgram) {
   exit(EXIT_SUCCESS);
 }
 
+TEST(Parser, InvalidNumbers) {
+  ISOLATE_TEST();
+  Parser parser;
+
+  std::vector<Token> tokens = {
+      PUSH("int32", "42.2", 1),
+  };
+
+  exit(EXIT_SUCCESS);
+}
+
 // TODO: Test invalid string numbers
 // TODO: Test ParserExceptions
 // TODO: Test VmExceptions

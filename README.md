@@ -29,8 +29,20 @@ The avm will read the file and execute the instructions in it provided the assem
 
 ## How to run tests
 
-In order to run tests, you need to have rust and cargo installed.
-To run tests, execute the command `make test`.
+There are two tests: Unit tests and integration tests.
+
+1. Unit tests
+To run unit tests, make sure to uncomment the `#define DEBUG` line at the top of the main.cpp file. Then run `make run`.
+
+2. Integration tests
+In order to run integration tests, make sure the line `#define DEBUG` at the top of main.cpp is commented out.
+Then run the following commands:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install ward
+ward -p tests/
+```
 
 ## Features
 
