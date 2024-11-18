@@ -1,3 +1,4 @@
+#include "../exceptions/ParserException.hpp"
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
 #include "../vm/Vm.hpp"
@@ -5,6 +6,7 @@
 #include <fmt/base.h>
 #include <fmt/format.h>
 #include <gtest/gtest.h>
+#include <stdexcept>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -200,16 +202,22 @@ TEST(VirtualMachine, SubjectProgram) {
 
 TEST(Parser, InvalidNumbers) {
   ISOLATE_TEST();
-  Parser parser;
 
   std::vector<Token> tokens = {
-      PUSH("int32", "42.2", 1),
+      PUSH("int32", "ew", 1),
   };
+
+  Parser parser(tokens);
+  try {
+    auto instructions = parser.parse(false);
+    ASSERT_EQ(1, 2) << "Invalid Argument Exception hasn't been thrown";
+  } catch (std::invalid_argument &e) {
+		ASSERT_EQ(parser.getErrorState(), true);
+  }
 
   exit(EXIT_SUCCESS);
 }
 
-// TODO: Test invalid string numbers
 // TODO: Test ParserExceptions
 // TODO: Test VmExceptions
 

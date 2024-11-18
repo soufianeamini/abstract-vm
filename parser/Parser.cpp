@@ -99,8 +99,11 @@ VmValue Parser::parseValue() {
   Token value = consume(TokenType::Word);
   consume(TokenType::RightParen);
 
-  if (!utils::is_valid_number(value.literal))
+  if (!utils::is_valid_number(value.literal)) {
+    // TODO: Switch to a new ParserException
+    hasErrored = true;
     throw std::invalid_argument("invalid_number: " + value.literal);
+  }
 
   VmValue operand;
   try {
