@@ -29,6 +29,7 @@ private:
   void add();
   void sub();
   void mul();
+	void mod();
   void div();
   void print();
 

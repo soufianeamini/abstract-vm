@@ -270,14 +270,124 @@ TEST(ParserException, Underflow) {
   exit(EXIT_SUCCESS);
 }
 
+TEST(VmException, Overflow) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "2147483646"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "2147483646"}},
+		Instruction{.command = TokenType::Add, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Overflow Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("Overflow") != err.npos, true);
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, Underflow) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "-2147483646"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "2147483646"}},
+		Instruction{.command = TokenType::Sub, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Underflow Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("Underflow") != err.npos, true);
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, TooFewStackValues) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "-2147483646"}},
+		Instruction{.command = TokenType::Sub, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "TooFewStackValues Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("Stack") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, DivisionByZero) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+		Instruction{.command = TokenType::Div, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Division/modulo By Zero Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("Division") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, ModuloByZero) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+		Instruction{.command = TokenType::Mod, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Division/modulo By Zero Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("modulo") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
 // TODO: Test VmExceptions
-// Overflow,
-// Underflow,
-// EmptyStack,
-// DivisionByZero,
+// EmptyStack
 // NoExitInstruction,
 // Assert,
-// TooFewStackValues,
 
 // TODO: Test multiple errors in succession
 

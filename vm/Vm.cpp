@@ -44,6 +44,9 @@ void Vm::interpret() {
     case TokenType::Mul:
       this->mul();
       break;
+    case TokenType::Mod:
+      this->mod();
+      break;
     case TokenType::Div:
       this->div();
       break;
@@ -106,6 +109,26 @@ void Vm::div() {
   }
 
   const IOperand *result = *b / *a;
+  delete a;
+  delete b;
+  this->stack.push_back(result);
+}
+
+void Vm::mod() {
+  if (stack.size() < 2)
+    throw VmException(VmException::Type::TooFewStackValues);
+  const IOperand *a = this->stack.back();
+  this->stack.pop_back();
+  const IOperand *b = this->stack.back();
+  this->stack.pop_back();
+
+  if (b->toString() == "0") {
+    delete a;
+    delete b;
+    throw VmException(VmException::Type::DivisionByZero);
+  }
+
+  const IOperand *result = *b % *a;
   delete a;
   delete b;
   this->stack.push_back(result);
