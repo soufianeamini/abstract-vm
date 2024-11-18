@@ -218,12 +218,6 @@ TEST(Parser, InvalidNumbers) {
   exit(EXIT_SUCCESS);
 }
 
-// TODO: Test ParserExceptions
-// SyntaxError,
-// UnknownInstruction,
-// Overflow,
-// Underflow,
-
 TEST(ParserException, SyntaxError) {
   ISOLATE_TEST();
 
@@ -255,6 +249,23 @@ TEST(ParserException, Overflow) {
   ASSERT_EQ(parser.getErrors().size(), 1ul);
   std::string err = parser.getErrors()[0];
   ASSERT_EQ(err.find("Overflow") != err.npos, true);
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(ParserException, Underflow) {
+  ISOLATE_TEST();
+
+  std::vector<Token> tokens = {
+      PUSH("int8", "-800000", 1),
+  };
+
+  Parser parser(tokens);
+  auto _ = parser.parse(false);
+  ASSERT_EQ(parser.getErrorState(), true);
+  ASSERT_EQ(parser.getErrors().size(), 1ul);
+  std::string err = parser.getErrors()[0];
+  ASSERT_EQ(err.find("Underflow") != err.npos, true);
 
   exit(EXIT_SUCCESS);
 }
