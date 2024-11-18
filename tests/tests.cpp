@@ -192,10 +192,14 @@ TEST(VirtualMachine, SubjectProgram) {
   vm.interpret();
   std::string actual = vm.getOutput();
 
-  std::string expected = "42\n42.42\n3341.25";
+  std::string expected = "42\n42.42\n3341.25\n";
   ASSERT_EQ(expected, actual);
 
   exit(EXIT_SUCCESS);
 }
+
+// TODO: Test invalid string numbers
+// TODO: Test ParserExceptions
+// TODO: Test VmExceptions
 
 #undef ISOLATE_TEST

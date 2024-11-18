@@ -64,6 +64,22 @@ void Vm::interpret() {
   throw VmException(VmException::Type::NoExitInstruction);
 }
 
+static std::string trimZeroes(std::string value) {
+  size_t i = value.length() - 1;
+  bool hasDot = value.find('.') != value.npos;
+
+  if (!hasDot)
+    return value;
+
+  for (; i >= 0; i--) {
+    if (value[i] != '0')
+      break;
+  }
+
+  std::string trimmedValue = value.substr(0, i + 1);
+  return trimmedValue;
+}
+
 void Vm::writeOutput(std::string out) { this->output += out; }
 
 void Vm::print() {
@@ -71,7 +87,7 @@ void Vm::print() {
     throw VmException(VmException::Type::TooFewStackValues);
   const IOperand *a = this->stack.back();
 
-	this->writeOutput(a->toString() + "\n");
+  this->writeOutput(trimZeroes(a->toString()) + "\n");
 }
 
 void Vm::div() {
@@ -163,17 +179,11 @@ void Vm::vmAssert() const {
 
 void Vm::dumpStack() {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
-
-    // TODO: make vm write to an internal buffer, so that the main function
-    // writes what's in the buffer to the stdout This allows the vm to be more
-    // testable
-		this->writeOutput((*it)->toString() + "\n");
+    this->writeOutput(trimZeroes((*it)->toString()) + "\n");
   }
 }
 
-std::string Vm::getOutput() {
-	return this->output;
-}
+std::string Vm::getOutput() { return this->output; }
 
 Vm::~Vm() {
   for (auto ptr : this->stack) {

@@ -169,10 +169,7 @@ public:
       return *new_operand % rhs;
     }
   }
-  std::string const &toString(void) const {
-    // TODO: Print only two characters after the '.'
-    return toStr;
-  }
+  std::string const &toString(void) const { return toStr; }
   ~Operand(void) {}
 };
 
