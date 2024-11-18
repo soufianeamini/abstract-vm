@@ -5,6 +5,11 @@
 namespace InputHandler {
 std::string ReadFile(const std::string &filename) {
   std::fstream file(filename);
+
+	if (!file) {
+		throw std::runtime_error("invalid file name: " + filename);
+	}
+
   std::stringstream ss;
 
   ss << file.rdbuf();
