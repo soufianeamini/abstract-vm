@@ -29,7 +29,7 @@ $(DEPS): scripts/install_dependencies.py
 
 test: all
 	. .venv/bin/activate
-	ward -p tests/ || echo "Make sure that DEBUG is not set for integration tests"
+	ward -p avm-tests/ || echo "Make sure that DEBUG is not set for integration tests"
 
 run: all
 	./avm
