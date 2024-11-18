@@ -1,6 +1,6 @@
 #include "Parser.hpp"
-#include "../avm-lib/utils.hpp"
 #include "../avm-exceptions/ParserException.hpp"
+#include "../avm-lib/utils.hpp"
 #include "Instruction.hpp"
 #include "VmValue.hpp"
 #include <fmt/format.h>
@@ -14,7 +14,7 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
   while (tokens.size() > 0) {
     try {
       instructions.push_back(parseInstruction(isRepl));
-      while (peek().has_value() && peek()->type == TokenType::Sep)
+      while (peek() && peek()->type == TokenType::Sep)
         consume(TokenType::Sep);
     } catch (ParserException &e) {
       hasErrored = true;
@@ -28,10 +28,10 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
 }
 
 Instruction Parser::parseInstruction(bool isRepl) {
-  while (peek().has_value() && peek()->type == TokenType::Sep)
+  while (peek() && peek()->type == TokenType::Sep)
     consume(TokenType::Sep);
 
-  if (!peek().has_value())
+  if (!peek())
     return generateInstruction(consume(TokenType::Dummy).type);
 
   switch (peek()->type) {
@@ -142,7 +142,7 @@ VmValue Parser::parseValue() {
 
 std::optional<Token> Parser::peek() {
   if (tokens.size() != 0)
-    return std::make_optional(tokens.front());
+    return tokens.front();
   return std::nullopt;
 }
 
@@ -159,9 +159,9 @@ Token Parser::consume(TokenType type) {
 }
 
 void Parser::recoverParser() {
-  while (peek().has_value() && peek()->type != TokenType::Sep)
+  while (peek() && peek()->type != TokenType::Sep)
     tokens.pop_front();
-  while (peek().has_value() && peek()->type == TokenType::Sep)
+  while (peek() && peek()->type == TokenType::Sep)
     tokens.pop_front();
 }
 

@@ -1,4 +1,4 @@
-// #define DEBUG
+#define DEBUG
 
 #include "avm-fmt/Formatter.hpp"
 #include "avm-lexer/Lexer.hpp"
@@ -78,10 +78,9 @@ void formatFile(std::string filename, std::deque<std::string> args) {
   (void)args;
   Formatter formatter;
   std::string source = InputHandler::ReadFile(filename);
-  auto result = formatter.formatAvm(source);
-  if (result.has_value()) {
-    std::string formattedString = *result;
-    fmt::println(formattedString);
+
+  if (auto formattedString = formatter.formatAvm(source)) {
+    fmt::println("{}", *formattedString);
   } else {
     fmt::println(stderr, "Error, couldn't format file: Invalid avm program.");
   }

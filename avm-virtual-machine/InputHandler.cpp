@@ -22,6 +22,7 @@ std::string ReadFile(const std::string &filename) {
 }
 
 std::optional<std::string> ReadLine() {
+	// TODO: use a static buffer for history
   std::string line;
 
   if (std::getline(std::cin, line)) {
