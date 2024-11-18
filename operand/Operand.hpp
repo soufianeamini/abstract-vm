@@ -169,7 +169,10 @@ public:
       return *new_operand % rhs;
     }
   }
-  std::string const &toString(void) const { return toStr; }
+  std::string const &toString(void) const {
+    // TODO: Print only two characters after the '.'
+    return toStr;
+  }
   ~Operand(void) {}
 };
 
@@ -229,7 +232,7 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
 
     return of.createOperand(eOperandType::Float, std::to_string(new_value));
   } else {
-			// FIX: this leaks memory. sigh...
+    // FIX: this leaks memory. sigh...
     auto new_operand = of.createOperand(rhs.getType(), this->toString());
     return *new_operand % rhs;
   }
