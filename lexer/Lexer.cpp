@@ -1,5 +1,6 @@
 #include "Lexer.hpp"
 #include "Token.hpp"
+#include <fmt/base.h>
 #include <map>
 #include <string>
 
@@ -31,6 +32,8 @@ std::vector<Token> Lexer::lex(const std::string &source) {
         tokens.push_back(generateWord(it, current, line));
         word = false;
       }
+      // TODO: Simplify code for slices considering you're not using
+      // string_views anymore
       std::string slice(it, it + 1);
       tokens.push_back(
           Token{.type = TokenType::LeftParen, .literal = slice, .line = line});
@@ -68,10 +71,13 @@ std::vector<Token> Lexer::lex(const std::string &source) {
       break;
     }
     case '\n':
+      if (word) {
+        tokens.push_back(generateWord(it, current, line));
+        word = false;
+      }
       line++;
       tokens.push_back(
           Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
-      [[fallthrough]];
     case ' ':
       if (word) {
         tokens.push_back(generateWord(it, current, line));
@@ -94,8 +100,8 @@ Token Lexer::generateWord(StrIter it, StrIter current, int line) {
   std::string slice(current, it);
   TokenType type = TokenType::Word;
 
-  if (keywords.find(std::string(slice)) != keywords.end()) {
-    type = keywords.at(std::string(slice));
+  if (keywords.find(slice) != keywords.end()) {
+    type = keywords.at(slice);
   }
 
   return Token{.type = type, .literal = slice, .line = line};
