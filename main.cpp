@@ -12,7 +12,6 @@
 #include <deque>
 #include <fmt/base.h>
 #include <gtest/gtest.h>
-#include <iostream>
 #include <stdexcept>
 #include <string>
 
@@ -36,26 +35,19 @@ void FileMode(std::string filename) {
   }
 
   Vm vm(instructions);
-
-  // for (const auto &i : instructions) {
-  //   printInstruction(i);
-  // }
-
   vm.interpret();
   fmt::print(vm.getOutput());
 }
 
 void Repl() {
-  // int lineNumber = 1;
+  int lineNumber = 1;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
-  // TODO: change std::getline() to InputHandler::ReadLine()
   while (auto line = InputHandler::ReadLine()) {
     Lexer lexer;
-    // should pass line as well
-    auto nTokens = lexer.lex(*line + "\n");
-    // lineNumber++;
+    auto nTokens = lexer.lex(*line + "\n", lineNumber);
+    lineNumber++;
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
 

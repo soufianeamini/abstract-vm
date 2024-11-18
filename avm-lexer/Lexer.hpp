@@ -16,4 +16,5 @@ public:
   Lexer &operator=(const Lexer &other);
   ~Lexer();
   std::vector<Token> lex(const std::string &);
+  std::vector<Token> lex(const std::string &, int line);
 };

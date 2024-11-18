@@ -3,6 +3,7 @@
 #include <fmt/base.h>
 #include <map>
 #include <string>
+#include <vector>
 
 Lexer::Lexer() {
   keywords["add"] = TokenType::Add;
@@ -20,8 +21,11 @@ Lexer::Lexer() {
 }
 
 std::vector<Token> Lexer::lex(const std::string &source) {
+  return lex(source, 1);
+}
+
+std::vector<Token> Lexer::lex(const std::string &source, int line) {
   std::vector<Token> tokens;
-  int line = 1;
   StrIter current = source.cend();
   bool word = false;
 
@@ -78,8 +82,8 @@ std::vector<Token> Lexer::lex(const std::string &source) {
       line++;
       tokens.push_back(
           Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
-		case '\v':
-		case '\t':
+    case '\v':
+    case '\t':
     case ' ':
       if (word) {
         tokens.push_back(generateWord(it, current, line));
