@@ -22,7 +22,6 @@ void printInstruction(const Instruction &i) {
 }
 
 void FileMode(std::string filename) {
-  // TODO: handle file not existing:
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
   auto tokens = lexer.lex(source);
