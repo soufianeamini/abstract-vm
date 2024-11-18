@@ -16,10 +16,13 @@ private:
 
   // Instruction Pointer
   std::vector<Instruction>::const_iterator ip;
+  std::string output;
 
-public:
-  void interpret();
-  void dumpStack() const;
+  // Buffers output to a string before being used in the main function
+  void writeOutput(std::string out);
+
+  // Instructions
+  void dumpStack();
   void vmAssert() const;
   void push();
   void pop();
@@ -27,7 +30,11 @@ public:
   void sub();
   void mul();
   void div();
-  void print() const;
+  void print();
+
+public:
+  void interpret();
+	std::string getOutput();
 
   Vm();
   Vm(const std::vector<Instruction> &instructions);

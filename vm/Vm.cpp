@@ -1,6 +1,7 @@
 #include "Vm.hpp"
 #include "../exceptions/VmException.hpp"
 #include <fmt/base.h>
+#include <fmt/format.h>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -63,12 +64,14 @@ void Vm::interpret() {
   throw VmException(VmException::Type::NoExitInstruction);
 }
 
-void Vm::print() const {
+void Vm::writeOutput(std::string out) { this->output += out; }
+
+void Vm::print() {
   if (stack.size() < 1)
     throw VmException(VmException::Type::TooFewStackValues);
   const IOperand *a = this->stack.back();
 
-  fmt::println("{}", a->toString());
+	this->writeOutput(a->toString() + "\n");
 }
 
 void Vm::div() {
@@ -158,14 +161,18 @@ void Vm::vmAssert() const {
     throw VmException(VmException::Type::Assert);
 }
 
-void Vm::dumpStack() const {
+void Vm::dumpStack() {
   for (auto it = stack.rbegin(); it != stack.rend(); it++) {
 
     // TODO: make vm write to an internal buffer, so that the main function
     // writes what's in the buffer to the stdout This allows the vm to be more
     // testable
-    fmt::println("{}", (*it)->toString());
+		this->writeOutput((*it)->toString() + "\n");
   }
+}
+
+std::string Vm::getOutput() {
+	return this->output;
 }
 
 Vm::~Vm() {

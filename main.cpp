@@ -41,6 +41,7 @@ void FileMode(const char *arg) {
   // }
 
   vm.interpret();
+  fmt::print(vm.getOutput());
 }
 
 void Repl() {
@@ -78,6 +79,7 @@ void Repl() {
 
   Vm vm(instructions);
   vm.interpret();
+  fmt::print(vm.getOutput());
 }
 
 int main(int argc, char *argv[]) {

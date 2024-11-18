@@ -1,5 +1,6 @@
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
+#include "../vm/Vm.hpp"
 #include <cstdlib>
 #include <fmt/base.h>
 #include <fmt/format.h>
@@ -165,6 +166,35 @@ TEST(Lexer, Comment) {
   ASSERT_EQ(token.type, TokenType::Sep);
   ASSERT_EQ(token.line, 1);
   ASSERT_EQ(token.literal, "\n");
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VirtualMachine, SubjectProgram) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "42"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "33"}},
+		Instruction{.command = TokenType::Add, .value = VmValue()},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Float, .value = "44.55"}},
+		Instruction{.command = TokenType::Mul, .value = VmValue()},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Double, .value = "42.42"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "42"}},
+		Instruction{.command = TokenType::Dump, .value = VmValue()},
+		Instruction{.command = TokenType::Pop, .value = VmValue()},
+		Instruction{.command = TokenType::Assert, .value = VmValue{.type = eOperandType::Double, .value = "42.42"}},
+		Instruction{.command = TokenType::Exit, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  vm.interpret();
+  std::string actual = vm.getOutput();
+
+  std::string expected = "42\n42.42\n3341.25";
+  ASSERT_EQ(expected, actual);
+
   exit(EXIT_SUCCESS);
 }
 
