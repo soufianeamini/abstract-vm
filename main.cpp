@@ -9,9 +9,11 @@
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
 #include <cstdio>
+#include <deque>
 #include <fmt/base.h>
 #include <gtest/gtest.h>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 
 void printInstruction(const Instruction &i) {
@@ -19,18 +21,9 @@ void printInstruction(const Instruction &i) {
                i.value.value);
 }
 
-void PrintFormattedVersion(const std::string &source) {
-  Formatter formatter;
-  fmt::println("Formatted Input:");
-  fmt::println("{}", *formatter.formatAvm(source));
-}
-
-void FileMode(const char *arg) {
-  std::string filename = arg;
-
+void FileMode(std::string filename) {
   // TODO: handle file not existing:
   std::string source = InputHandler::ReadFile(filename);
-  PrintFormattedVersion(source);
   Lexer lexer;
   auto tokens = lexer.lex(source);
   Parser parser(tokens);
@@ -91,16 +84,55 @@ void Repl() {
   fmt::print(vm.getOutput());
 }
 
+void formatFile(std::string filename, std::deque<std::string> args) {
+  (void)args;
+  Formatter formatter;
+  std::string source = InputHandler::ReadFile(filename);
+  auto result = formatter.formatAvm(source);
+  if (result.has_value()) {
+    std::string formattedString = *result;
+    fmt::println(formattedString);
+  } else {
+    fmt::println(stderr, "Error, couldn't format file: Invalid avm program.");
+  }
+}
+
+void handleOptions(std::deque<std::string> args) {
+  args.pop_front(); // Remove program name
+  try {
+    std::string option = args.at(0);
+    std::string value = args.at(1);
+    if (option == "--format") {
+      args.pop_front();
+      formatFile(value, args);
+    }
+  } catch (std::out_of_range &e) {
+    fmt::println(stderr, "Usage: ./avm --<opt> <value>");
+  }
+}
+
+std::deque<std::string> getArgs(int argc, char *argv[]) {
+  std::deque<std::string> args;
+  for (int i = 0; i < argc; i++) {
+    args.push_back(argv[i]);
+  }
+
+  return args;
+}
+
 int main(int argc, char *argv[]) {
 #ifdef DEBUG
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 #else
+  std::deque<std::string> args = getArgs(argc, argv);
   try {
-    if (argc == 1) {
+    if (args.size() == 1) {
       Repl();
-    } else if (argc == 2) {
-      FileMode(argv[1]);
+    } else if (args.size() == 2) {
+      FileMode(args[1]);
+    } else if (args.size() > 2) {
+      handleOptions(args);
     } else {
       fmt::println(stderr, "Usage: ./avm [.avm file]");
     }
