@@ -1,6 +1,8 @@
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
 #include <cstdlib>
+#include <fmt/base.h>
+#include <fmt/format.h>
 #include <gtest/gtest.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -65,12 +67,49 @@ TEST(Lexer, SimpleTest) {
   exit(EXIT_SUCCESS);
 }
 
+TEST(Lexer, SubjectProgram) {
+  ISOLATE_TEST();
+
+  std::string input = std::string("push int32(42)\n") + "push int32(33)\n" +
+                      "add\n" + "push float(44.55)\n" + "mul\n" +
+                      "push double(42.42)\n" + "push int32(42)\n" + "dump\n" +
+                      "pop\n" + "assert double(42.42)\n" + "exit\n" + ";;";
+
+  std::vector<Token> test_tokens = {
+      PUSH("int32", "42", 1),
+      PUSH("int32", "33", 2),
+      ADD(3),
+      PUSH("float", "44.55", 4),
+      MUL(5),
+      PUSH("double", "42.42", 6),
+      PUSH("int32", "42", 7),
+      DUMP(8),
+      POP(9),
+      ASSERT("double", "42.42", 10),
+      EXIT(11),
+  };
+  Lexer lexer;
+
+  auto tokens = lexer.lex(input);
+
+  for (unsigned int i = 0; i < test_tokens.size(); i++) {
+    auto a = tokens[i];
+    auto b = test_tokens[i];
+
+    ASSERT_EQ(a.type, b.type) << fmt::format("a: {}, b: {}", a, b);
+    ASSERT_EQ(a.literal, b.literal) << fmt::format("a: {}, b: {}", a, b);
+    ASSERT_EQ(a.line, b.line) << fmt::format("a: {}, b: {}", a, b);
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
 TEST(Parser, SubjectProgram) {
   ISOLATE_TEST();
 
   std::vector<Token> subject_tokens = {
-      PUSH("int32", "32", 1),
-      PUSH("int32", "32", 2),
+      PUSH("int32", "42", 1),
+      PUSH("int32", "33", 2),
       ADD(3),
       PUSH("float", "44.55", 4),
       MUL(5),
@@ -84,8 +123,8 @@ TEST(Parser, SubjectProgram) {
 
   std::vector<Instruction> test_instructions = {
       // clang-format off
-		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "32"}},
-		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "32"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "42"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "33"}},
 		Instruction{.command = TokenType::Add, .value = VmValue()},
 		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Float, .value = "44.55"}},
 		Instruction{.command = TokenType::Mul, .value = VmValue()},
