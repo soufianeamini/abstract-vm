@@ -384,10 +384,63 @@ TEST(VmException, ModuloByZero) {
   exit(EXIT_SUCCESS);
 }
 
-// TODO: Test VmExceptions
-// EmptyStack
-// NoExitInstruction,
-// Assert,
+TEST(VmException, EmptyStack) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+      // clang-format off
+		Instruction{.command = TokenType::Pop, .value = VmValue()},
+      // clang-format on
+  };
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Empty Stack Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("empty stack") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, NoExitInstruction) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {};
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "NoExitInstruction Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("no exit instruction") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+TEST(VmException, Assert) {
+  ISOLATE_TEST();
+
+  std::vector<Instruction> test_instructions = {
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "2"}},
+		Instruction{.command = TokenType::Assert, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+	};
+
+  Vm vm(test_instructions);
+  try {
+    vm.interpret();
+    ASSERT_EQ(1, 2) << "Assert Exception wasn't thrown";
+  } catch (VmException &e) {
+    std::string err = e.what();
+    ASSERT_EQ(err.find("Assertion") != err.npos, true) << err;
+  }
+
+  exit(EXIT_SUCCESS);
+}
 
 // TODO: Test multiple errors in succession
 
