@@ -46,16 +46,15 @@ void FileMode(std::string filename) {
 }
 
 void Repl() {
-  std::string line;
   // int lineNumber = 1;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
   // TODO: change std::getline() to InputHandler::ReadLine()
-  while (std::getline(std::cin, line)) {
+  while (auto line = InputHandler::ReadLine()) {
     Lexer lexer;
     // should pass line as well
-    auto nTokens = lexer.lex(line + "\n");
+    auto nTokens = lexer.lex(*line + "\n");
     // lineNumber++;
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
