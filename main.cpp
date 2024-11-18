@@ -1,4 +1,4 @@
-// #define DEBUG
+#define DEBUG
 
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
