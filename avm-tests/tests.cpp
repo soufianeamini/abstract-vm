@@ -161,7 +161,7 @@ TEST(Lexer, Comment) {
   ISOLATE_TEST();
   Lexer lexer;
   auto tokens = lexer.lex("; Hello, this should be completely ignored");
-  ASSERT_EQ(tokens.size(), (unsigned long)1);
+  ASSERT_EQ(tokens.size(), 1ul);
 
   auto token = tokens[0];
 
@@ -229,7 +229,7 @@ TEST(ParserException, SyntaxError) {
   Parser parser(tokens);
   auto _ = parser.parse(false);
   ASSERT_EQ(parser.getErrorState(), true);
-  ASSERT_EQ(parser.getErrors().size(), (unsigned long)1);
+  ASSERT_EQ(parser.getErrors().size(), 1ul);
   std::string error = parser.getErrors()[0];
   ASSERT_EQ(error.find("Syntax Error") != error.npos, true);
 
