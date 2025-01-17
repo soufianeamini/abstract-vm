@@ -20,6 +20,8 @@ void printInstruction(const Instruction &i) {
                i.value.value);
 }
 
+// TODO: Change PascalCase to camelCase
+
 void FileMode(std::string filename) {
   std::string source = InputHandler::ReadFile(filename);
   Lexer lexer;
