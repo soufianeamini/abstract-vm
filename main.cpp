@@ -1,5 +1,3 @@
-#define DEBUG
-
 #include "avm-fmt/Formatter.hpp"
 #include "avm-lexer/Lexer.hpp"
 #include "avm-parser/Instruction.hpp"
@@ -111,25 +109,27 @@ std::deque<std::string> getArgs(int argc, char *argv[]) {
   return args;
 }
 
+constexpr bool test_mode = false;
+
 int main(int argc, char *argv[]) {
-#ifdef DEBUG
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-#else
-  std::deque<std::string> args = getArgs(argc, argv);
-  try {
-    if (args.size() == 1) {
-      Repl();
-    } else if (args.size() == 2) {
-      FileMode(args[1]);
-    } else if (args.size() > 2) {
-      handleOptions(args);
-    } else {
-      fmt::println(stderr, "Usage: ./avm [.avm file]");
+  if constexpr (test_mode) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+  } else {
+    std::deque<std::string> args = getArgs(argc, argv);
+    try {
+      if (args.size() == 1) {
+        Repl();
+      } else if (args.size() == 2) {
+        FileMode(args[1]);
+      } else if (args.size() > 2) {
+        handleOptions(args);
+      } else {
+        fmt::println(stderr, "Usage: ./avm [.avm file]");
+      }
+    } catch (std::exception &e) {
+      fmt::println(stderr, "error: {}", e.what());
     }
-  } catch (std::exception &e) {
-    fmt::println(stderr, "error: {}", e.what());
+    return 0;
   }
-  return 0;
-#endif
 }
