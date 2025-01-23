@@ -1,7 +1,8 @@
 #include "utils.hpp"
 #include <cctype>
 
-bool utils::is_valid_number(const std::string &value) {
+namespace utils {
+bool is_valid_number(const std::string &value) {
   bool has_dot = false;
   for (std::string::const_iterator it = value.cbegin(); it != value.cend();
        ++it) {
@@ -19,3 +20,4 @@ bool utils::is_valid_number(const std::string &value) {
 
   return true;
 }
+} // namespace utils

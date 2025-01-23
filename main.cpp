@@ -1,11 +1,13 @@
 #include "avm-fmt/Formatter.hpp"
 #include "avm-lexer/Lexer.hpp"
+#include "avm-lexer/Token.hpp"
+#include "avm-lib/InputHandler.hpp"
 #include "avm-parser/Instruction.hpp"
 #include "avm-parser/Parser.hpp"
-#include "avm-virtual-machine/InputHandler.hpp"
 #include "avm-virtual-machine/Vm.hpp"
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
+#include <algorithm>
 #include <cstdio>
 #include <deque>
 #include <fmt/base.h>
@@ -21,10 +23,10 @@ void printInstruction(const Instruction &i) {
 // TODO: Change PascalCase to camelCase
 
 void fileMode(std::string filename) {
-  std::string source = InputHandler::readFile(filename);
-  Lexer lexer;
+  std::string source{InputHandler::readFile(filename)};
+  Lexer lexer{};
   auto tokens = lexer.lex(source);
-  Parser parser(tokens);
+  Parser parser{tokens};
   auto instructions = parser.parse(false);
 
   if (parser.getErrorState()) {
@@ -34,19 +36,20 @@ void fileMode(std::string filename) {
     std::exit(1);
   }
 
-  Vm vm(instructions);
+  Vm vm{instructions};
   vm.interpret();
   fmt::print(vm.getOutput());
 }
 
 void repl() {
-  int lineNumber = 1;
-  std::vector<Token> tokens;
-  bool breakFromWhile = false;
+  int lineNumber{1};
+  std::vector<Token> tokens{};
+  bool breakFromWhile{false};
+  InputHandler inputHandler{};
 
-  while (auto line = InputHandler::readLine()) {
-    Lexer lexer;
-    auto nTokens = lexer.lex(*line + "\n", lineNumber);
+  while (auto line{inputHandler.readLine()}) {
+    Lexer lexer{};
+    auto nTokens{lexer.lex(*line + "\n", lineNumber)};
     lineNumber++;
 
     tokens.insert(tokens.end(), nTokens.begin(), nTokens.end());
@@ -60,26 +63,26 @@ void repl() {
       break;
   }
 
-  Parser parser(tokens);
+  Parser parser{tokens};
   auto instructions = parser.parse(true);
   if (parser.getErrorState()) {
-    for (auto &error : parser.getErrors()) {
+    for (const auto &error : parser.getErrors()) {
       fmt::println(stderr, "{}", error);
     }
     std::exit(1);
   }
 
-  Vm vm(instructions);
+  Vm vm{instructions};
   vm.interpret();
   fmt::print(vm.getOutput());
 }
 
 void formatFile(std::string filename, std::deque<std::string> args) {
   (void)args;
-  Formatter formatter;
-  std::string source = InputHandler::readFile(filename);
+  Formatter formatter{};
+  std::string source{InputHandler::readFile(filename)};
 
-  if (auto formattedString = formatter.formatAvm(source)) {
+  if (auto formattedString{formatter.formatAvm(source)}) {
     fmt::println("{}", *formattedString);
   } else {
     fmt::println(stderr, "Error, couldn't format file: Invalid avm program.");
@@ -109,7 +112,7 @@ std::deque<std::string> getArgs(int argc, char *argv[]) {
   return args;
 }
 
-constexpr bool test_mode = false;
+constexpr bool test_mode = true;
 
 int main(int argc, char *argv[]) {
   if constexpr (test_mode) {
