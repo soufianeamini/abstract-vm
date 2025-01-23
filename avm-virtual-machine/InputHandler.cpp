@@ -5,8 +5,9 @@
 #include <optional>
 #include <sstream>
 
+// TODO: Transform into class to add history handling later
 namespace InputHandler {
-std::string ReadFile(const std::string &filename) {
+std::string readFile(const std::string &filename) {
   std::fstream file(filename);
 
   if (!file) {
@@ -21,8 +22,7 @@ std::string ReadFile(const std::string &filename) {
   return content;
 }
 
-std::optional<std::string> ReadLine() {
-	// TODO: use a static buffer for history
+std::optional<std::string> readLine() {
   std::string line;
 
   if (std::getline(std::cin, line)) {

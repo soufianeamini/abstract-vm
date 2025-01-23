@@ -20,8 +20,8 @@ void printInstruction(const Instruction &i) {
 
 // TODO: Change PascalCase to camelCase
 
-void FileMode(std::string filename) {
-  std::string source = InputHandler::ReadFile(filename);
+void fileMode(std::string filename) {
+  std::string source = InputHandler::readFile(filename);
   Lexer lexer;
   auto tokens = lexer.lex(source);
   Parser parser(tokens);
@@ -39,12 +39,12 @@ void FileMode(std::string filename) {
   fmt::print(vm.getOutput());
 }
 
-void Repl() {
+void repl() {
   int lineNumber = 1;
   std::vector<Token> tokens;
   bool breakFromWhile = false;
 
-  while (auto line = InputHandler::ReadLine()) {
+  while (auto line = InputHandler::readLine()) {
     Lexer lexer;
     auto nTokens = lexer.lex(*line + "\n", lineNumber);
     lineNumber++;
@@ -77,7 +77,7 @@ void Repl() {
 void formatFile(std::string filename, std::deque<std::string> args) {
   (void)args;
   Formatter formatter;
-  std::string source = InputHandler::ReadFile(filename);
+  std::string source = InputHandler::readFile(filename);
 
   if (auto formattedString = formatter.formatAvm(source)) {
     fmt::println("{}", *formattedString);
@@ -119,9 +119,9 @@ int main(int argc, char *argv[]) {
     std::deque<std::string> args = getArgs(argc, argv);
     try {
       if (args.size() == 1) {
-        Repl();
+        repl();
       } else if (args.size() == 2) {
-        FileMode(args[1]);
+        fileMode(args[1]);
       } else if (args.size() > 2) {
         handleOptions(args);
       } else {

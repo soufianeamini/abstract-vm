@@ -3,6 +3,6 @@
 #include <optional>
 #include <string>
 namespace InputHandler {
-std::string ReadFile(const std::string &filename);
-std::optional<std::string> ReadLine();
+std::string readFile(const std::string &filename);
+std::optional<std::string> readLine();
 }
