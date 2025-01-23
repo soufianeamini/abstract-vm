@@ -9,7 +9,7 @@
 #include <string>
 
 std::vector<Instruction> Parser::parse(bool isRepl) {
-  std::vector<Instruction> instructions;
+  std::vector<Instruction> instructions{};
 
   while (tokens.size() > 0) {
     try {
@@ -19,7 +19,7 @@ std::vector<Instruction> Parser::parse(bool isRepl) {
     } catch (ParserException &e) {
       hasErrored = true;
       recoverParser();
-      std::string errMsg = fmt::format("{} {}", e.what(), e.getLineInfo());
+      std::string errMsg{fmt::format("{} {}", e.what(), e.getLineInfo())};
       errors.push_back(errMsg);
     }
   }
@@ -106,9 +106,9 @@ VmValue Parser::parseValue() {
     throw std::invalid_argument("invalid_number: " + value.literal);
   }
 
-  VmValue operand;
-  OperandFactory of;
-  const IOperand *ptr = nullptr;
+  VmValue operand{};
+  OperandFactory of{};
+  const IOperand *ptr{nullptr}; // Used to check underflow/overflow
   try {
     if (precision.literal == "int8") {
       ptr = of.createOperand(eOperandType::Int8, value.literal);
@@ -166,13 +166,13 @@ void Parser::recoverParser() {
 }
 
 Instruction Parser::generateInstruction(TokenType type) {
-  Instruction instruction = Instruction{.command = type, .value = VmValue()};
+  Instruction instruction{type, VmValue()};
 
   return instruction;
 }
 
 Instruction Parser::generateInstruction(TokenType type, VmValue operand) {
-  Instruction instruction = Instruction{.command = type, .value = operand};
+  Instruction instruction{type, operand};
 
   return instruction;
 }
@@ -181,14 +181,14 @@ bool Parser::getErrorState() { return hasErrored; }
 
 std::vector<std::string> Parser::getErrors() { return errors; }
 
-Parser::Parser() : hasErrored(false) {}
+Parser::Parser() : hasErrored{false} {}
 
 Parser::Parser(const std::vector<Token> &tokens)
-    : tokens(std::deque(tokens.begin(), tokens.end())), hasErrored(false) {}
+    : tokens{std::deque(tokens.begin(), tokens.end())}, hasErrored{false} {}
 
 Parser::Parser(const Parser &o)
-    : tokens(std::deque(o.tokens.begin(), o.tokens.end())), errors(o.errors),
-      hasErrored(o.hasErrored) {}
+    : tokens{std::deque{o.tokens}}, errors{o.errors}, hasErrored{o.hasErrored} {
+}
 
 Parser &Parser::operator=(const Parser &o) {
   if (this == &o)

@@ -7,7 +7,6 @@
 #include "avm-virtual-machine/Vm.hpp"
 #include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
-#include <algorithm>
 #include <cstdio>
 #include <deque>
 #include <fmt/base.h>
@@ -25,9 +24,11 @@ void printInstruction(const Instruction &i) {
 void fileMode(std::string filename) {
   std::string source{InputHandler::readFile(filename)};
   Lexer lexer{};
-  auto tokens = lexer.lex(source);
+  auto tokens{lexer.lex(source)};
   Parser parser{tokens};
-  auto instructions = parser.parse(false);
+  // TODO: use generics here (compile time metaprogramming) to call different
+  // functions either parse input or file
+  auto instructions{parser.parse(false)};
 
   if (parser.getErrorState()) {
     for (auto &error : parser.getErrors()) {
