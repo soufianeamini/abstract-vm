@@ -1,4 +1,5 @@
 #include "InputHandler.hpp"
+#include <cctype>
 #include <cstdio>
 #include <cstdlib>
 #include <fmt/base.h>
@@ -27,54 +28,61 @@ std::string InputHandler::readFile(const std::string &filename) {
   return content;
 }
 
-std::optional<std::string> InputHandler::readLine() {
-  const static auto enableRawMode = [this]() {
-    tcgetattr(STDIN_FILENO, &old);
-    new1.c_lflag &= ~ECHO;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &new1);
-  };
+static constexpr auto ctrlKey(char key) { return (key & 0x1f); }
 
-  const static auto disableRawMode = [this]() {
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &old);
-  };
+static auto readKey() {
+  char c{'\0'};
+  read(STDIN_FILENO, &c, 1);
+  return std::make_optional(c);
+}
+
+static constexpr auto enableRawMode(termios *old, termios *new1) {
+  tcgetattr(STDIN_FILENO, old);
+  new1->c_lflag &= ~(ICRNL | IXON);
+  new1->c_lflag &= ~(OPOST);
+  new1->c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+  new1->c_cc[VMIN] = 0;
+  new1->c_cc[VTIME] = 1; // in tenths of a second e.g 1 => 100ms of timeout
+
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, new1);
+}
+
+static constexpr auto disableRawMode(termios *old) {
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, old);
+}
+
+auto InputHandler::readLine() -> decltype(readLine()) {
+  // This function should only return at the last statement
   std::string line{};
-
-  // TODO: Use something that allows you to capture arrow keys
-  // if (std::getline(std::cin, line)) {
-  //   if (!line.empty()) {
-  //     history.push_back(line);
-  //   }
-  //   return line;
-  // }
-
-  enableRawMode();
-
-  char c{};
-  char old{};
+  enableRawMode(&old, &new1);
 
   while (1) {
-    read(STDIN_FILENO, &c, 1);
-    if (c != old && c != 127) {
-      // fmt::print("char: {}, code: {}", c, static_cast<int>(c));
-      // std::flush(std::cout);
-    }
-    if (c != old && c == 127) {
-      fmt::print("\b \b");
-    }
-    if (c == 'q') {
+    auto r{readKey()};
+
+    if (!r.has_value()) {
+      // TODO: remove printing
+      fmt::println(stderr, "error: read()");
       break;
     }
-    old = c;
-  }
-  disableRawMode();
+    auto c = *r;
 
+    if (!std::iscntrl(c)) {
+      fmt::println("c: {}\r", c);
+    } else {
+      fmt::println("c: {}, code: {}\r", c, static_cast<int>(c));
+    }
+    if (c == ctrlKey('c')) {
+      break;
+    }
+  }
+
+  disableRawMode(&old);
   return std::nullopt;
 }
 
 InputHandler::InputHandler() {}
 InputHandler::InputHandler(const InputHandler &o)
     : history{o.history}, old{o.old}, new1{o.new1} {}
-
 InputHandler &InputHandler::operator=(const InputHandler &o) {
   if (&o == this) {
     return *this;
@@ -86,5 +94,4 @@ InputHandler &InputHandler::operator=(const InputHandler &o) {
 
   return *this;
 }
-
 InputHandler::~InputHandler() {}
