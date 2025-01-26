@@ -26,9 +26,7 @@ void fileMode(std::string filename) {
   Lexer lexer{};
   auto tokens{lexer.lex(source)};
   Parser parser{tokens};
-  // TODO: use generics here (compile time metaprogramming) to call different
-  // functions either parse input or file
-  auto instructions{parser.parse(false)};
+  auto instructions{parser.parse<NonRepl>()};
 
   if (parser.getErrorState()) {
     for (auto &error : parser.getErrors()) {
@@ -65,7 +63,7 @@ void repl() {
   }
 
   Parser parser{tokens};
-  auto instructions = parser.parse(true);
+  auto instructions = parser.parse<Repl>();
   if (parser.getErrorState()) {
     for (const auto &error : parser.getErrors()) {
       fmt::println(stderr, "{}", error);
@@ -113,7 +111,7 @@ std::deque<std::string> getArgs(int argc, char *argv[]) {
   return args;
 }
 
-constexpr bool test_mode{false};
+constexpr bool test_mode{true};
 
 int main(int argc, char *argv[]) {
   if constexpr (test_mode) {

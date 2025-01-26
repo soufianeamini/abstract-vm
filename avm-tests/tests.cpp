@@ -141,7 +141,7 @@ TEST(Parser, SubjectProgram) {
   };
 
   Parser parser(subject_tokens);
-  std::vector<Instruction> instructions = parser.parse(false);
+  std::vector<Instruction> instructions = parser.parse<NonRepl>();
 
   ASSERT_EQ(instructions.size(), test_instructions.size());
 
@@ -209,7 +209,7 @@ TEST(Parser, InvalidNumbers) {
 
   Parser parser(tokens);
   try {
-    auto instructions = parser.parse(false);
+    auto instructions = parser.parse<NonRepl>();
     ASSERT_EQ(1, 2) << "Invalid Argument Exception hasn't been thrown";
   } catch (std::invalid_argument &e) {
     ASSERT_EQ(parser.getErrorState(), true);
@@ -227,7 +227,7 @@ TEST(ParserException, SyntaxError) {
   };
 
   Parser parser(tokens);
-  auto _ = parser.parse(false);
+  auto _ = parser.parse<NonRepl>();
   ASSERT_EQ(parser.getErrorState(), true);
   ASSERT_EQ(parser.getErrors().size(), 1ul);
   std::string error = parser.getErrors()[0];
@@ -244,7 +244,7 @@ TEST(ParserException, Overflow) {
   };
 
   Parser parser(tokens);
-  auto _ = parser.parse(false);
+  auto _ = parser.parse<NonRepl>();
   ASSERT_EQ(parser.getErrorState(), true);
   ASSERT_EQ(parser.getErrors().size(), 1ul);
   std::string err = parser.getErrors()[0];
@@ -261,7 +261,7 @@ TEST(ParserException, Underflow) {
   };
 
   Parser parser(tokens);
-  auto _ = parser.parse(false);
+  auto _ = parser.parse<NonRepl>();
   ASSERT_EQ(parser.getErrorState(), true);
   ASSERT_EQ(parser.getErrors().size(), 1ul);
   std::string err = parser.getErrors()[0];
