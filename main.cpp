@@ -109,7 +109,7 @@ std::deque<std::string> getArgs(int argc, char *argv[]) {
   return args;
 }
 
-constexpr bool test_mode{false};
+constexpr bool test_mode{true};
 
 int main(int argc, char *argv[]) {
   if constexpr (test_mode) {

@@ -4,9 +4,9 @@ HEADER = $(wildcard avm-*/*.h) $(wildcard avm-*/*.hpp)
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
-
 DEPS = ./external-libs/include
+
+CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
 STATIC_LIBS = ./external-libs/lib/libfmt.a ./external-libs/lib/libgtest.a
 
@@ -50,6 +50,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) -r deps
+	$(RM) -r $(VENV)
 
 pretty:
 	clang++ -Xclang -ast-print -fsyntax-only $(SRCS)
