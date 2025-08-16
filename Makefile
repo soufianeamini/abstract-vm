@@ -32,8 +32,7 @@ $(DEPS): scripts/install_dependencies.py
 	./scripts/install_dependencies.py
 
 test: all $(VENV) $(PYTEST)
-	. .venv/bin/activate
-	pytest avm-tests/ || echo "Make sure that 'test_mode' is set to 'false' for integration tests"
+	.venv/bin/pytest avm-tests/ || echo "Make sure that 'test_mode' is set to 'false' for integration tests"
 
 $(VENV):
 	uv venv
