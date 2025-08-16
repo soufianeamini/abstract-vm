@@ -16,6 +16,10 @@ CC	=	clang++
 
 all: $(NAME)
 
+VENV = .venv
+
+PYTEST = .venv/bin/pytest
+
 $(NAME): $(DEPS) $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) $(STATIC_LIBS) -o $@
 
@@ -27,9 +31,15 @@ $(DEPS): scripts/install_dependencies.py
 	mkdir -p external-libs
 	./scripts/install_dependencies.py
 
-test: all
+test: all $(VENV) $(PYTEST)
 	. .venv/bin/activate
-	ward -p avm-tests/ || echo "Make sure that 'test_mode' is set to 'false' for integration tests"
+	pytest avm-tests/ || echo "Make sure that 'test_mode' is set to 'false' for integration tests"
+
+$(VENV):
+	uv venv
+
+$(PYTEST):
+	uv pip install pytest
 
 run: all
 	./avm

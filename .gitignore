@@ -5,4 +5,5 @@ avm
 notes.md
 deps
 external-libs
+__pycache__
 .cache
