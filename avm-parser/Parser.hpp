@@ -74,7 +74,7 @@ private:
       tokens.pop_front();
       return generateInstruction(TokenType::Exit);
     case TokenType::EndOfProgram:
-      if constexpr (std::is_same<ReplMode, Repl>()) {
+      if constexpr (std::is_same<ReplMode, NonRepl>()) {
         // TODO: use a wrapper function that throws an error explicitly, and add
         // context to it depending on the error.
         consume(TokenType::Dummy);
