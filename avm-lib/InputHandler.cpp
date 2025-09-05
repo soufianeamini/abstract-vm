@@ -27,6 +27,7 @@ std::string InputHandler::readFile(const std::string &filename) {
 auto InputHandler::readLine() -> decltype(readLine()) {
   // This function should only return at the last statement
   std::string line{};
+  // TODO: error handling
   std::getline(std::cin, line);
   return std::make_optional(line);
 }
