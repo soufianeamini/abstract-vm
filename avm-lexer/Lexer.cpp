@@ -82,8 +82,11 @@ std::vector<Token> Lexer::lex(const std::string &source, int line) {
       line++;
       tokens.push_back(
           Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
+      [[fallthrough]];
     case '\v':
+      [[fallthrough]];
     case '\t':
+      [[fallthrough]];
     case ' ':
       if (word) {
         tokens.push_back(generateWord(it, current, line));
