@@ -50,6 +50,8 @@ public:
         throw std::invalid_argument("invalid impl");
       case CheckedArithmeticResult::CA_SUCCESS:
         break;
+      default:
+        throw "Unreachable!";
       }
 
       return of.createOperand(E, std::to_string(new_value));
@@ -76,6 +78,8 @@ public:
         throw std::invalid_argument("invalid impl");
       case CheckedArithmeticResult::CA_SUCCESS:
         break;
+      default:
+        throw "Unreachable!";
       }
 
       return of.createOperand(E, std::to_string(new_value));
@@ -106,6 +110,8 @@ public:
         throw std::invalid_argument("invalid impl");
       case CheckedArithmeticResult::CA_SUCCESS:
         break;
+      default:
+        throw "Unreachable!";
       }
 
       return of.createOperand(E, std::to_string(new_value));
@@ -132,6 +138,8 @@ public:
         throw std::invalid_argument("invalid impl");
       case CheckedArithmeticResult::CA_SUCCESS:
         break;
+      default:
+        throw "Unreachable!";
       }
 
       return of.createOperand(E, std::to_string(this->value / value));
@@ -160,6 +168,8 @@ public:
         throw std::invalid_argument("invalid impl");
       case CheckedArithmeticResult::CA_SUCCESS:
         break;
+      default:
+        throw "Unreachable!";
       }
 
       return of.createOperand(E, std::to_string(new_value));
@@ -194,6 +204,8 @@ Operand<eOperandType::Double, double>::operator%(IOperand const &rhs) const {
       throw std::invalid_argument("invalid impl");
     case CheckedArithmeticResult::CA_SUCCESS:
       break;
+    default:
+      throw "Unreachable!";
     }
 
     return of.createOperand(eOperandType::Double, std::to_string(new_value));
@@ -225,6 +237,8 @@ Operand<eOperandType::Float, float>::operator%(IOperand const &rhs) const {
       throw std::invalid_argument("invalid impl");
     case CheckedArithmeticResult::CA_SUCCESS:
       break;
+    default:
+      throw "Unreachable!";
     }
 
     return of.createOperand(eOperandType::Float, std::to_string(new_value));
