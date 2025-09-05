@@ -69,7 +69,7 @@ void Vm::interpret() {
 
 // TODO: move this function into the utils namespace
 static std::string trimZeroes(std::string value) {
-  size_t i = value.length() - 1;
+  ssize_t i = value.length() - 1;
   bool hasDot = value.find('.') != value.npos;
 
   if (!hasDot)
