@@ -26,6 +26,7 @@ std::string format_as(const ParserException::Type &t) {
 		case ParserException::Type::UnknownInstruction: return "UnknownInstruction";
 		case ParserException::Type::Overflow: return "Overflow";
 		case ParserException::Type::Underflow: return "Underflow";
+		default: return "(Unknown ParserException type)";
   }
   // clang-format on
 }

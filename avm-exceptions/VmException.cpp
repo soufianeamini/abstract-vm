@@ -26,6 +26,7 @@ std::string format_as(const VmException::Type &t) {
 		case VmException::Type::NoExitInstruction: return "NoExitInstruction";
 		case VmException::Type::Assert: return "Assert";
 		case VmException::Type::TooFewStackValues: return "TooFewStackValues";
+		default: return "(Uknown VmException type)";
 	}
   // clang-format on
 }

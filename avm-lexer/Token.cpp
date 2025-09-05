@@ -29,6 +29,7 @@ std::string format_as(const TokenType &t) {
 		case TokenType::EndOfProgram: return "EndOfProgram";
 		case TokenType::Sep: return "Sep";
 		case TokenType::Dummy: return "Dummy";
+		default: return "(Unknown TokenType type)";
 	}
   // clang-format on
 }
