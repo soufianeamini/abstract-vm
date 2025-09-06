@@ -2,9 +2,8 @@
 #include "../avm-lexer/Lexer.hpp"
 #include <optional>
 
-// TODO: handle keeping comments, perhaps the lexer can handle different modes
 std::optional<std::string> Formatter::formatAvm(const std::string &input) {
-  Lexer lexer;
+  Lexer lexer{true};
   std::vector<Token> tokens = lexer.lex(input);
   // TODO: Parse it to verify that it's a valid string, and only return a valid
   // string if it's valid, if not it's an error, return std::nullopt
@@ -42,7 +41,7 @@ std::string Formatter::emitStringFromTokens(const std::vector<Token> &tokens) {
     if (token.type == TokenType::Sep) {
       result += "\n";
     } else {
-      if (token.type == TokenType::Push) {
+      if (token.type == TokenType::Push or token.type == TokenType::Assert) {
         result += token.literal + " ";
       } else {
         result += token.literal;

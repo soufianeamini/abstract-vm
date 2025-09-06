@@ -19,6 +19,7 @@ enum class TokenType {
   EndOfProgram, // ;;
   Sep,
   Dummy,
+  Comment, // After `;` symbol
 };
 
 struct Token {

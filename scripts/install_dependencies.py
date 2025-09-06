@@ -32,7 +32,7 @@ def download_cmake_lib(url: str, tag: str, name: str):
         i += 1
 
 libs = [
-    lambda : download_cmake_lib(url="https://github.com/nlohmann/json", tag="v3.11.3", name="json"),
+    # lambda : download_cmake_lib(url="https://github.com/nlohmann/json", tag="v3.11.3", name="json"),
     lambda : download_cmake_lib(url="https://github.com/fmtlib/fmt", tag="11.0.2", name="fmt"),
     lambda : download_cmake_lib(url="https://github.com/google/googletest", tag="v1.15.2", name="googletest"),
 ]

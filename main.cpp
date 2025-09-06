@@ -94,9 +94,11 @@ void handleOptions(std::deque<std::string> args) {
     if (option == "--format") {
       args.pop_front();
       formatFile(value, args);
+    } else {
+      fmt::println(stderr, "Usage: ./avm --format <.amv-file>");
     }
   } catch (std::out_of_range &e) {
-    fmt::println(stderr, "Usage: ./avm --<opt> <value>");
+    fmt::println(stderr, "Usage: ./avm --format <.amv-file>");
   }
 }
 

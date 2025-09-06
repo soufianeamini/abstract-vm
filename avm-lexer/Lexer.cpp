@@ -20,6 +20,10 @@ Lexer::Lexer() {
   keywords["exit"] = TokenType::Exit;
 }
 
+Lexer::Lexer(bool preserveComments) : Lexer() {
+  this->preserveComments = preserveComments;
+}
+
 std::vector<Token> Lexer::lex(const std::string &source) {
   return lex(source, 1);
 }
@@ -61,12 +65,18 @@ std::vector<Token> Lexer::lex(const std::string &source, int line) {
         tokens.push_back(Token{
             .type = TokenType::EndOfProgram, .literal = slice, .line = line});
       } else {
+        StrIter start_it = it;
         while (it != source.cend() && *it != '\n') {
           it++;
         }
         if (it == source.cend())
           it--;
         line++;
+        if (this->preserveComments) {
+          std::string comment(start_it, it);
+          tokens.push_back(
+              Token{.type = TokenType::Comment, .literal = comment, .line = line - 1});
+        }
         tokens.push_back(
             Token{.type = TokenType::Sep, .literal = "\n", .line = line - 1});
       }

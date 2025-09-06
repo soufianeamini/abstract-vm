@@ -63,7 +63,13 @@ An .avm file needs to contain an exit instruction.
 
 ### Formatter
 
-TODO: make sure formatter is functional
+To run the formatter, you can execute the following command:
+
+```bash
+./amv --format <.avm-file>
+```
+
+The output is a nicely formatted .avm file, and you can redirect the output to whatever file you want.
 
 ## Implementation details
 
