@@ -8,11 +8,11 @@ DEPS = ./external-libs/include
 
 CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -g -I$(DEPS)
 
-STATIC_LIBS = ./external-libs/lib/libfmt.a ./external-libs/lib/libgtest.a
+STATIC_LIBS = ./external-libs/lib64/libfmt.a ./external-libs/lib64/libgtest.a
 
 NAME	=	avm
 
-CC	=	clang++
+CC	=	g++
 
 all: $(NAME)
 

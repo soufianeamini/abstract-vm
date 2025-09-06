@@ -19,7 +19,7 @@ std::string InputHandler::readFile(const std::string &filename) {
   std::stringstream ss{};
 
   ss << file.rdbuf();
-  std::string content(ss.str());
+  std::string content(ss.str() + "\n");
 
   return content;
 }

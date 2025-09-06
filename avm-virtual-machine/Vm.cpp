@@ -2,6 +2,7 @@
 #include "../avm-exceptions/VmException.hpp"
 #include <fmt/base.h>
 #include <fmt/format.h>
+#include <string>
 
 Vm::Vm() {}
 Vm::Vm(const std::vector<Instruction> &instructions)
@@ -90,8 +91,13 @@ void Vm::print() {
   if (stack.size() < 1)
     throw VmException(VmException::Type::TooFewStackValues);
   const IOperand *a = this->stack.back();
-
-  this->writeOutput(trimZeroes(a->toString()) + "\n");
+  if (a->getType() != eOperandType::Int8) {
+    throw VmException(VmException::Type::Assert);
+  }
+  std::string character;
+  character = (std::stoi(a->toString()));
+  this->writeOutput(character + "\n");
+  // this->writeOutput(trimZeroes(a->toString()) + "\n");
 }
 
 void Vm::div() {
@@ -102,7 +108,7 @@ void Vm::div() {
   const IOperand *b = this->stack.back();
   this->stack.pop_back();
 
-  if (b->toString() == "0") {
+  if (a->toString() == "0") {
     delete a;
     delete b;
     throw VmException(VmException::Type::DivisionByZero);
@@ -122,7 +128,7 @@ void Vm::mod() {
   const IOperand *b = this->stack.back();
   this->stack.pop_back();
 
-  if (b->toString() == "0") {
+  if (a->toString() == "0") {
     delete a;
     delete b;
     throw VmException(VmException::Type::DivisionByZero);
@@ -170,9 +176,12 @@ void Vm::add() {
   const IOperand *b = this->stack.back();
   this->stack.pop_back();
 
+  fmt::println("A: {}, B: {}", a->toString(), b->toString());
+
   const IOperand *result = *b + *a;
   delete a;
   delete b;
+  fmt::println("Result: {}", result->toString());
   this->stack.push_back(result);
 }
 
@@ -197,7 +206,7 @@ void Vm::vmAssert() const {
   std::string actual = stack.back()->toString();
   std::string expected = ip->value.value;
 
-  if (actual != expected)
+  if (actual != expected or stack.back()->getType() != ip->value.type)
     throw VmException(VmException::Type::Assert);
 }
 

@@ -4,10 +4,12 @@
 #include "OperandFactory.hpp"
 #include <cmath>
 #include <cstdint>
+#include <fmt/base.h>
 #include <fmt/format.h>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 
 template <eOperandType E, class T> class Operand : public IOperand {
 private:
@@ -16,8 +18,9 @@ private:
 
 public:
   Operand() {}
-  Operand(const std::string &value) : toStr(value) {
+  Operand(const std::string &value) {
     this->value = std::stoi(value);
+    this->toStr = std::to_string(this->value);
   }
   Operand(const Operand &o) : value(o.value), toStr(o.toStr) {}
   Operand &operator=(const Operand &o) {
@@ -34,10 +37,13 @@ public:
   IOperand const *operator+(IOperand const &rhs) const {
     OperandFactory of;
     if (this->getPrecision() >= rhs.getPrecision()) {
-      std::stringstream ss(rhs.toString());
+      std::stringstream ss{rhs.toString()};
       T value;
-      ss >> value;
-
+      if (std::is_same<T, int8_t>()) {
+        value = std::stoi(rhs.toString());
+      } else {
+        ss >> value;
+      }
       T new_value;
       CheckedArithmeticResult state =
           checked_arithmetic::checked_add(&new_value, this->value, value);
@@ -64,7 +70,11 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-      ss >> value;
+      if (std::is_same<T, int8_t>()) {
+        value = std::stoi(rhs.toString());
+      } else {
+        ss >> value;
+      }
 
       T new_value;
       CheckedArithmeticResult state =
@@ -96,7 +106,11 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-      ss >> value;
+      if (std::is_same<T, int8_t>()) {
+        value = std::stoi(rhs.toString());
+      } else {
+        ss >> value;
+      }
 
       T new_value;
       CheckedArithmeticResult state =
@@ -124,7 +138,11 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-      ss >> value;
+      if (std::is_same<T, int8_t>()) {
+        value = std::stoi(rhs.toString());
+      } else {
+        ss >> value;
+      }
 
       T new_value;
       CheckedArithmeticResult state =
@@ -154,7 +172,11 @@ public:
     if (this->getPrecision() >= rhs.getPrecision()) {
       std::stringstream ss(rhs.toString());
       T value;
-      ss >> value;
+      if (std::is_same<T, int8_t>()) {
+        value = std::stoi(rhs.toString());
+      } else {
+        ss >> value;
+      }
 
       T new_value;
       CheckedArithmeticResult state =
@@ -254,6 +276,8 @@ inline Operand<eOperandType::Int8, int8_t>::Operand(const std::string &value) {
   int32_t int_value = std::stoi(value);
   if (int_value < -128 || int_value > 127)
     throw std::out_of_range("stoi");
+  this->value = int_value;
+  this->toStr = std::to_string(int_value);
 }
 
 template <>
@@ -262,6 +286,8 @@ inline Operand<eOperandType::Int16, int16_t>::Operand(
   int32_t int_value = std::stoi(value);
   if (int_value < -32768 || int_value > 32767)
     throw std::out_of_range("stoi");
+  this->value = int_value;
+  this->toStr = std::to_string(int_value);
 }
 
 template <>

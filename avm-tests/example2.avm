@@ -1,0 +1,24 @@
+; --------------
+; example2.avm -
+; --------------
+
+push int8(65)
+print
+        push int8(32)
+dump
+   add
+
+
+
+
+
+
+
+
+
+
+
+
+print
+
+exit

@@ -2,6 +2,7 @@
 #include <exception>
 #include "../avm-lexer/Token.hpp"
 
+// TODO: inherit from std::runtime_error or std::logic_error (the former is better)
 class ParserException : public std::exception {
 public:
   enum class Type {

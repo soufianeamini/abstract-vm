@@ -3,11 +3,13 @@
 #include "../avm-lib/utils.hpp"
 #include "Instruction.hpp"
 #include "VmValue.hpp"
+#include <fmt/base.h>
 #include <fmt/format.h>
 #include <optional>
 #include <stdexcept>
 #include <string>
 
+// TODO: if you face an error when the previous token is a newline, recover immediately instead of going to the next newline
 Instruction Parser::parseAssert() {
   consume(TokenType::Assert);
   VmValue operand = parseValue();
