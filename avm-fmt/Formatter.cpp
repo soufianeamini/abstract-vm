@@ -1,13 +1,26 @@
 #include "Formatter.hpp"
 #include "../avm-lexer/Lexer.hpp"
+#include "../avm-parser/Parser.hpp"
 #include <optional>
+
+static void validateInput(const std::string& input) {
+  Lexer lexer{};
+  std::vector<Token> tokens = lexer.lex(input);
+  Parser parser{tokens};
+  auto instructions{parser.parse<NonRepl>()};
+
+  if (parser.getErrorState()) {
+    for (auto &error : parser.getErrors()) {
+      fmt::println("{}", error);
+    }
+    std::exit(1);
+  }
+}
 
 std::optional<std::string> Formatter::formatAvm(const std::string &input) {
   Lexer lexer{true};
   std::vector<Token> tokens = lexer.lex(input);
-  // TODO: Parse it to verify that it's a valid string, and only return a valid
-  // string if it's valid, if not it's an error, return std::nullopt
-
+  validateInput(input);
   std::vector<Token> deduplicatedTokens = removeDuplicateSep(tokens);
   std::string formatted_string = emitStringFromTokens(deduplicatedTokens);
 
