@@ -1,9 +1,8 @@
 #pragma once
-#include <exception>
+#include <stdexcept>
 #include "../avm-lexer/Token.hpp"
 
-// TODO: inherit from std::runtime_error or std::logic_error (the former is better)
-class ParserException : public std::exception {
+class ParserException : public std::runtime_error {
 public:
   enum class Type {
     SyntaxError,

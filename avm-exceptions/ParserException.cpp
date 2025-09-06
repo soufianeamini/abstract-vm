@@ -2,6 +2,7 @@
 #include <array>
 #include <fmt/format.h>
 #include <sstream>
+#include <stdexcept>
 
 const char *ParserException::what() const noexcept {
   static std::array<const char *, 4> messages{
@@ -31,11 +32,11 @@ std::string format_as(const ParserException::Type &t) {
   // clang-format on
 }
 
-ParserException::ParserException() {}
+ParserException::ParserException() : std::runtime_error("") {}
 ParserException::ParserException(Type type, Token errorToken)
-    : type(type), errorToken(errorToken) {}
+    : std::runtime_error(""), type(type), errorToken(errorToken) {}
 ParserException::ParserException(const ParserException &o)
-    : type(o.type), errorToken(o.errorToken) {}
+    : std::runtime_error(""), type(o.type), errorToken(o.errorToken) {}
 ParserException &ParserException::operator=(const ParserException &o) {
   if (this == &o)
     return *this;

@@ -6,6 +6,7 @@
 #include <optional>
 #include <ostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <unistd.h>
 
@@ -25,10 +26,13 @@ std::string InputHandler::readFile(const std::string &filename) {
 }
 
 auto InputHandler::readLine() -> decltype(readLine()) {
-  // This function should only return at the last statement
   std::string line{};
-  // TODO: error handling
-  std::getline(std::cin, line);
+  if (!std::getline(std::cin, line)) {
+    if (std::cin.eof()) {
+      return std::nullopt;
+    }
+    throw std::runtime_error("Error reading from stdin.");
+  };
   return std::make_optional(line);
 }
 
