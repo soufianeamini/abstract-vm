@@ -59,7 +59,6 @@ void Vm::interpret() {
     case TokenType::EndOfProgram:
       return;
     default:
-      // FIX: Remove this line before pushing
       throw "Unreachable!";
     }
     ip++;
@@ -176,12 +175,9 @@ void Vm::add() {
   const IOperand *b = this->stack.back();
   this->stack.pop_back();
 
-  fmt::println("A: {}, B: {}", a->toString(), b->toString());
-
   const IOperand *result = *b + *a;
   delete a;
   delete b;
-  fmt::println("Result: {}", result->toString());
   this->stack.push_back(result);
 }
 
@@ -201,8 +197,7 @@ void Vm::pop() {
 void Vm::vmAssert() const {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
-
-  // TODO: Use operator == from IOperand instead of comparing strings
+  
   std::string actual = stack.back()->toString();
   std::string expected = ip->value.value;
 

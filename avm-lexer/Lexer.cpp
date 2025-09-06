@@ -36,8 +36,6 @@ std::vector<Token> Lexer::lex(const std::string &source, int line) {
         tokens.push_back(generateWord(it, current, line));
         word = false;
       }
-      // TODO: Simplify code for slices considering you're not using
-      // string_views anymore
       std::string slice(it, it + 1);
       tokens.push_back(
           Token{.type = TokenType::LeftParen, .literal = slice, .line = line});
