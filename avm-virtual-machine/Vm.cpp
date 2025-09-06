@@ -67,7 +67,6 @@ void Vm::interpret() {
   throw VmException(VmException::Type::NoExitInstruction);
 }
 
-// TODO: move this function into the utils namespace
 static std::string trimZeroes(std::string value) {
   ssize_t i = value.length() - 1;
   bool hasDot = value.find('.') != value.npos;
@@ -197,7 +196,7 @@ void Vm::pop() {
 void Vm::vmAssert() const {
   if (stack.size() == 0)
     throw VmException(VmException::Type::EmptyStack);
-  
+
   std::string actual = stack.back()->toString();
   std::string expected = ip->value.value;
 

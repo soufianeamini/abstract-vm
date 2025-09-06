@@ -208,12 +208,8 @@ TEST(Parser, InvalidNumbers) {
   };
 
   Parser parser(tokens);
-  try {
-    auto instructions = parser.parse<NonRepl>();
-    ASSERT_EQ(1, 2) << "Invalid Argument Exception hasn't been thrown";
-  } catch (std::invalid_argument &e) {
-    ASSERT_EQ(parser.getErrorState(), true);
-  }
+  auto instructions = parser.parse<NonRepl>();
+  ASSERT_EQ(parser.getErrorState(), true);
 
   exit(EXIT_SUCCESS);
 }
@@ -343,8 +339,8 @@ TEST(VmException, DivisionByZero) {
 
   std::vector<Instruction> test_instructions = {
       // clang-format off
-		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
 		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
 		Instruction{.command = TokenType::Div, .value = VmValue()},
       // clang-format on
   };
@@ -366,8 +362,8 @@ TEST(VmException, ModuloByZero) {
 
   std::vector<Instruction> test_instructions = {
       // clang-format off
-		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
 		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "1"}},
+		Instruction{.command = TokenType::Push, .value = VmValue{.type = eOperandType::Int32, .value = "0"}},
 		Instruction{.command = TokenType::Mod, .value = VmValue()},
       // clang-format on
   };
@@ -443,7 +439,5 @@ TEST(VmException, Assert) {
 
   exit(EXIT_SUCCESS);
 }
-
-// TODO: Test multiple errors in succession
 
 #undef ISOLATE_TEST

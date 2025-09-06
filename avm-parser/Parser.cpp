@@ -81,7 +81,6 @@ Token Parser::consume(TokenType type) {
   Token token = tokens.front();
   if (token.type != type) {
     hasErrored = true;
-    recoverParser();
     throw ParserException(ParserException::Type::SyntaxError, token);
   }
 
