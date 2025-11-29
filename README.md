@@ -4,14 +4,25 @@ The purpose of this project is to create a simple virtual machine that can inter
 
 ## How to build
 
-Run the command `make` in order to download dependencies and build the project.
 You will need to have the following dependencies installed on your system:
 * clang
-* make
+* ninja
 * cmake
-* python
+
+Run the command `cmake -GNinja -Bbuild` to generate the build directory with a build.ninja file.
+The step above only needs to be executed once.
+
+Next, in order to compile (or recompile) the project (after changes in either the source code or CMakeLists.txt), run:
+```bash
+cd build/
+ninja
+```
+
+The project will take care of installing dependencies along with compiling the project.
 
 ## How to run
+
+First, make sure you are inside the `build/` directory.
 
 1. 
 ```bash
@@ -22,7 +33,7 @@ The avm will read from standard input and interpret code after each ';;' token.
 
 2.
 ```bash
-./avm example.avm
+./avm ../avm-tests/example.avm
 ```
 
 The avm will read the file and execute the instructions in it provided the assembly code is correct.
