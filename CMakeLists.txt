@@ -60,10 +60,10 @@ target_sources(
 )
 target_sources(
 	avm-lib
-	PRIVATE avm-lib/InputHandler.cpp avm-lib/utils.cpp avm-lib/safe-math.h
+	PRIVATE avm-lib/InputHandler.cpp avm-lib/utils.cpp
 	PUBLIC
 	FILE_SET HEADERS
-	FILES avm-lib/InputHandler.hpp avm-lib/utils.hpp
+	FILES avm-lib/InputHandler.hpp avm-lib/utils.hpp avm-lib/safe-math.h
 )
 target_sources(
 	avm-operand
@@ -97,20 +97,17 @@ FetchContent_Declare(
   GIT_TAG        407c905e45ad75fc29bf0f9bb7c5c2fd3475976f) # 12.1.0
 FetchContent_MakeAvailable(fmt)
 
-target_link_libraries(avm fmt::fmt)
 target_link_libraries(avm-operand fmt::fmt)
 target_link_libraries(avm-lib fmt::fmt)
 target_link_libraries(avm-lexer fmt::fmt)
-target_link_libraries(avm-parser fmt::fmt)
 target_link_libraries(avm-exceptions fmt::fmt)
-target_link_libraries(avm-virtual-machine fmt::fmt)
 target_link_libraries(avm-fmt fmt::fmt)
 
 ## gtest
 include(FetchContent)
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip
+  URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip # 1.17.0
 )
 FetchContent_MakeAvailable(googletest)
 

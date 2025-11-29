@@ -5,10 +5,8 @@
 #include "avm-parser/Instruction.hpp"
 #include "avm-parser/Parser.hpp"
 #include "avm-virtual-machine/Vm.hpp"
-#include "fmt/format.h"
 #include <cstdio>
 #include <deque>
-#include <fmt/base.h>
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <string>
