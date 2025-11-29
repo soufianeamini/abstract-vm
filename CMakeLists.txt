@@ -42,6 +42,7 @@ target_sources(
 	PRIVATE avm-exceptions/ParserException.cpp avm-exceptions/VmException.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-exceptions/
 	FILES avm-exceptions/ParserException.hpp avm-exceptions/VmException.hpp
 )
 target_sources(
@@ -49,6 +50,7 @@ target_sources(
 	PRIVATE avm-fmt/Formatter.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-fmt/
 	FILES avm-fmt/Formatter.hpp
 )
 target_sources(
@@ -56,6 +58,7 @@ target_sources(
 	PRIVATE avm-lexer/Lexer.cpp avm-lexer/Token.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-lexer/
 	FILES avm-lexer/Lexer.hpp avm-lexer/Token.hpp
 )
 target_sources(
@@ -63,6 +66,7 @@ target_sources(
 	PRIVATE avm-lib/InputHandler.cpp avm-lib/utils.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-lib/
 	FILES avm-lib/InputHandler.hpp avm-lib/utils.hpp avm-lib/safe-math.h
 )
 target_sources(
@@ -70,6 +74,7 @@ target_sources(
 	PRIVATE avm-operand/OperandFactory.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-operand/
 	FILES avm-operand/IOperand.hpp avm-operand/Operand.hpp avm-operand/OperandFactory.hpp
 )
 target_sources(
@@ -77,6 +82,7 @@ target_sources(
 	PRIVATE avm-parser/Parser.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-parser/
 	FILES avm-parser/Instruction.hpp avm-parser/Parser.hpp avm-parser/VmValue.hpp
 )
 target_sources(
@@ -84,6 +90,7 @@ target_sources(
 	PRIVATE avm-virtual-machine/Vm.cpp
 	PUBLIC
 	FILE_SET HEADERS
+	BASE_DIRS avm-virtual-machine/
 	FILES avm-virtual-machine/Vm.hpp
 )
 
