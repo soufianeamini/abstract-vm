@@ -1,4 +1,5 @@
 CompileFlags:
-  Add:
-    - -std=c++17
-    - -Iexternal-libs/include
+  CompilationDatabase: ./build/
+  # Add:
+  #   - -std=c++17
+  #   - -Iexternal-libs/include

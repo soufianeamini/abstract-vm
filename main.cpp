@@ -5,7 +5,6 @@
 #include "avm-parser/Instruction.hpp"
 #include "avm-parser/Parser.hpp"
 #include "avm-virtual-machine/Vm.hpp"
-#include "external-libs/include/fmt/format.h"
 #include "fmt/format.h"
 #include <cstdio>
 #include <deque>
