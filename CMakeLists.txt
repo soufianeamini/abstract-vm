@@ -20,12 +20,7 @@ add_library(avm-operand)
 add_library(avm-parser)
 add_library(avm-virtual-machine)
 
-
-target_link_libraries(avm avm-parser)
-target_link_libraries(avm avm-fmt)
-target_link_libraries(avm avm-lexer)
-target_link_libraries(avm avm-lib)
-target_link_libraries(avm avm-virtual-machine)
+target_link_libraries(avm avm-parser avm-fmt avm-lexer avm-lib avm-virtual-machine)
 target_link_libraries(avm-virtual-machine avm-exceptions)
 target_link_libraries(avm-parser avm-operand)
 
@@ -111,7 +106,6 @@ target_link_libraries(avm-exceptions fmt::fmt)
 target_link_libraries(avm-fmt fmt::fmt)
 
 ## gtest
-include(FetchContent)
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip # 1.17.0
